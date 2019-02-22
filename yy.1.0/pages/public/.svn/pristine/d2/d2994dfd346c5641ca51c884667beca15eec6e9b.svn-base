@@ -1,0 +1,119 @@
+<!--pages/personalCenter/personalCenter.wxml-->
+<import src='/template/loading/loading' />
+<import src='/template/getUserInfo/getUserInfo'/>
+<block wx:if='{{!loading}}'>
+  <view class='personalCenter-background'></view>
+  <view class='personalCenter-content'>
+    <!-- 用户信息 -->
+    <view class='personalCenter-content-box'>
+      <view class='personalCenter-content-box-user'>
+        <view class='pcbu-box'>
+          <image class='pcbu-icon' mode='widthFix' src='{{getInfo?usericon:noinfoicon}}' bindtap='{{ismember?"nav":""}}' data-url='/pages/public/userInfo/userInfo'></image>
+          <button wx:if='{{!getInfo}}' class='pcbu-box-button' open-type='getUserInfo' bindgetuserinfo='getUserInfo'></button>
+        </view>
+        <view class='pcbu-status' style='color:{{themeTxtColor}}'>
+          <view class='pcbu-status-name'>{{getInfo?username:'游客'}}</view>
+          <view class='pcbu-status-number' wx:if='{{ismember}}'>{{customid}}</view>
+        </view>
+      </view>
+      <view class='personalCenter-content-box-useritem'>
+        <view class='pcbu-item' bindtap='{{ismember?"switchtab":""}}' data-url='/pages/public/product/product'>
+          <view class='pcbu-item-num' style='color:{{themeTxtColor}}'>{{rest}}</view>
+          <view class='pcbu-item-txt' style='color:{{assistedTxtColor2}}'>余额</view>
+        </view>
+        <view class='pcbu-item' bindtap='{{ismember?"nav":""}}' data-url='/pages/public/point/point'>
+          <view class='pcbu-item-num' style='color:{{themeTxtColor}}'>{{point}}</view>
+          <view class='pcbu-item-txt' style='color:{{assistedTxtColor2}}'>积分</view>
+        </view>
+        <view class='pcbu-item' bindtap='{{ismember?"nav":""}}' data-url='/pages/public/coupon/coupon?types=user'>
+          <view class='pcbu-item-num' style='color:{{themeTxtColor}}'>{{coupon}}</view>
+          <view class='pcbu-item-txt' style='color:{{assistedTxtColor2}}'>优惠券</view>
+        </view>
+      </view>
+    </view>
+    <!-- 预约类别 -->
+    <view class='personalCenter-content-box'>
+      <view class='personalCenter-content-box-myAppointment' style='border-bottom:1px solid #E5E5E5'>
+        <view class='pcbm-left'>
+          <view class='pcbm-left-stick'></view>
+          <text class='pcbm-left-txt' style='color:{{themeTxtColor}}'>我的预约</text>
+        </view>
+        <view class='pcbm-right' bindtap='nav' data-url='/pages/public/myOrder/myOrder?types=appoint'>
+          <text class='pcbm-right-txt' style='color:{{assistedTxtColor2}}'>查看全部</text>
+          <image class='pcbm-right-arrow' src='/images/personalCenter/narrow@2x.png' mode='widthFix'></image>
+        </view>
+      </view>
+      <view class='personalCenter-content-box-appointmentItems' style='color:{{assistedTxtColor2}}'>
+        <view class='pcba-item' bindtap='nav' data-url='/pages/public/myOrder/myOrder?txt=待付款&types=appoint'>
+          <image class='pcba-item-icon' src='{{ordericon1}}' mode='widthFix'></image>
+          <view class='pcba-item-txt'>待付款</view>
+        </view>
+        <view class='pcba-item' bindtap='nav' data-url='/pages/public/myOrder/myOrder?txt=待提货&types=appoint'>
+          <image class='pcba-item-icon' src='{{ordericon2}}' mode='widthFix'></image>
+          <view class='pcba-item-txt'>待提货</view>
+        </view>
+        <view class='pcba-item' bindtap='nav' data-url='/pages/public/myOrder/myOrder?txt=待服务&types=appoint'>
+          <image class='pcba-item-icon' src='{{ordericon3}}' mode='widthFix'></image>
+          <view class='pcba-item-txt'>待服务</view>
+        </view>
+        <view class='pcba-item' bindtap='nav' data-url='/pages/public/myOrder/myOrder?txt=已取消&types=appoint'>
+          <image class='pcba-item-icon' src='{{ordericon4}}' mode='widthFix'></image>
+          <view class='pcba-item-txt'>已取消</view>
+        </view>
+      </view>
+    </view>
+    <!-- 菜单栏 -->
+    <view class='personalCenter-content-box'>
+      <view class='personalCenter-content-box-menu' style='color:{{themeTxtColor}}'>
+        <view class='pcbme-item' bindtap='nav' data-url='/pages/public/myOrder/myOrder?types=order'>
+          <view class='pcbme-item-left'>
+            <image src='{{listicon1}}' mode='widthFix' class='pcbme-item-left-icon'></image>
+            <text class='pcbme-item-left-txt'>我的订单</text>
+          </view>
+          <image src='/images/personalCenter/narrow@2x.png' mode='widthFix' class='pcbme-item-arrow'></image>
+        </view>
+        <view class='pcbme-item' bindtap='nav' data-url='/pages/public/myActivity/myActivity'>
+          <view class='pcbme-item-left'>
+            <image src='{{listicon2}}' mode='widthFix' class='pcbme-item-left-icon'></image>
+            <text class='pcbme-item-left-txt'>我的活动</text>
+          </view>
+          <image src='/images/personalCenter/narrow@2x.png' mode='widthFix' class='pcbme-item-arrow'></image>
+        </view>
+        <view class='pcbme-item' bindtap='nav' data-url='/pages/public/myCoinWallet/myCoinWallet'>
+          <view class='pcbme-item-left'>
+            <image src='{{listicon4}}' mode='widthFix' class='pcbme-item-left-icon'></image>
+            <text class='pcbme-item-left-txt'>我的币钱包</text>
+          </view>
+          <image src='/images/personalCenter/narrow@2x.png' mode='widthFix' class='pcbme-item-arrow'></image>
+        </view>
+        <view class='pcbme-item' style='border:none;' bindtap='phoneCall' data-phone='{{phone}}'>
+          <view class='pcbme-item-left'>
+            <image src='{{listicon3}}' mode='widthFix' class='pcbme-item-left-icon'></image>
+            <text class='pcbme-item-left-txt'>联系商家</text>
+          </view>
+          <image src='/images/personalCenter/narrow@2x.png' mode='widthFix' class='pcbme-item-arrow'></image>
+        </view>
+      </view>
+    </view>
+    <!-- 最近预约 -->
+    <view class='personalCenter-content-box' wx:if='{{hasappoint}}'>
+      <view class='personalCenter-content-box-curappoint'>
+        <view class='pcbc-top'>
+          <view class='pcbc-top-left' style='color:{{themeTxtColor}}'>{{lastserv.name}}</view>
+          <view class='pcbc-top-right'>待消费</view>
+        </view>
+        <view class='pcbc-middle'>#{{lastserv.types}}</view>
+        <view class='pcbc-bottom'>
+          <view class='pcbc-bottom-left' style='color:{{assistedTxtColor2}}'>距服务开始 {{lastserv.date}}</view>
+          <view class='pcbc-bottom-right' bindtap='nav' data-url='/pages/public/paySuccess/paySuccess?orderId={{lastserv.id}}' wx:if='{{lastserv.hasPaid}}'>查看码券</view>
+        </view>
+      </view>
+    </view>  
+    
+  </view>
+</block>
+
+
+<template is='loading' data='{{loading:loading}}' />
+
+<template is='getUserInfo' data='{{getUserInfoState:getUserInfoState,shopImgSrc:shopImgSrc,shopName:shopName,themeColor:themeColor,closeIcon:closeIcon}}' />

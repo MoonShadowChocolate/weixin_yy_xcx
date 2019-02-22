@@ -1,0 +1,35 @@
+<!--pages/public/recharge/recharge.wxml-->
+<view class='content'>
+  <view class='topInfoBox'>
+    <view class='topInfoLeft'>
+      <view class='topInfoTxt_1'>购买XY币</view>
+      <view class='topInfoTxt_2'>117.80 RMB/币</view>
+      <view class='topInfoTxt_3'>数量：340100 XY</view>
+    </view>
+    <view class='topInfoRight'>
+      <image src='{{rechargeIcon}}' mode='widthFix'></image>
+      <view class='topInfoRightTxt'>XY</view>
+    </view>
+  </view>
+  <view class='inputBox'>
+    <view class='leftIcon'>
+      <image src='{{recgargeLinkIcon}}' mode='widthFix'></image>
+    </view>
+    <view class='rightInput'>
+      <view class='inputItem'>
+        <input placeholder='请输入购买商家币' placeholder-style='color:#ccc;' bindinput='inputCoinNum'></input>
+        <view class='inputCompany'>XY</view>
+      </view>
+      <view class='inputLine'></view>
+      <view class='inputItem'>
+        <input placeholder='对应金额' placeholder-style='color:#ccc;'></input>
+        <view class='inputCompany'>RMB</view>
+      </view>
+    </view>
+  </view>
+  <view class='rechargeBtnBox'>
+    <view class='rechargeBtn cancelBtn'>30s取消</view>
+    <view class='rechargeBtn confirmBtn'>确认购买</view>
+  </view>
+  <view class='RemarksBox'>备注：这是一段文字这是一段文字这是一段文字这是一段文字这是一段文字这是一段文字。</view>
+</view>

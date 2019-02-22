@@ -1,0 +1,33 @@
+/* pages/myActivity/myActivity.wxss */
+.myActivity-list{
+  padding: 0 40rpx;
+}
+.myActivity-list-item{
+  margin-top: 40rpx;
+  font-size: 0;
+  line-height: 1;
+  overflow: hidden;
+}
+.myActivity-list-item-img{
+  width: 100%;
+  height: 320rpx;
+  border-radius: 20rpx;
+}
+.myActivity-list-item-title{
+  font-size: 30rpx;
+  line-height: 1;
+  margin:20rpx 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 20rpx;
+}
+.mlit-txt{
+  display: inline-block;
+  padding: 10rpx 26rpx;
+  background-image: linear-gradient(to right,#FC9340,#FC2B95);
+  font-size: 24rpx;
+  color: white;
+  border-radius: 22rpx;
+  margin-right: 16rpx;
+}

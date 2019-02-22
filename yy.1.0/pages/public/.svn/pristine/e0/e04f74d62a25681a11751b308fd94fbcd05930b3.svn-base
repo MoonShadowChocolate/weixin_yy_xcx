@@ -1,0 +1,178 @@
+/* pages/peerDiscount/peerDiscount.wxss */
+page{
+  width: 100%;
+  height: 100%;
+}
+.content{
+  width: 100%;
+  height: auto;
+  background: linear-gradient(to right, #FFE200 , #FFB824);  
+  position: relative;
+}
+.peerActiveTitle{
+  width: 100%;
+  font-size: 60rpx;
+  color: #fff;
+  text-align: center;
+  text-shadow:6rpx 6rpx 8rpx rgba(103, 10, 168, 0.5);
+  padding-top: 60rpx;
+  box-sizing: border-box;
+}
+.peerCountDown{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 30rpx;
+  color: #333;
+  margin-top: 40rpx;
+}
+.peerCountDown text{
+  padding-top: 5rpx;
+  box-sizing: border-box;
+}
+.peerCountDownNum{
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 14rpx;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  line-height: 50rpx;
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+}
+.peerActiveList{
+  width: 100%;
+  height: auto;
+  padding-top: 60rpx;
+  padding-bottom: 50rpx;
+  box-sizing: border-box;
+}
+.peerActiveItem{
+  width: 670rpx;
+  height: 590rpx;
+  border-radius: 20rpx;
+  background-color: #fff;
+  margin: 0 auto;
+  margin-bottom: 50rpx;
+  padding: 50rpx 40rpx 25rpx 40rpx;
+  box-sizing: border-box;
+}
+.peerActiveItemImg{
+  width: 590rpx;
+  height: 282rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+}
+.peerActiveItemImg image{
+  width: 590rpx;
+  height: 282rpx;
+}
+.peerActiveItemTitle{
+  width: 100%;
+  font-size: 30rpx;
+  color: #333;
+  margin-top: 20rpx;
+  white-space:nowrap;  
+	overflow:hidden;
+  text-overflow:ellipsis;
+}
+.peerActiveItemInfo{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 15rpx;
+}
+.peerActiveItemPrice{
+  font-size: 30rpx;
+  color: #333;
+}
+.peerActiveItemPrice text{
+  color: #FF4646;
+}
+.peerActiveItemOldPrice{
+  font-size: 24rpx;
+  color: #999;
+  text-decoration:line-through;
+  padding-top: 6rpx;
+  box-sizing: border-box;
+  margin-left: 30rpx;
+}
+.joinPeerActiveBtn{
+  width: 266rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  color: #333;
+  text-align: center;
+  line-height: 80rpx;
+  margin: 0 auto;
+  margin-top: 30rpx;
+}
+.peerActiveRuleBtn{
+  width: 140rpx;
+  height: 70rpx;
+  border-top-left-radius: 35rpx;
+  border-bottom-left-radius: 35rpx;
+  font-size: 26rpx;
+  color: #fff;
+  text-align: center;
+  line-height: 70rpx;
+  position: absolute;
+  top:70rpx;
+  right:0rpx;
+}
+/* 活动规则弹窗start */
+.activeRuleBox{
+  width: 670rpx;
+  height: 950rpx;
+  border-radius: 20rpx;
+  background-color: #fff;
+  position: fixed;
+  top:100rpx;
+  left: 40rpx;
+  z-index: 20;
+}
+.closeIconRule{
+  width: 66rpx;
+  height: 66rpx;
+  position: absolute;
+  top:-25rpx;
+  right:-25rpx;
+}
+.activityExplain{
+  width: 100%;
+  height: auto;
+  padding-top: 40rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  box-sizing: border-box;
+}
+.activeRuleTile{
+  width: 100%;
+  font-size: 34rpx;
+  text-align: center;
+}
+.activityRuleCnt{
+  width: 100%;
+  height: auto;
+  font-size: 26rpx;
+  color: #333;
+  padding-top: 5rpx;
+  box-sizing: border-box;
+}
+.activityRuleItem{
+  width: 100%;
+  height: auto;
+  margin-top: 10rpx;
+}
+.activityRule{
+  width: 100%;
+  height: auto;
+  margin-top: 40rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  box-sizing: border-box;
+}
+/* 活动规则弹窗end */

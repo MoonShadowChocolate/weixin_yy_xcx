@@ -1,0 +1,97 @@
+/* pages/paySuccess/paySuccess.wxss */
+.content{
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+.successTop{
+  width: 100%;
+  height: 330rpx;
+  text-align: center;
+  border-bottom: solid 1rpx #E5E5E5;
+}
+.successIcon{
+  width: 176rpx;
+  height: 176rpx;
+  margin-top: 40rpx;
+}
+.successTip{
+  font-size: 30rpx;
+  color: #333;
+  margin-top: 30rpx;
+}
+.fillingItem{
+  width: 750rpx;
+  height: 110rpx;
+  border-bottom: solid 1rpx #E5E5E5;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  font-size: 32rpx;
+  color: #333;
+  line-height: 110rpx;
+}
+.fillingTitleShort{
+  width: 80rpx;
+  height: 110rpx;
+  font-weight: bold;
+}
+.fillingTitleLong{
+  width: 144rpx;
+  height: 110rpx;
+  font-weight: bold;
+}
+.fillingInputShort{
+  width: 506rpx;
+  height: 110rpx;
+  margin-left: 20rpx;
+  text-align: right;
+  white-space:nowrap;  
+	overflow:hidden;
+  text-overflow:ellipsis;
+}
+.fillingInputLong{
+  width: 570rpx;
+  height: 110rpx;
+  margin-left: 20rpx;
+}
+.successTxt{
+  width: 100%;
+  height: 90rpx;
+  font-size: 28rpx;
+  color: #999;
+  line-height: 90rpx;
+  padding-left: 40rpx;
+  box-sizing: border-box;
+}
+.qrCodeBox{
+  width: 100%;
+  height: 400rpx;
+  padding-top: 50rpx;
+  box-sizing: border-box;
+}
+.callBusinessBtn{
+  width: 520rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  margin: 0 auto;
+  margin-top: 30rpx;
+  margin-bottom: 40rpx;
+  font-size: 32rpx;
+  color: #333;
+  text-align: center;
+  line-height: 80rpx;
+}
+.qrCodeBox canvas{
+  width: 248rpx;
+  height: 248rpx;
+  margin: 0 auto;
+}
+.codeShow{
+  font-size: 36rpx;
+  color: #333;
+  text-align: center;
+  margin-top: 40rpx;
+}

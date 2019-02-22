@@ -1,0 +1,15 @@
+<!--pages/myActivity/myActivity.wxml-->
+<import src='/template/loading/loading' />
+<block wx:if='{{!loading}}'>
+  <view class='myActivity-list' wx:if='{{list[0]}}'>
+    <view class='myActivity-list-item' bindtap='nav' data-url='/pages/public/myPeerActivity/myPeerActivity?peerId={{item.id}}&peerType=me' wx:for='{{list}}' wx:key=''>
+      <image class='myActivity-list-item-img' mode='aspectFill' src='{{item.img}}'></image>
+      <view class='myActivity-list-item-title' style='color:{{themeTxtColor}}'><text class='mlit-txt'>同行</text>{{item.title}}</view>
+    </view>
+  </view>
+  <view class='nodata' wx:else>
+    <image class='nodata-icon' src='/images/myActivity/no_activity_illustration@2x.png'></image>
+    <view class='nodata-txt' style='color:{{assistedTxtColor1}}'>暂时没有活动哦~</view>
+  </view>
+</block>
+<template is='loading' data='{{loading:loading}}' />

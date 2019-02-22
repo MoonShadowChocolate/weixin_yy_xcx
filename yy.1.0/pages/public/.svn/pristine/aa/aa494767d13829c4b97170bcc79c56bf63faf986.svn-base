@@ -1,0 +1,12 @@
+<!--pages/fillMyAddress/fillMyAddress.wxml-->
+<view class='content'>
+  <view class='fillingItem'>
+    <view class='fillingTitleShort'>地址:</view>
+    <input class='fillingInputLong' placeholder='请在地图中选择收货小区/大厦/学校' bindtap='selAddress' value='{{userAddr}}'></input>
+  </view>
+  <view class='fillingItem'>
+    <view class='fillingTitleMiddle'>门牌号:</view>
+    <input class='fillingInputMiddle' placeholder='请输入详细地址,精确到栋号,门牌号' bindinput='inputs'></input>
+  </view>
+  <view class='fillingOkBtn' style='background-color: {{fillingOkBtnState?themeColor:"#ccc"}};' bindtap='{{fillingOkBtnState?"confirm":""}}'>确认</view>
+</view>

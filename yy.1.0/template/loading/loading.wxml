@@ -1,0 +1,9 @@
+<!--template/loading/loading.wxml-->
+<template name='loading'>
+  <view class='loading-box1' wx:if='{{loading}}'>
+    <view class='loading-box2'>
+      <image src='/images/loading.gif' mode='aspectFit' class='loading-img1'></image>
+      <view class='loading-box3'>数据加载中...</view>
+    </view>
+  </view>
+</template>

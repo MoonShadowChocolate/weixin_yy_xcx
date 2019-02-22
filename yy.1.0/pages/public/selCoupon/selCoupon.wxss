@@ -1,0 +1,95 @@
+/* pages/selCoupon/selCoupon.wxss */
+.content{
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+.couponList{
+  width: 100%;
+  height: auto;
+  padding-top: 60rpx;
+  box-sizing: border-box;
+}
+.couponItem{
+  width: 670rpx;
+  height: 224rpx;
+  border-radius: 12rpx;
+  margin: 0 auto;
+  margin-bottom: 40rpx;
+  position: relative;   
+  display: flex;
+  flex-direction: row;
+  color: #fff;
+}
+.leftMark{
+  width: 22rpx;
+  height: 22rpx;
+  border-radius: 50%;
+  background-color: #fff;
+  position: absolute;
+  top:150rpx;
+  left:-11rpx;
+}
+.rightMark{
+  width: 22rpx;
+  height: 22rpx;
+  border-radius: 50%;
+  background-color: #fff;
+  position: absolute;
+  top:150rpx;
+  right:-11rpx;
+}
+.couponInfo{
+  width: 60%;
+  height: 224rpx;
+  padding-left: 40rpx;
+  box-sizing: border-box;
+}
+.couponPrice{
+  width: 40%;
+  height: 224rpx;
+}
+.couponTitle{
+  font-size: 46rpx;
+  font-weight: bold;
+  margin-top: 40rpx;
+  margin-bottom: 30rpx;
+}
+.couponInfoTxt{
+  font-size: 24rpx;
+  margin-top: 10rpx;
+}
+.couponPrice{
+  width: 40%;
+  height: 224rpx;
+  font-size: 76rpx;
+  text-align: center;
+  line-height: 224rpx;
+}
+.couponPrice text{
+  font-size: 32rpx;
+  margin-right: 10rpx;
+  margin-left: 10rpx;
+}
+
+/* 空页面 start */
+.emptyPageBox{
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  text-align: center;
+}
+.emptyIcon{
+  width: 400rpx;
+  height: 400rpx;
+  margin-top: 100rpx;
+}
+.emptyTip{
+  font-size: 28rpx;
+  color: #999;
+}
+/* 空页面 end */

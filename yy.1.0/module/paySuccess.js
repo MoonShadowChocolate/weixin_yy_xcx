@@ -1,0 +1,106 @@
+const app = getApp();
+const wxbarcode = require('../utils/getQRbar.js');
+export default {
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    loading:true,
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    console.log(options);
+    //设置皮肤
+    this.setStyleFun();
+    //获取商家电话
+    this.setData({
+      phone: wx.getStorageSync('businessPhone')
+    })
+    let that = this;
+    app.request(app.host + 'appointment/find/' + options.orderId, 'POST', 'form', {}, function (res) {
+      console.log(res.data);
+      if (res.data.code == 200) {
+        let appointmentDate = new Date((res.data.data.summary.appointmentDate.replace(/-/g, '/')).replace(/T/g, ' ').substr(0, 19));
+        that.setData({
+          totalPrice: res.data.data.summary.price,
+          appointmentDate: (appointmentDate.getMonth() + 1) + '-' + appointmentDate.getDate() + ' ' + appointmentDate.getHours() + ':' + appointmentDate.getMinutes(),
+          appointmentAddress: res.data.data.summary.appointmentAddress,
+          tradeCode: res.data.data.summary.tradeCode,
+          payMethod: res.data.data.recInfo.payMethod,
+          loading:false
+        })
+        wxbarcode.qrcode('qrcode', that.data.tradeCode, 248, 248);
+      }
+    })
+  },
+  //给商家打call
+  phoneCall: function (e) {
+    app.phoneCall(e.currentTarget.dataset.phone);
+  },
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  },
+  //设置皮肤
+  setStyleFun: function () {
+    this.setData({
+      themeColor: app.globalObj.themeColor,//主题色
+      assistedColor1: app.globalObj.assistedColor1,//辅助色1
+      assistedColor2: app.globalObj.assistedColor2,//辅助色2
+      importantColor: app.globalObj.importantColor,//重要警示性颜色
+      btnGradientColor: app.globalObj.btnGradientColor,//一些按钮背景的渐变色
+      themeTxtColor: app.globalObj.themeTxtColor,//主文字色
+      assistedTxtColor1: app.globalObj.assistedTxtColor1,//辅助文字色1
+      assistedTxtColor2: app.globalObj.assistedTxtColor2,//辅助文字色2
+      getCodeBtnBgColor: app.globalObj.assistedColor1,//获取按钮的背景色
+      hookIcon: app.payObj.hookIcon,//预约成功标志
+    })
+  }
+}

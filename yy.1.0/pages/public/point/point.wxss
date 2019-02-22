@@ -1,0 +1,73 @@
+/* pages/point/point.wxss */
+.point-content{
+  padding: 30rpx 40rpx;
+}
+.point-content-top{
+  background: linear-gradient(to bottom,#FFB824,#FFA100);
+  position: relative;
+  border-radius: 20rpx;
+  height: 280rpx;
+  width: 100%;
+  margin-bottom: 60rpx;
+}
+.point-content-top-left{
+  position: absolute;
+  left: 52rpx;
+  top: 80rpx;
+  color: white;
+  line-height: 1;
+  z-index: 2;
+}
+.pctl-top{
+  font-size: 32rpx;
+  margin-bottom: 30rpx;
+}
+.pctl-point{
+  font-size: 80rpx;
+}
+.point-content-top-right{
+  position: absolute;
+  width: 224rpx;
+  height: 224rpx;
+  top: 34rpx;
+  right: 58rpx;
+}
+.point-content-point{
+  border-radius: 20rpx;
+  box-shadow: 0 1px 15px rgba(194, 194, 194, .25);
+  overflow: hidden;
+  background: white;
+}
+.point-content-point-title{
+  display: flex;
+  align-items: center;
+  height: 70rpx;
+  padding: 20rpx 20rpx 0 20rpx;
+  border-bottom: 1px solid #E5E5E5;
+}
+.pcpt-stick{
+  width: 6rpx;
+  height: 28rpx;
+  background: #333333;
+  border-radius: 10rpx;
+}
+.pcpt-txt{
+  margin-left: 12rpx;
+  font-size: 28rpx;
+  line-height: 1;
+}
+.point-content-point-list{
+  padding: 10rpx 0 20rpx;
+}
+.pcpl-item{
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20rpx;
+  font-size: 28rpx;
+}
+.pcpl-item-arrow{
+  width: 20rpx;
+  height: 20rpx;
+}

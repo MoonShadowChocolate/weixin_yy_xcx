@@ -1,0 +1,44 @@
+/* pages/userInfo/userInfo.wxss */
+.userInfo-list{
+  margin-bottom: 70rpx;
+}
+.userInfo-list-item{
+  height: 110rpx;
+  padding: 0 40rpx;
+  border-bottom: 1px solid #E5E5E5;
+}
+.userInfo-list-item-left{
+  font-size: 32rpx;
+  height: 100%;
+  line-height: 110rpx;
+  float: left;
+  font-weight: bold;
+}
+.userInfo-list-item-name{
+  height: 100%;
+  overflow: hidden;
+  line-height: 110rpx;
+  font-size: 32rpx;
+}
+.userInfo-list-item-namep{
+  color: #CCCCCC;
+}
+.ulin-arrow{
+  width: 20rpx;
+  height: 20rpx;
+  margin-left: 24rpx;
+}
+.userInfo-button{
+  background: #FFE200;
+  width: 520rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  line-height: 80rpx;
+  text-align: center;
+  color: white;
+  margin: 0 auto;
+}
+.userInfo-picker{
+  text-align: right;
+}

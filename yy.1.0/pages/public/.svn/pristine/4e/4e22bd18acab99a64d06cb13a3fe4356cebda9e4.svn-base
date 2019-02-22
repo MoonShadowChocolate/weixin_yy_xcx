@@ -1,0 +1,225 @@
+/* pages/public/myCoinWallet/myCoinWallet.wxss */
+.content{
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  padding-bottom: 80rpx;
+  box-sizing: border-box;
+}
+.topShow{
+  width: 670rpx;
+  height: 280rpx;
+  border-radius: 20rpx;
+  margin: 0 auto;
+  margin-top: 30rpx;
+  position: relative;
+}
+.topShowBg{
+  width: 280rpx;
+  height: 232rpx;
+  margin-top: 48rpx;
+  margin-left: 373rpx;
+}
+.coinNumBox{
+  width: 670rpx;
+  height: 280rpx;
+  position: absolute;
+  top:0;
+  left:0;
+  padding-left: 40rpx;
+  box-sizing: border-box;
+}
+.coinNum{
+  font-size: 80rpx;
+  color: #333;
+  margin-top: 65rpx;
+}
+.coinNumTxt{
+  font-size: 30rpx;
+  color: #333;
+  font-weight: bold;
+}
+.briefIntroduction{
+  width: 100%;
+  height: auto;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  margin-top: 40rpx;
+}
+.briefIntroductionTitle{
+  font-size: 36rpx;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 5rpx;
+}
+.briefIntroductionItem{
+  font-size: 28rpx;
+  color: #333;
+  font-weight: bold;
+  margin-top: 20rpx;
+}
+.briefIntroductionItem text{
+  font-size: 24rpx;
+  color: #999;
+  font-weight: normal;
+}
+.briefIntroductionTxt{
+  width: 670rpx;
+  font-size: 28rpx;
+  color: #333;
+  font-weight: normal;
+  margin-top: 10rpx;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+.viewAll{
+  font-size: 26rpx;
+  color: #FF8A2C;
+  font-weight: normal;
+}
+.coinWalletBtnBox{
+  width: 100%;
+  height: 125rpx;
+  background-color: #fff;
+  box-shadow: 4rpx 0rpx 15rpx RGBA(180, 180, 180, 0.2);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-around;
+}
+.coinWalletBtnStyle{
+  width: 210rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  margin: auto 0;
+  font-size: 28rpx;
+  color: #fff;
+  text-align: center;
+  line-height: 80rpx; 
+}
+/* 绑定APP账户弹窗 start */
+.getMemberBox{
+  width: 620rpx;
+  height: 526rpx;
+  border-radius: 10rpx;
+  background-color: #fff;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 20rpx;
+  box-sizing: border-box;
+  position: relative;
+}
+.closeIcon{
+  width: 66rpx;
+  height: 66rpx;
+  position: absolute;
+  top:-25rpx;
+  right: -25rpx;
+}
+.getMemberTitle{
+  font-size: 34rpx;
+  color: #333;
+  margin-top: 60rpx;
+}
+.getPhone{
+  width: 342rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  color: #333;
+  text-align: center;
+  line-height: 80rpx;
+  margin: 0 auto;
+  margin-top: 90rpx;
+  position: relative;
+}
+.getPhoneBtn{
+  width: 342rpx;
+  height: 80rpx;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.userGetPhone{
+  width: 342rpx;
+  height: 80rpx;
+  box-sizing: border-box;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  text-align: center;
+  line-height: 80rpx;
+  margin: 0 auto;
+  margin-top: 50rpx;
+}
+.getPhoneBg{
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  position: fixed;
+  top:0;
+  left:0;
+  z-index: 20;
+  padding-top: 260rpx;
+  box-sizing: border-box;
+}
+.userPhone{
+  width: 500rpx;
+  height: 94rpx;
+  margin: 0 auto;
+  margin-top: 30rpx;
+  border-bottom: solid 1rpx #333;
+}
+.userPhone input{
+  width: 500rpx;
+  height: 94rpx;
+  font-size: 30rpx;
+  color: #333;
+  line-height: 94rpx;
+  text-align: left;
+}
+.getCode{
+  width: 500rpx;
+  height: 94rpx;
+  margin: 0 auto;
+  margin-top: 20rpx;
+  border-bottom: solid 1rpx #333;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.getCode input{
+  width: 200rpx;
+  height: 94rpx;
+  font-size: 30rpx;
+  color: #333;
+  line-height: 94rpx;
+  text-align: left;
+}
+.getCodeBtn{
+  width: 150rpx;
+  height: 60rpx;
+  border-radius: 10rpx;
+  font-size: 30rpx;
+  color: #fff;
+  text-align: center;
+  line-height: 60rpx;
+  margin: auto 0;
+}
+.becomeMember{
+  width: 266rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  color: #333;
+  text-align: center;
+  line-height: 80rpx;
+  margin: 0 auto;
+  margin-top: 30rpx;
+}
+/* end */

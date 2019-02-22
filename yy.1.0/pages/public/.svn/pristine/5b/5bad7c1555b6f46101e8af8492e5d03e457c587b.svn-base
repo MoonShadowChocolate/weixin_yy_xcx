@@ -1,0 +1,401 @@
+/* pages/orderFilling/orderFilling.wxss */
+ @import "/template/getUserInfo/getUserInfo"; 
+.content{
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+.fillingItem{
+  width: 750rpx;
+  height: 110rpx;
+  border-bottom: solid 1rpx #E5E5E5;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  font-size: 32rpx;
+  color: #333;
+  line-height: 110rpx;
+}
+.fillingTitleShort{
+  width: 80rpx;
+  height: 110rpx;
+  font-weight: bold;
+}
+.fillingTitleMiddle{
+  width: 120rpx;
+  height: 110rpx;
+  font-weight: bold;
+}
+.fillingTitleLong{
+  width: 144rpx;
+  height: 110rpx;
+  font-weight: bold;
+}
+.fillingInputShort{
+  width: 506rpx;
+  height: 110rpx;
+  margin-left: 20rpx;
+}
+.fillingInputLong{
+  width: 570rpx;
+  height: 110rpx;
+  margin: auto 0;
+  margin-left: 20rpx;
+}
+.orderContent{
+  width: 750rpx;
+  height: auto;
+  border-bottom: solid 1rpx #E5E5E5;
+  padding: 30rpx 40rpx 30rpx 40rpx;
+  box-sizing: border-box;
+}
+.orderCntTitle{
+  width: 100%;
+  height: 80rpx;
+  font-size: 32rpx;
+  color: #333;
+  font-weight: bold;
+}
+.productInfo{
+  width: 670rpx;
+  height: 160rpx;
+  display: flex;
+  flex-direction: row;
+}
+.productImg{
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+.productImg image{
+  width: 160rpx;
+  height: 160rpx;
+}
+.productInfoDetails{
+  width: 510rpx;
+  height: auto;
+  padding-top: 10rpx;
+  padding-left: 30rpx;
+  box-sizing: border-box;
+}
+.productTitle{
+  font-size: 30rpx;
+  color: #333;
+}
+.productDec{
+  font-size: 26rpx;
+  color: #999;
+  margin-top: 10rpx;
+}
+.shopAddress{
+  width: 466rpx;
+  height: 110rpx;
+  font-size: 32rpx;
+  color: #333;
+  line-height: 110rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  text-align: right;
+  white-space:nowrap;  
+	overflow:hidden;
+  text-overflow:ellipsis;
+}
+.selTime{
+  width: 446rpx;
+  height: 110rpx;
+  font-size: 32rpx;
+  color: #333;
+  line-height: 110rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  text-align: right;
+}
+.selDiscount{
+  width: 520rpx;
+  height: 110rpx;
+  font-size: 32rpx;
+  color: #333;
+  line-height: 110rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  text-align: right;
+}
+.selIcon{
+  width: 20rpx;
+  height: 20rpx;
+  margin: auto 0;
+  margin-left: 20rpx;
+}
+.totalPrice{
+  width: 100%;
+  height: 110rpx;
+  text-align: right;
+  padding-right: 20rpx;
+  box-sizing: border-box;
+}
+/* 底部tab start */
+.tabBtnBottom{
+  width: 100%;
+  height: 125rpx;
+  background-color: #fff;
+  box-shadow: 4rpx 0rpx 15rpx RGBA(180, 180, 180, 0.2);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+}
+.payBtn{
+  width: 520rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  color: #333;
+  text-align: center;
+  line-height: 80rpx;
+  margin: auto;
+}
+/* 底部tab end */
+/* 日历时间弹窗 start */
+.timerSelectBox{
+  width: 600rpx;
+  /* height: 608rpx; */
+  /* height: 980rpx; */
+  height: auto;
+  background-color: #fff;
+  position: fixed;
+  top:200rpx;
+  left:74rpx;
+  z-index: 20;
+}
+.weekDateList{
+  width: 600rpx;
+  height: 98rpx;
+  border-bottom: solid 1rpx RGBA(4, 0, 0, 0.05);
+  display: flex;
+  flex-direction: row;
+}
+.weekDateItemBox{
+  width: 500rpx;
+  height: 98rpx;
+  display: flex;
+  flex-direction: row;
+}
+.weekDateItem{
+  width: 100rpx;
+  height: 98rpx;
+  padding-top: 20rpx;
+  box-sizing: border-box;
+}
+.weekDateNum{
+  width: 100rpx;
+  font-size: 24rpx;
+  text-align: center;
+}
+.toCanlendarIcon{
+  width: 102rpx;
+  height: 98rpx;
+  display: flex;
+}
+.toCanlendarIcon image{
+  width: 42rpx;
+  height: 42rpx;
+  margin: auto;
+}
+.timerListBox{
+  width: 600rpx;
+  height: 220rpx;
+}
+.timerList{
+  width: 600rpx;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-top: 10rpx;
+  padding-bottom: 20rpx;
+  /* padding-left: 5rpx;
+  padding-right: 5rpx; */
+  box-sizing: border-box;
+}
+.timerItem{
+  width: 120rpx;
+  height: 48rpx;
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  text-align: center;
+  line-height: 48rpx;
+  /* margin-left: 5rpx;
+  margin-right: 5rpx;  */
+  box-sizing: border-box;
+}
+.selTimer{
+  background-color: #333;
+  color: #fff;
+}
+.selctTimerOKBox{
+  width: 602rpx;
+  height: 120rpx;
+  box-shadow: 4rpx 0rpx 15rpx RGBA(180, 180, 180, 0.2);
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+}
+.selTimerShow{
+  width: 60%;
+  height: 120rpx;
+  font-size: 28rpx;
+  color: #333;
+  text-align: center;
+  line-height: 120rpx;
+}
+.selctTimerOKBtn{
+  width: 200rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  color: #333;
+  text-align: center;
+  line-height: 80rpx;
+  margin: auto 0;
+}
+.canlendarBgView{
+  width: 600rpx;
+  height: 735rpx;
+  background-color: #fff;
+  position: fixed;
+  top:200rpx;
+  left:74rpx;
+  z-index: 30;
+}
+.canlendarTopViewTitel{
+  width: 600rpx;
+  height: 90rpx;
+  font-size: 30rpx;
+  color: #333;
+  text-align: center;
+  line-height: 90rpx;
+  border-bottom: solid 1rpx #E5E5E5;
+  box-sizing: border-box;
+  position: relative;
+}
+.closeIconImg{
+  width: 26rpx;
+  height: 26rpx;
+  position: absolute;
+  top:35rpx;
+  right: 40rpx;
+}
+.canlendarTopView{
+  width: 600rpx;
+  height: 98rpx;
+  font-size: 28rpx;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  box-sizing: border-box;
+}
+.directionBox{
+  width: 30rpx;
+  height: 98rpx;
+  line-height: 98rpx;
+  font-size: 28rpx;
+  color: #AAAAAA;
+}
+.centerView{
+  width: 462rpx;
+  height: 98rpx;
+  font-size: 28rpx;
+  color: #333;
+  text-align: center;
+  line-height: 98rpx;
+}
+.weekBgView{
+  width: 600rpx;
+  height: 54rpx;
+  font-size: 24rpx;
+  color: #333;
+  line-height: 54rpx;
+  padding-left: 60rpx;
+  padding-right: 60rpx;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+}
+.dateBgView{
+  width: 600rpx;
+  height: 460rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-left: 35rpx;
+  padding-right: 35rpx;
+  box-sizing: border-box;
+}
+.dateView{
+  width: 76rpx;
+  height: 92rpx;
+  display: flex;
+}
+.datesView{
+  width: 66rpx;
+  height: 48rpx;
+  border-radius: 24rpx;
+  font-size: 24rpx;
+  text-align: center;
+  line-height: 48rpx;
+  margin: auto;
+}
+.dateSelectView{
+  background-color: #333;
+  color: #fff;
+}
+.dateEmptyView{
+  width: 76rpx;
+  height: 92rpx;
+}
+/* 日历时间弹窗 end */
+
+/* 选择支付方式弹窗 start */
+.selPayTypeBox{
+  width: 620rpx;
+  height: 526rpx;
+  position: fixed;
+  top:300rpx;
+  left:65rpx;
+  z-index: 20;
+}
+.selPayTypeBg{
+  width: 620rpx;
+  height: 526rpx;
+}
+.selPayTypeCnt{
+  width: 620rpx;
+  height: 526rpx;
+  position: absolute;
+  top:0;
+  left: 0;
+  padding-top: 100rpx;
+  box-sizing: border-box;
+}
+.selPayTypeTitle{
+  font-size: 32rpx;
+  color: #fff;
+  text-align: center;
+}
+.selPayTypeBtn{
+  width: 410rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  margin: 0 auto;
+  margin-top: 50rpx;
+  font-size: 32rpx;
+  text-align: center;
+  line-height: 80rpx;
+}
+/* 选择支付方式弹窗 end */

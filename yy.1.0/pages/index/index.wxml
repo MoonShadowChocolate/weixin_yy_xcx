@@ -1,0 +1,109 @@
+<!--index.wxml-->
+<import src='/template/loading/loading'/>
+<view class='index-container' wx:if='{{!loading}}'>
+  <!-- 商户信息 -->
+  <view class='index-account'>
+    <view class='index-account-user' style='background:{{themeColor}}'>
+      <view class='index-account-user-left' bindtap='nav' data-url='/pages/public/business/business?id={{business.id}}'>
+        <image class='iaul-img' mode='aspectFill' src='{{business.icon?business.icon:defaulticon}}'></image>
+      </view>
+      <view class='index-account-user-right' style='color:{{themeTxtColor}}'>
+        <view class='iaur-title'>{{business.name}}</view>
+        <view class='iaur-address' bindtap='{{getLocation?"map":""}}' data-map='{{business.map}}'>
+          <view class='iaur-address-txt'>{{business.address}}</view>
+          <image class='iaur-address-icon' src='{{locationicon}}' mode='widthFix'></image>
+          <button class='iaur-address-button' open-type='openSetting' bindopensetting='openSetting' data-map='{{business.map}}' wx:if='{{!getLocation}}'></button>
+        </view>
+      </view>
+    </view>
+    <view class='index-account-business' style='color:{{themeTxtColor}};border-bottom:1rpx solid #E5E5E5;'>
+      <view class='index-account-business-left' bindtap='nav' data-url='/pages/public/changeStore/changeStore'><image mode='widthFix' src='{{changestoreicon}}' class='iabr-icon'></image>切换门店</view>
+      <view class='index-account-business-right' bindtap='phoneCall' data-phone='{{business.phone}}'><image mode='widthFix' src='{{phoneicon}}' class='iabr-icon'></image>联系商家</view>
+    </view>
+  </view>
+  <!-- 内容 -->
+  <view class='index-content'>
+    <!-- 优惠券 -->
+    <view class='index-coupon' bindtap='nav' data-url='/pages/public/coupon/coupon?types=business'>
+      <view class='index-content-title' style='color:{{assistedTxtColor2}}'>
+        <view class='index-content-title-box'>
+          <view class='index-content-title-before' style='background:{{assistedTxtColor2}}'></view>
+          <view class='index-content-title-before index-content-title-after' style='background:{{assistedTxtColor2}}'></view>
+          进店有礼
+        </view>
+      </view>
+      <image class='index-coupon-icon' mode='widthFix' src='{{couponicon}}'></image>
+    </view>
+    <!-- 活动 -->
+    <view class='index-activity' wx:if='{{actlist[0]}}'>
+      <view class='index-content-title' style='color:{{assistedTxtColor2}}'>
+        <view class='index-content-title-box'>
+          <view class='index-content-title-before' style='background:{{assistedTxtColor2}}'></view>
+          <view class='index-content-title-before index-content-title-after' style='background:{{assistedTxtColor2}}'></view>
+          精选活动
+        </view>
+      </view>
+      <view bindtap='nav' data-url='/pages/public/peerDiscount/peerDiscount?id={{item.id}}' wx:for='{{actlist}}' wx:key=''>
+        <image class='index-activity-icon' mode='aspectFit' src='{{item.icon}}'></image>
+        <view class='index-activity-summary' style='color:{{themeTxtColor}}'>{{item.name}}</view>
+      </view>
+    </view>
+    <!-- 服务 -->
+    <view class='index-service' wx:if='{{servlist[0]}}'>
+      <view class='index-content-title' style='color:{{assistedTxtColor2}}'>
+        <view class='index-content-title-box'>
+          <view class='index-content-title-before' style='background:{{assistedTxtColor2}}'></view>
+          <view class='index-content-title-before index-content-title-after' style='background:{{assistedTxtColor2}}'></view>
+          精选服务
+        </view>
+      </view>
+      <view style='margin-top:44rpx;'>
+        <view class='index-service-box' bindtap='nav' data-url='/pages/public/serviceDetails/serviceDetails?id={{item.id}}&type=sever' wx:for='{{servlist}}' wx:key=''>
+          <image class='index-service-box-icon' mode='aspectFill' src='{{item.icon}}'></image>
+          <view class='index-service-box-title'><text class='isbt-txt' style='color:{{themeTxtColor}}'>{{item.name}}</text><text class='isbt-price'>￥{{item.price}}</text></view>
+          <view class='index-service-box-status' style='color:{{assistedTxtColor2}}'><text>已售：{{item.soldNum}}</text><text>{{setnames}}：￥{{item.maxRackRate}}</text></view>
+          <view class='index-service-box-coin' style='color:{{importantColor}}'>可用币抵扣{{item.maxInCoin}}元</view>
+        </view>
+      </view>
+    </view>
+    <!-- 商品 -->
+    <view class='index-goods' wx:if='{{golist[0]}}'>
+      <view class='index-content-title' style='color:{{assistedTxtColor2}}'>
+        <view class='index-content-title-box'>
+          <view class='index-content-title-before' style='background:{{assistedTxtColor2}}'></view>
+          <view class='index-content-title-before index-content-title-after' style='background:{{assistedTxtColor2}}'></view>
+          精选商品
+        </view>
+      </view>
+      <view style='margin-top:76rpx;'>
+        <view class='index-goods-item' bindtap='nav' data-url='/pages/public/serviceDetails/serviceDetails?id={{item.id}}&type=shop' wx:for='{{golist}}' wx:key='' style='{{index%2==0?"margin-right:30rpx;":""}}'>
+          <image class='index-goods-item-icon' mode='aspectFill' src='{{item.icon}}'></image>
+          <view class='index-goods-item-txt'>
+            <view class='igit-title' style='color:{{themeTxtColor}}'>{{item.name}}</view>
+            <view class='igit-price'>
+              <text class='igit-price-left' style='color:{{importantColor}}'>￥{{item.price}}</text>
+              <text class='igit-price-right' wx:if='{{item.oldPrice}}' style='color:{{assistedTxtColor2}}'>￥{{item.oldPrice}}</text>
+            </view>
+            <view class='igit-status' style='color:{{assistedTxtColor2}}'>{{item.payNum}}人付款</view>
+            <view class='igit-coin' style='color:{{importantColor}}'>可用币抵扣{{item.maxInCoin}}元</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+  </view>
+  <!-- 会员弹窗 -->
+  <!-- <view class='index-pop' wx:if='{{showpop}}'>
+    <view class='index-pop-background' bindtap='hidenPop'></view>
+    <view class='index-pop-content'>
+      <image class='index-pop-content-img' mode='widthFix' src='/images/index/element@2x.png'></image>
+      <view class='index-pop-content-inside'>
+        <image class='ipci-icon' mode='widthFix' src='{{business.icon}}'></image>
+        <view class='ipci-name'>{{business.name}}</view>
+        <view class='ipci-txt'>授权信息免费成为店铺会员，享受店铺会员权益。</view>
+        <button class='ipci-button' open-type='getUserInfo' bindgetuserinfo='getUserInfo' style='color:{{themeTxtColor}}'>成为会员</button>
+      </view>
+    </view>
+  </view> -->
+</view>
+<template is='loading' data='{{loading:loading}}'/>

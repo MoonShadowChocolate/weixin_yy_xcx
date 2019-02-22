@@ -1,0 +1,867 @@
+const app = getApp();
+const appUtil = require("../utils/appUtil.js");
+export default {
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    loading: true,
+    myAddress: '选择',//我的地址
+    couponId: '',//优惠券Id
+    selPayTypeState: false,//选择支付方式弹窗状态
+    remarks: '',//备注
+    couponTxt: '选择',//显示优惠券选择
+    userName: '',
+    calendar: [],
+    currentIndex: 0,
+    currentDateShow: 0,
+    currentTimeShow: 0,
+    hasEmptyGrid: false,
+    cur_year: '',
+    cur_month: '',
+    timeArr: [{ "time": "0:00" }, { "time": "1:00" }, { "time": "2:00" }, { "time": "3:00" }, { "time": "4:00" }, { "time": "5:00" }, { "time": "6:00" }, { "time": "7:00" }, { "time": "8:00" }, { "time": "9:00" }, { "time": "10:00" }, { "time": "11:00" }, { "time": "12:00" }, { "time": "13:00" }, { "time": "14:00" }, { "time": "15:00" }, { "time": "16:00" }, { "time": "17:00" }, { "time": "18:00" }, { "time": "19:00" }, { "time": "20:00" }, { "time": "21:00" }, { "time": "22:00" }, { "time": "23:00" }],
+    selectDateNum: '',
+    selectTimeNum: '',
+    canlendarState: false,
+    timerSelectState: false,
+    selectIndex:'',//选中时间节点编号初始化
+    prohibitCount:0
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    console.log(options);
+    //获得订单类型和订单参数
+    this.setData({
+      orderType: wx.getStorageSync('orderType'),
+      param: wx.getStorageSync('param'),
+      totalPrice: wx.getStorageSync('param').totalPrice,
+      paymentMethod: wx.getStorageSync('param').paymentMethod,
+    })
+    //获取选择的优惠券
+    if (options.couponId) {
+      //满减券
+      if (options.couponType == 1) {
+        this.setData({
+          totalPrice: appUtil.setOnePriceStyle(appUtil.accSub(this.data.totalPrice, Number(options.couponVal))),
+          couponTxt: '-' + options.couponVal
+        })
+      }
+      //折扣券
+      if (options.couponType == 2) {
+        this.setData({
+          totalPrice: appUtil.setOnePriceStyle(appUtil.accMul(Number(this.data.totalPrice), Number(options.couponVal) / 10)),
+          couponTxt: '-' + appUtil.setOnePriceStyle(appUtil.accSub(this.data.totalPrice, appUtil.accMul(Number(this.data.totalPrice), Number(options.couponVal) / 10)))
+        })
+      }
+      let param = wx.getStorageSync('param');
+      param.totalPrice = this.data.totalPrice;
+      wx.setStorageSync('param', param);
+      this.setData({
+        couponId: options.couponId
+      })
+    }
+    //设置皮肤
+    this.setStyleFun();
+    //获取店铺Id
+    let businessId = wx.getStorageSync('businessId');
+    this.setData({
+      businessId: businessId
+    })
+    //获取门市价
+    this.setData({
+      minRackRate: wx.getStorageSync('param').minRackRate,
+    })
+    //判断是否获取用户信息
+    this.judeUserInfo();
+    //获取店铺地址
+    this.getShopInfo();
+    //获取预约范围半径
+    this.getShopRadii();
+    //设置查询可用优惠券参数
+    let couponParam = {};
+    couponParam.price = wx.getStorageSync('param').totalPrice;
+    couponParam.goodsIds = wx.getStorageSync('param').id;
+    couponParam.paramIds = wx.getStorageSync('param').paramId;
+    couponParam.quantitys = wx.getStorageSync('param').quantity;
+    couponParam.shopId = wx.getStorageSync('businessId');
+    couponParam = JSON.stringify(couponParam);
+    this.setData({
+      couponParam: couponParam,
+      loading: false
+    })
+  },
+  //判断是否获取用户信息
+  judeUserInfo: function () {
+    let that = this;
+    app.request(app.host + 'member/info/find4App/' + app.openid, 'POST', 'form', {
+      appId: app.appid,
+    }, function (res) {
+      console.log(res.data);
+      if (res.data.code == 200) {
+        if (res.data.data.nickname && res.data.data.avatarUrl) {
+          that.setData({
+            userName: res.data.data.nickname,
+            userPhone: res.data.data.phone,
+          })
+        } else {
+          that.setData({
+            userPhone: res.data.data.phone,
+            getUserInfoState: true,
+          })
+        }
+      }
+    })
+  },
+  //查询当天选择时间段
+  querySelectionPeriod: function (y, m, d) {
+    console.log('time:', y, m, d);
+    let that = this;
+    app.request(app.host + 'appointment/findAppointmentTimeNodeBo', 'POST', 'form',
+      {
+        goodsId: wx.getStorageSync('param').id,
+        time: y + '-' + m + '-' + d
+      },
+      function (res) {
+        console.log(res.data);
+        let timeList = res.data.data.list;
+        let k = 999;
+        if (res.data.data.year == that.data.cur_year && res.data.data.month == that.data.cur_month && res.data.data.day == that.data.cur_date) {
+          for (let i in timeList) {
+            if (timeList[i].value == that.data.currentTimeShow && !timeList[i].prohibitState) {
+              timeList[i].seleted = true;
+              k=i;
+            }
+            if (wx.getStorageSync('param').serviceTime && i > k) {
+              let serviceTimeNum = appUtil.accDiv(wx.getStorageSync('param').serviceTime, 15);
+                for (let j = 1; j <= serviceTimeNum; j++) {
+                  if (timeList[i].index == Number(k) + Number(j)) {
+                    timeList[i].seletedSlot = true;
+                  }
+                }
+            }
+          }
+        }
+        that.setData({
+          timeList: timeList
+        })
+      })
+  },
+  //获取店铺信息
+  getShopInfo: function () {
+    let that = this;
+    app.request(app.host + 'shop/infoBo/find4App/' + that.data.businessId, 'POST', 'form', {}, function (res) {
+      console.log(res.data);
+      if (res.data.code == 200) {
+        let expireDateTime = new Date((res.data.data.expireDate.replace(/-/g, '/')).replace(/T/g, ' ').substr(0, 19));
+        const date = new Date();
+        let dayOfWeek = res.data.data.dayOfWeek.split(',');//可选的星期
+        let weekCurState = false;//星期的可选状态
+        for (let i of dayOfWeek) {
+          if (date.getDay() == i) {
+            weekCurState = true
+          }
+        }
+        that.setData({
+          shopName: res.data.data.name,
+          shopImgSrc: res.data.data.iconImgUrl,
+          shopAddress: res.data.data.address,
+          longitude: res.data.data.longitudeX,//经度
+          latitude: res.data.data.latitudeX,//纬度
+          //日历组件初始化
+          // endYear: 2019,
+          // endMonth: 10,
+          // endDay: 15,
+          endYear: expireDateTime.getFullYear(),
+          endMonth: expireDateTime.getMonth() + 1,
+          endDay: expireDateTime.getDate(),
+          startTime: parseInt(res.data.data.timeStart),
+          endTime: parseInt(res.data.data.timeEnd),
+          startYear: date.getFullYear(),
+          startMonth: date.getMonth() + 1,
+          startDay: date.getDate(),
+          dayOfWeek: dayOfWeek,//可选的星期
+          weekCurState: weekCurState,//星期的可选状态
+        })
+        //设置日历组件
+        that.setSelTimer(that.data.startYear, that.data.startMonth, that.data.startDay);
+        that.querySelectionPeriod(that.data.startYear , that.data.startMonth , that.data.startDay)
+        that.setNowDate();
+      }
+    })
+  },
+  //跳转地图
+  map: function () {
+    let that = this;
+    if (that.data.longitude && that.data.latitude) {
+      wx.getLocation({
+        success(res) {
+          wx.openLocation({
+            latitude: Number(that.data.latitude),
+            longitude: Number(that.data.longitude),
+          })
+        }
+      })
+    }
+  },
+  //关闭获取用户信息弹窗
+  closeGetUserInfo: function () {
+    this.setData({
+      getUserInfoState: false
+    })
+  },
+  //授权用户信息
+  getUserInfo: function (e) {
+    let that = this;
+    console.log(e);
+    if (e.detail.userInfo) {
+      wx.getUserInfo({
+        lang: 'en',
+        success: function (res) {
+          console.log(res);
+          //保存用户信息到服务器
+          app.request(app.host + 'member/info/updateByWeiXin', 'POST', 'form', {
+            appId: app.appid,
+            openId: app.openid,
+            encryptedData: res.encryptedData,
+            iv: res.iv,
+          }, function (res) {
+            console.log(res.data);
+            if (res.data.data) {
+              console.log('授权成功');
+              that.setData({
+                getUserInfoState: false,
+                userName: res.data.data.nickname,
+              })
+            }
+          })
+        }
+      })
+    }
+  },
+  //选择预约时间初始化
+  setSelTimer: function (y, m, d) {
+    var that = this;
+    function getThisMonthDays(year, month) {
+      return new Date(year, month, 0).getDate();
+    }
+    // 计算每月第一天是星期几
+    function getFirstDayOfWeek(year, month) {
+      return new Date(Date.UTC(year, month - 1, 1)).getDay();
+    }
+    const date = new Date();
+    // let cur_year = date.getFullYear();
+    // let cur_month = date.getMonth() + 1;
+    // let cur_date = date.getDate();
+    console.log(y, m, d);
+    let cur_year = y;
+    let cur_month = m;
+    let cur_date = d;
+    //初始化用户选择日期和时间
+    let toHours = new Date().getHours();
+    let currentTime = that.data.startTime;
+    if (parseInt(toHours) > that.data.startTime) {
+      currentTime = parseInt(toHours) + 1;
+      if (currentTime >= that.data.endTime){
+        currentTime = '';
+        that.setData({
+          currentDateShow: '',
+          currentTimeShow: '',
+          timeNullState:true
+        })
+      }else{
+        that.setData({
+          currentDateShow: cur_month + '-' + cur_date,
+          currentTimeShow: currentTime + ':00',
+          timeNullState:false
+        })
+      }
+    }
+    //判断是否为今日
+    let todatDate = new Date().getDate();
+    if (cur_date == todatDate) {
+      this.setData({
+        todayState: true,
+      })
+    } else {
+      this.setData({
+        todayState: false,
+      })
+    }
+    that.setData({
+      currentTime: currentTime,
+      cur_year,
+      cur_month,
+      cur_date,
+      to_year: cur_year,
+      to_month: cur_month,
+      to_date: cur_date,
+      toHours,
+      toHoursNum: parseInt(toHours) + 1
+    })
+    const weeks_ch = ['日', '一', '二', '三', '四', '五', '六'];
+    //利用构造函数创建对象
+    function calendar(date, week, month, year) {
+      let toDay = new Date().getDate();
+      let toMonth = new Date().getMonth() + 1;
+      let toYear = new Date().getFullYear();
+      console.log(date, toDay);
+      this.year = year;
+      this.month = month;
+      this.day = date;
+      this.date = cur_month + '-' + date;
+      if (date == toDay && month == toMonth && year == toYear) {
+        this.week = "今天";
+      } else if (date == toDay + 1 && month == toMonth && year == toYear) {
+        this.week = "明天";
+      } else if (date == toDay + 2 && month == toMonth && year == toYear) {
+        this.week = "后天";
+      } else {
+        this.week = '周' + week;
+      }
+    }
+    //当前月份的天数
+    var monthLength = getThisMonthDays(cur_year, cur_month);
+    //当前月份的第一天是星期几
+    var week = getFirstDayOfWeek(cur_year, cur_month)
+    var x = week;
+    for (var i = 1; i <= monthLength; i++) {
+      //当循环完一周后，初始化再次循环
+      if (x > 6) {
+        x = 0;
+      }
+      //利用构造函数创建对象
+      that.data.calendar[i] = new calendar(i, [weeks_ch[x]][0], cur_month, cur_year)
+      x++;
+    }
+    //限制要渲染的日历数据天数为7天以内（用户体验）
+    var flag = that.data.calendar.splice(cur_date, that.data.calendar.length - cur_date <= 5 ? that.data.calendar.length : 5)
+    that.setData({
+      calendar: flag
+    })
+  },
+  //日期选择事件
+  select: function (e) {
+    console.log(e);
+    if (e.currentTarget.dataset.week == '今天') {
+      this.setData({
+        todayState: true,
+      })
+    }
+    else {
+      this.setData({
+        todayState: false,
+      })
+    }
+    let weekCurNum = new Date(e.currentTarget.dataset.year + '/' + e.currentTarget.dataset.month + '/' + e.currentTarget.dataset.day).getDay();
+    console.log(weekCurNum);
+    this.setData({
+      currentIndex: e.currentTarget.dataset.index,
+      // currentDateShow: e.currentTarget.dataset.seldate,
+      // cur_year: e.currentTarget.dataset.year,
+      // cur_month: e.currentTarget.dataset.month,
+      // cur_date: e.currentTarget.dataset.day,
+      to_year: e.currentTarget.dataset.year,
+      to_month: e.currentTarget.dataset.month,
+      to_date: e.currentTarget.dataset.day,
+      weekCurNum: weekCurNum
+    })
+    this.querySelectionPeriod(e.currentTarget.dataset.year , e.currentTarget.dataset.month , e.currentTarget.dataset.day);
+    this.setNowDate();
+  },
+  //时间点选择事件
+  selectTime: function (e) {
+    for (let i in this.data.timeList) {
+      this.setData({
+        [`timeList[${i}].seleted`]: false,
+        [`timeList[${i}].seletedSlot`]: false,
+      });
+    }
+    this.setData({
+      [`timeList[${e.currentTarget.dataset.index}].seleted`]: true,
+      selectIndex: e.currentTarget.dataset.index
+    });
+    if (wx.getStorageSync('param').serviceTime) {
+      let serviceTimeNum = appUtil.accDiv(wx.getStorageSync('param').serviceTime, 15);
+      for (let i = 1; i <= serviceTimeNum; i++) {
+        this.setData({
+          [`timeList[${e.currentTarget.dataset.index + i}].seletedSlot`]: true,
+        });
+      }
+    }
+    this.setData({
+      currentTimeShow: e.currentTarget.dataset.timeval,
+      cur_year: this.data.to_year,
+      cur_month: this.data.to_month,
+      cur_date: this.data.to_date,
+      currentDateShow: this.data.to_month + '-' + this.data.to_date,
+      timeNullState:false
+    })
+  },
+  //显示时间选择组件
+  timerSelectShow: function () {
+    this.setData({
+      timerSelectState: true
+    })
+  },
+  //关闭时间选择组件
+  closeTimerSelect: function () {
+    this.setData({
+      timerSelectState: false
+    })
+  },
+  //时间选择组件确定事件
+  selOkTimer: function () {
+    let weekCurNum = new Date(this.data.cur_year + '/' + this.data.cur_month + '/' + this.data.cur_date).getDay();
+    this.setData({
+      weekCurState: false
+    })
+    for (let i of this.data.dayOfWeek) {
+      if (weekCurNum == i) {
+        this.setData({
+          weekCurState: true
+        })
+      }
+    }
+    if (this.data.weekCurState) {
+      this.setData({
+        timerSelectState: false
+      })
+    } else {
+      wx.showToast({
+        title: '预约当日不营业',
+        image: '/images/close@2x.png',
+        duration: 2000
+      })
+    }
+  },
+  //显示日期组件
+  showCanlendar: function () {
+    this.setData({
+      canlendarState: true
+    })
+  },
+  //关闭日期组件
+  closeCanlendar: function () {
+    this.setData({
+      canlendarState: false
+    })
+  },
+  //日期选择事件
+  dateSelectAction: function (e) {
+    var cur_day = e.currentTarget.dataset.idx;
+    this.setData({
+      todayIndex: cur_day,
+      canlendarState: false,
+      cur_day: cur_day + 1,
+      currentIndex: 0
+    })
+    this.setSelTimer(this.data.cur_year, this.data.cur_month, cur_day + 1);
+    this.querySelectionPeriod(this.data.cur_year, this.data.cur_month, Number(cur_day + 1));
+    console.log(`点击的日期:${this.data.cur_year}年${this.data.cur_month}月${cur_day + 1}日`);
+  },
+  //设置日历组件
+  setNowDate: function () {
+    const date = new Date();
+    var cur_year = this.data.cur_year;
+    var cur_month = this.data.cur_month;
+    var todayIndex = this.data.cur_date - 1;
+    // var startDate = new Date((startDate.replace(/-/g, '/')).replace(/T/g, ' ').substr(0, 19));
+    // var startYear = startDate.getFullYear();
+    // var startMonth = startDate.getMonth() + 1;
+    // var startDay = startDate.getDate();
+    console.log(`日期：${todayIndex}`)
+    const weeks_ch = ['日', '一', '二', '三', '四', '五', '六'];
+    this.calculateEmptyGrids(cur_year, cur_month);
+    this.calculateDays(cur_year, cur_month);
+    this.setData({
+      cur_year: cur_year,
+      cur_month: cur_month,
+      weeks_ch,
+      todayIndex,
+      // startYear: startYear,
+      // startMonth: startMonth,
+      // startDay: startDay
+    })
+  },
+
+  getThisMonthDays(year, month) {
+    return new Date(year, month, 0).getDate();
+  },
+  getFirstDayOfWeek(year, month) {
+    return new Date(Date.UTC(year, month - 1, 1)).getDay();
+  },
+  calculateEmptyGrids(year, month) {
+    const firstDayOfWeek = this.getFirstDayOfWeek(year, month);
+    let empytGrids = [];
+    if (firstDayOfWeek > 0) {
+      for (let i = 0; i < firstDayOfWeek; i++) {
+        empytGrids.push(i);
+      }
+      this.setData({
+        hasEmptyGrid: true,
+        empytGrids
+      });
+    } else {
+      this.setData({
+        hasEmptyGrid: false,
+        empytGrids: []
+      });
+    }
+  },
+  calculateDays(year, month) {
+    let days = [];
+    const thisMonthDays = this.getThisMonthDays(year, month);
+    for (let i = 1; i <= thisMonthDays; i++) {
+      days.push(i);
+    }
+    this.setData({
+      days
+    });
+  },
+  //上一月和下一月点击事件
+  handleCalendar(e) {
+    const handle = e.currentTarget.dataset.handle;
+    const cur_year = Number(this.data.cur_year);
+    const cur_month = Number(this.data.cur_month);
+    if (handle === 'prev') {
+      let newMonth = cur_month - 1;
+      let newYear = cur_year;
+      if (newMonth < 1) {
+        newYear = cur_year - 1;
+        newMonth = 12;
+      }
+      this.calculateDays(newYear, newMonth);
+      this.calculateEmptyGrids(newYear, newMonth);
+      this.setData({
+        cur_year: newYear,
+        cur_month: newMonth
+      })
+    } else {
+      let newMonth = Number(cur_month) + 1;
+      let newYear = cur_year;
+      if (newMonth > 12) {
+        newYear = cur_year + 1;
+        newMonth = 1;
+      }
+      this.calculateDays(newYear, newMonth);
+      this.calculateEmptyGrids(newYear, newMonth);
+      this.setData({
+        cur_year: newYear,
+        cur_month: newMonth
+      })
+    }
+  },
+  //用户名输入事件
+  inputUserName: function (e) {
+    console.log(e);
+    this.setData({
+      userName: e.detail.value
+    })
+  },
+  //手机号事件
+  inputUserPhone: function (e) {
+    console.log(e);
+    this.setData({
+      userPhone: e.detail.value
+    })
+  },
+  //备注输入事件
+  inputRemarks: function (e) {
+    console.log(e);
+    this.setData({
+      remarks: e.detail.value
+    })
+  },
+  //获取预约范围半径
+  getShopRadii: function () {
+    let that = this;
+    app.request(app.host + 'appointment/set/find4App/' + wx.getStorageSync('businessId'), 'POST', 'form', {}, function (res) {
+      console.log(res.data);
+      if (res.data.code == 200) {
+        that.setData({
+          rangeRadius: Number(res.data.data.rangeRadius)
+        })
+      }
+    })
+  },
+  //支付定金
+  toPay: function () {
+    let that = this;
+    let reg = /^[1][3,4,5,7,8][0-9]{9}$/; //电话匹配正则
+    //获取店铺地址和用户地址的距离
+    let userRangeRadius = this.GetDistance(this.data.latitude, this.data.longitude, wx.getStorageSync('userlatitude'), wx.getStorageSync('userlongitude'));
+    if (that.data.userName == '') {
+      wx.showToast({
+        title: '未填写会员名',
+        image: '/images/close@2x.png',
+        duration: 2000
+      })
+    } else if (!reg.test(that.data.userPhone)) {
+      wx.showToast({
+        title: '手机号填写有误',
+        image: '/images/close@2x.png',
+        duration: 2000
+      })
+    } else if (that.data.orderType == 'toDoor' && that.data.myAddress == '选择') {
+      wx.showToast({
+        title: '请选择我的地址',
+        image: '/images/close@2x.png',
+        duration: 2000
+      })
+    } else if (!that.data.weekCurState) {
+      wx.showToast({
+        title: '预约当日不营业',
+        image: '/images/close@2x.png',
+        duration: 2000
+      })
+    } else if (that.data.orderType == 'toDoor' && userRangeRadius > that.data.rangeRadius) {
+      wx.showToast({
+        title: '超出可预约范围',
+        image: '/images/close@2x.png',
+        duration: 2000
+      })
+    }else if(that.data.timeNullState){
+      wx.showToast({
+        title: '请选择预约时间',
+        image: '/images/close@2x.png',
+        duration: 2000
+      })
+    }
+    else {
+      if (that.data.orderType == 'peer' || that.data.paymentMethod == 1) {
+        //订单校验
+        let that = this;
+        app.request(app.host + 'appointment/check4Goods/' + app.appid + '/' + app.openid, 'POST', 'form', {
+          goodsId: wx.getStorageSync('param').id,
+          paramId: wx.getStorageSync('param').paramId,
+          quantity: wx.getStorageSync('param').quantity,
+          couponId: that.data.couponId,
+          payType: 1
+        }, function (res) {
+          console.log(res.data);
+          if (res.data.code == 200) {
+            let orderParam = {};
+            orderParam.couponId = that.data.couponId;
+            orderParam.name = that.data.userName;
+            orderParam.phone = that.data.userPhone;
+            orderParam.nickname = that.data.userName;
+            orderParam.payType = 1;
+            orderParam.appointmentDate = that.data.cur_year + '-' + that.data.cur_month + '-' + that.data.cur_date + ' ' + that.data.currentTime + ':00:00';
+            // orderParam.type = 1;
+            // orderParam.shopAddrId = wx.getStorageSync('businessId');
+            if (wx.getStorageSync('orderType') == 'toDoor') {
+              orderParam.type = 2;
+              orderParam.address = that.data.myAddress;
+            } else {
+              orderParam.type = 1;
+              orderParam.shopAddrId = wx.getStorageSync('businessId');
+            }
+            orderParam.description = that.data.remarks;
+            orderParam = JSON.stringify(orderParam);
+            wx.navigateTo({
+              url: '/pages/public/pay/pay?payType=product&orderParam=' + orderParam
+            })
+          }
+        })
+      } else {
+        that.setData({
+          selPayTypeState: true,
+        })
+      }
+    }
+  },
+  selPayType: function (e) {
+    console.log(e);
+    let payType = '';
+    if (e.currentTarget.id == 1) {
+      payType = 1;
+    }
+    if (e.currentTarget.id == 2) {
+      payType = 2;
+    }
+    //订单校验
+    let that = this;
+    app.request(app.host + 'appointment/check4Goods/' + app.appid + '/' + app.openid, 'POST', 'form', {
+      goodsId: wx.getStorageSync('param').id,
+      paramId: wx.getStorageSync('param').paramId,
+      quantity: wx.getStorageSync('param').quantity,
+      couponId: that.data.couponId,
+      payType: payType
+    }, function (res) {
+      console.log(res.data);
+      if (res.data.code == 200) {
+        // let appointmentDate = new Date(that.data.cur_year + '-' + that.data.cur_month + '-' + that.data.cur_date + ' ' + that.data.currentTime+':00:00');
+        // console.log(appointmentDate);
+        //在线支付
+        if (payType == 1) {
+          let orderParam = {};
+          orderParam.couponId = that.data.couponId;
+          orderParam.name = that.data.userName;
+          orderParam.phone = that.data.userPhone;
+          orderParam.nickname = that.data.userName;
+          orderParam.payType = payType;
+          orderParam.appointmentDate = that.data.cur_year + '-' + that.data.cur_month + '-' + that.data.cur_date + ' ' + that.data.currentTime + ':00:00';
+          orderParam.description = that.data.remarks;
+          if (wx.getStorageSync('orderType') == 'toDoor') {
+            orderParam.type = 2;
+            orderParam.address = that.data.myAddress;
+          } else {
+            orderParam.type = 1;
+            orderParam.shopAddrId = wx.getStorageSync('businessId');
+          }
+          orderParam = JSON.stringify(orderParam);
+          wx.navigateTo({
+            url: '/pages/public/pay/pay?payType=product&orderParam=' + orderParam
+          })
+        }
+        //到店支付
+        if (payType == 2) {
+          //下单
+          let otype = '', address = '';
+          if (wx.getStorageSync('orderType') == 'toDoor') {
+            otype = 2;
+            address = that.data.myAddress;
+          } else {
+            otype = 1;
+            address = '';
+          }
+          app.request(app.host + 'appointment/add4Goods/' + app.appid + '/' + app.openid, 'POST', 'form', {
+            goodsId: wx.getStorageSync('param').id,
+            paramId: wx.getStorageSync('param').paramId,
+            quantity: wx.getStorageSync('param').quantity,
+            'type': otype,
+            name: that.data.userName,
+            phone: that.data.userPhone,
+            shopAddrId: wx.getStorageSync('businessId'),
+            address: address,
+            appointmentDate: that.data.cur_year + '-' + that.data.cur_month + '-' + that.data.cur_date + ' ' + that.data.currentTime + ':00:00',
+            description: that.data.remarks,
+            payType: payType,
+            payMethod: 4,
+          }, function (res) {
+            console.log(res.data);
+            if (res.data.code == 200) {
+              let orderId = res.data.data.summary.id;
+              setTimeout(function () {
+                wx.reLaunch({
+                  url: '/pages/public/personalCenter/personalCenter?state=paySuccess&orderId=' + orderId,
+                })
+              }, 1500);
+              wx.showToast({
+                title: '预约成功',
+                mask: true
+              })
+            }
+          })
+        }
+      } else {
+        wx.showToast({
+          title: res.data.message,
+          image: '/images/close@2x.png',
+          duration: 2000
+        })
+      }
+    })
+  },
+  //进行经纬度转换为距离的计算
+  Rad: function (d) {
+    return d * Math.PI / 180.0;//经纬度转换成三角函数中度分表形式。
+  },
+  //计算距离，参数分别为第一点的纬度，经度；第二点的纬度，经度
+  GetDistance: function (lat1, lng1, lat2, lng2) {
+    console.log(lat1, lng1, lat2, lng2);
+    let radLat1 = this.Rad(lat1);
+    let radLat2 = this.Rad(lat2);
+    let a = radLat1 - radLat2;
+    let b = this.Rad(lng1) - this.Rad(lng2);
+    let s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) +
+      Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));
+    s = s * 6378.137;// EARTH_RADIUS;
+    s = Math.round(s * 10000) / 10000; //输出为公里
+    console.log(s);
+    return s;
+  },
+  //通用导航
+  nav: function (e) {
+    app.nav(e.currentTarget.dataset.url);
+  },
+  //弹出遮罩层后禁止页面上下滑动
+  maskCatchEvent: function () {
+
+  },
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    //获取我的地址
+    if (wx.getStorageSync('myAddress')) {
+      this.setData({
+        myAddress: wx.getStorageSync('myAddress')
+      })
+    }
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  },
+  //弹出遮罩层后禁止页面上下滑动
+  maskCatchEvent: function () {
+
+  },
+  //设置皮肤
+  setStyleFun: function () {
+    this.setData({
+      themeColor: app.globalObj.themeColor,//主题色
+      assistedColor1: app.globalObj.assistedColor1,//辅助色1
+      assistedColor2: app.globalObj.assistedColor2,//辅助色2
+      importantColor: app.globalObj.importantColor,//重要警示性颜色
+      btnGradientColor: app.globalObj.btnGradientColor,//一些按钮背景的渐变色
+      themeTxtColor: app.globalObj.themeTxtColor,//主文字色
+      assistedTxtColor1: app.globalObj.assistedTxtColor1,//辅助文字色1
+      assistedTxtColor2: app.globalObj.assistedTxtColor2,//辅助文字色2
+      getCodeBtnBgColor: app.globalObj.assistedColor1,//获取按钮的背景色
+      closeIcon: app.produtObj.closeIcon,//关闭按钮
+    })
+  }
+}

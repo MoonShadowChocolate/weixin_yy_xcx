@@ -1,0 +1,19 @@
+<!--pages/public/offlinePay/offlinePay.wxml-->
+<view class='content'>
+  <view class='top_Bg'></view>
+  <view class='image_bg'>
+    <image src='/images/offlinePay/yellow_arc@2x.png' mode='widthFix'></image>
+  </view>
+  <view class='qrCodeShow'>
+    <image class='qrCodeBg' src='/images/offlinePay/qr_code_bg@2x.png' mode='widthFix'></image>
+    <view class='qrCodeShowCnt'>
+      <view class='topTip'>{{payTypeName}}扫一扫，向我付钱</view>
+      <image class='qrImg' src='{{qrCodeImg}}' mode='widthFix'></image>
+      <view class='payAmt'>支付金额：¥{{totalPrice}}</view>
+      <image class='line_img' src='/images/offlinePay/qr_code_bg_line@2x.png' mode='widthFix'></image>
+      <view class='remarks'>备注：个人转账可合理避税，给您节省开支</view>
+      <view class='tipTxt'>请扫码支付后，点击下方按钮，确认已支付。到店出示转账记录即可享受服务。</view>
+    </view>
+  </view>
+  <view class='completePayBtn' bindtap='completePay'>我已完成支付</view>
+</view>

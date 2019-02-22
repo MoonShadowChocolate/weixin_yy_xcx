@@ -1,0 +1,26 @@
+<!--pages/paySuccess/paySuccess.wxml-->
+<import src='/template/loading/loading' />
+<view class='content'>
+  <view class='successTop'>
+    <image class='successIcon' src='{{hookIcon}}' mode='widthFix'></image>
+    <view class='successTip'>预约成功 ¥{{totalPrice}}</view>
+  </view>
+  <view class='fillingItem'>
+    <view class='fillingTitleLong'>预约时间:</view>
+    <view class='fillingInputShort'>{{appointmentDate}}</view>
+  </view>
+  <view class='fillingItem'>
+    <view class='fillingTitleLong'>预约地址:</view>
+    <view class='fillingInputShort'>{{appointmentAddress}}</view>
+  </view>
+  <view class='successTxt' wx:if='{{payMethod!=7}}'>手机号与商家确认后即可享受服务</view>
+  <view class='successTxt' wx:if='{{payMethod==7}}'>请按时到店，凭手机号和转账记录与商家确认后可享受服务</view>
+  <!-- <view class='successTxt' wx:if='{{payMethod!=1 && payMethod!=5}}'>手机号与商家确认后即可享受服务</view>
+  <view class='successTxt' wx:if='{{payMethod==1 || payMethod==5}}'>出示以下消费码可享受服务:</view>
+  <view class='qrCodeBox' wx:if='{{payMethod==1 || payMethod==5}}'>
+    <canvas canvas-id="qrcode" class='qr' />
+    <view class='codeShow'>{{tradeCode}}</view>
+  </view> -->
+  <view class='callBusinessBtn' style='background-color: {{themeColor}};' bindtap='phoneCall' data-phone='{{phone}}'>联系商家</view>
+</view>
+<template is='loading' data='{{loading:loading}}' />

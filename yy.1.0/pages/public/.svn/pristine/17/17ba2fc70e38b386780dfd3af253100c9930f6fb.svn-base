@@ -1,0 +1,18 @@
+<!--pages/underLinePaid/underLinePaid.wxml-->
+<view class='ulpaid-box' style='color:{{themeTxtColor}}'>
+  <view class='ulpaid-top'>
+    <image class='ulpaid-top-icon' src='/images/product/hook.png' mode='widthFix'></image>
+    <view class='ulpaid-top-txt'>支付成功 ￥{{price}}</view>
+  </view>
+  <view class='ulpaid-list'>
+    <view class='ulpaid-list-item'>
+      <view class='ulpaid-list-item-left'>支付时间:</view>
+      <view class='ulpaid-list-item-right' style='text-align:right;'>{{date}}</view>
+    </view>
+    <view class='ulpaid-list-item'>
+      <view class='ulpaid-list-item-left'>消费门店:</view>
+      <view class='ulpaid-list-item-right' style='text-align:left;'>{{shopname}}</view>
+    </view>
+  </view>
+  <view class='ulpaid-button' bindtap='nav' data-url='/pages/index/index' style='background:{{themeColor}};'>进入店铺</view>
+</view>

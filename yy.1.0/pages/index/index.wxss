@@ -1,0 +1,313 @@
+/**index.wxss**/
+.index-container{
+
+}
+.index-account{
+  
+}
+.index-account-user{
+  background: #FFE200;
+  padding: 40rpx;
+  padding-top: 20rpx;
+  overflow: hidden;
+}
+.index-account-user-left{
+  font-size: 0;
+  float: left;
+  /* padding-top: 28rpx; */
+  box-sizing: border-box;
+  text-align: center;
+  width: 140rpx;
+  height: 140rpx;
+  background: white;
+  border-radius: 50%;
+  margin-right: 26rpx;
+  overflow: hidden;
+}
+.iaul-img{
+  width: 100%;
+  height: 100%;
+}
+.index-account-user-right{
+  overflow: hidden;
+}
+.iaur-title{
+  font-size: 32rpx;
+  line-height: 84rpx;
+}
+.iaur-address{
+  line-height: 1;
+  position: relative;
+}
+.iaur-address-txt{
+  font-size: 26rpx;
+  max-width: 80%;
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+.iaur-address-icon{
+  margin-left: 16rpx;
+  vertical-align: middle;
+  width: 40rpx;
+  height: 40rpx;
+}
+.index-account-business{
+  font-size: 28rpx;
+  display: flex;
+
+}
+.index-account-business-left,.index-account-business-right{
+  height: 88rpx;
+  width: 50%;
+  text-align: center;
+  line-height: 88rpx;
+  position: relative;
+}
+.index-account-business-left::after{
+  position: absolute;
+  content: '';
+  left: 100%;
+  top: 20%;
+  height: 60%;
+  width: 2rpx;
+  background: #E5E5E5;
+}
+.iabr-icon{
+  width: 40rpx;
+  vertical-align: middle;
+  margin-right: 18rpx;
+}
+.index-content{
+  padding: 0 40rpx;
+}
+.index-coupon{
+  padding-top:56rpx;
+}
+.index-content-title{
+  font-size: 28rpx;
+  text-align: center;
+}
+.index-content-title-box{
+  position: relative;
+  padding: 0 18rpx;
+  display: inline-block;  
+}
+.index-content-title-before{
+  position: absolute;
+  width: 40rpx;
+  height: 2rpx;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.index-content-title-after{
+  left: 100%;  
+}
+.index-coupon-icon{
+  width: 100%;
+  margin-top: 28rpx;
+}
+.index-activity{
+  font-size: 0;
+  padding-top:40rpx;
+}
+.index-activity-icon{
+  width: 100%;
+  height: 390rpx;
+  border-radius: 20rpx;
+  margin-top: 44rpx;
+}
+.index-activity-summary{
+  font-size: 30rpx;
+  line-height: 80rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 0 20rpx;
+}
+.index-service{
+  padding-top: 40rpx;
+  font-size: 0;
+}
+.index-service-box{
+  padding-bottom: 50rpx;
+}
+.index-service-box-icon{
+  width: 100%;
+  height: 390rpx;
+  border-radius: 20rpx;
+}
+.index-service-box-title{
+  font-size: 30rpx;
+  line-height: 64rpx;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20rpx;
+}
+.isbt-txt{
+  max-width:420rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
+.isbt-price{
+  color: #FF4646;
+}
+.index-service-box-status{
+  font-size: 24rpx;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20rpx;
+}
+.index-goods{
+  font-size: 0;
+  padding-top: 20rpx;
+}
+.index-goods-item{
+  display: inline-block;
+  vertical-align: top;
+  width: 320rpx;
+  margin-bottom: 30rpx;
+}
+.index-goods-item-icon{
+  width: 100%;
+  height: 320rpx;
+
+}
+.index-goods-item-txt{
+  box-shadow: 0 2px 5px rgba(194, 194, 194,.35);
+  padding: 20rpx;
+}
+.igit-title{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 26rpx;
+}
+.igit-price{
+  display: flex;
+  margin: 20rpx 0;
+  line-height: 1;
+}
+.igit-price-left{
+  font-size: 28rpx;
+  margin-right: 40rpx;
+}
+.igit-price-right{
+  font-size: 24rpx;
+  position: relative;
+  color: #999;
+}
+.igit-price-right::after{
+  content: '';
+  position: absolute;
+  width: 120%;
+  height: 2rpx;
+  left: -10%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #999;
+}
+.igit-status{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 24rpx;
+}
+
+.index-pop-background{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, .5);
+}
+.index-pop-content{
+  width: 620rpx;
+  box-sizing: border-box;
+  padding: 22rpx 16rpx 50rpx 0;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  border-radius: 10rpx;
+  background: linear-gradient(41deg,#FD941D,#E84556);
+}
+.index-pop-content-img{
+  width: 100%;
+}
+.index-pop-content-inside{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  text-align: center;
+  font-size: 0;
+  padding:0 130rpx;
+  box-sizing: border-box;
+}
+.ipci-icon{
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 50%;
+  margin-top: 66rpx;
+  margin-bottom: 40rpx;
+}
+.ipci-name{
+  color: white;
+  font-size: 32rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ipci-txt{
+  line-height: 42rpx;
+  font-size: 28rpx;
+  margin-top: 20rpx;
+}
+.ipci-button{
+  margin-top: 30rpx;
+  padding: 24rpx 68rpx;
+  border-radius: 40rpx;
+  background: #FFE200;
+  font-size: 28rpx;
+  text-align: center;
+  line-height: 1;
+  display: inline-block;
+}
+.ipci-button::after{
+  border: none;
+}
+.iaur-address-button{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  left: 0;
+  top: 0;
+}
+
+.index-service-box-coin{
+  font-size: 28rpx;
+  line-height: 1;
+  margin-top: 12rpx;
+  padding: 0 20rpx;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.igit-coin{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  font-size:26rpx;
+  line-height: 1;
+  margin-top: 12rpx;
+}

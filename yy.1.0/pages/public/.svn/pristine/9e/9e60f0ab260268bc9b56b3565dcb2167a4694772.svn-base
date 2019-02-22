@@ -1,0 +1,33 @@
+<!--pages/buyCard/buyCard.wxml-->
+<import src='/template/loading/loading'/>
+<import src='/template/getUserInfo/getUserInfo'/>
+<view class='content'>
+  <view class='fillingItem'>
+    <view class='fillingTitleShort'>会员:</view>
+    <input class='fillingInputLong' placeholder='会员名' value='{{userName}}' bindinput='inputsName'></input>
+  </view>
+  <view class='fillingItem'>
+    <view class='fillingTitleLong'>联系电话:</view>
+    <input class='fillingInputShort' placeholder='手机号' value='{{userPhone}}' bindinput='inputsPhone'></input>
+  </view>
+  <view class='orderContent'>
+    <view class='orderCntTitle'>充值内容:</view>
+    <view class='productInfo'>
+      <view class='productImg'>
+        <image src='/images/product/card_thumbnail.png' mode='aspectFill'></image>
+      </view>
+      <view class='productInfoDetails'>
+        <view class='productTitle'>{{cardName}}</view>
+        <view class='productDec' style='color:{{importantColor}}'>合计：￥{{cardPrice}}</view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 底部tab start -->
+<view class='tabBtnBottom'>
+  <view class='payAmtTxt'>待支付：¥{{cardPrice}}</view>
+  <view class='payBtn' style='background-color: {{themeColor}};' bindtap='toPay'>充值</view>
+</view>
+<!-- 底部tab end -->
+<template is='loading' data='{{loading:loading}}'/>
+<template is='getUserInfo' data='{{getUserInfoState:getUserInfoState,shopImgSrc:shopImgSrc,shopName:shopName,themeColor:themeColor,closeIcon:closeIcon}}' />

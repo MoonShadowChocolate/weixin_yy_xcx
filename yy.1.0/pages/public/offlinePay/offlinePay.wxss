@@ -1,0 +1,84 @@
+/* pages/public/offlinePay/offlinePay.wxss */
+.content{
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  position: relative;
+}
+.top_Bg{
+  width: 100%;
+  height: 564rpx;
+  background-color: #FFE200;
+}
+.image_bg{
+  width: 100%;
+  height: 225rpx;
+}
+.image_bg image{
+  width: 100%;
+  height: 225rpx;
+}
+.qrCodeShow{
+  width: 623rpx;
+  height: 817rpx;
+  position: absolute;
+  top:90rpx;
+  left:81rpx;
+  text-align: center;
+}
+.qrCodeShowCnt{
+  width: 623rpx;
+  height: 817rpx;
+  position: absolute;
+  top:0;
+  left:0;
+}
+.qrCodeBg{
+  width: 623rpx;
+  height: 817rpx;
+}
+.topTip{
+  font-size: 28rpx;
+  color: #333;
+  margin-top: 50rpx;
+}
+.qrImg{
+  width: 330rpx;
+  height: 330rpx;
+  margin-top: 40rpx;
+}
+.payAmt{
+  font-size: 28rpx;
+  color: #FF8A2C;
+  margin-top: 45rpx;
+}
+.line_img{
+  width: 533rpx;
+  height: 1rpx;
+}
+.remarks{
+  font-size: 24rpx;
+  color: #333;
+  margin-top: 30rpx;
+}
+.tipTxt{
+  font-size: 24rpx;
+  color: #333;
+  line-height: 36rpx;
+  margin-top: 15rpx;
+  padding-left: 80rpx;
+  padding-right: 50rpx;
+  text-align: left;
+}
+.completePayBtn{
+  width: 342rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  background-color: #FFE200;
+  font-size: 32rpx;
+  color: #333;
+  text-align: center;
+  line-height: 80rpx;
+  margin: 0 auto;
+  margin-top: 175rpx;
+}

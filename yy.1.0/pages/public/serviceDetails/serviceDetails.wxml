@@ -1,0 +1,123 @@
+<!--pages/serviceDetails/serviceDetails.wxml-->
+<import src='/template/loading/loading'/>
+<import src="../../../wxParse/wxParse.wxml" />
+<import src='/template/getMember/getMember'/>
+<view class='content'>
+  <image class='detailBanner' src='{{detailsBanner}}' mode='aspectFill'></image>
+  <view class='detailCnt1'>
+    <view class='detailDec'>{{detailsName}}</view>
+    <view class='serviceOldPrice' wx:if='{{detailsType=="activity"}}'>原价:
+      <text style='color:#FF4646;'>¥{{detailsPrice}}</text>
+    </view>
+    <view class='goodPriceInfo' wx:if='{{detailsType=="sever" || detailsType=="shop"}}'>
+      <view class='goodPrice' style='color:#FF4646;'>¥{{detailsPrice}}</view>
+      <view class='goodRackRate' style='color:#999;'>{{rackRate}}:¥{{minRackRate}}</view>
+      <view class='goodBuyNum' style='color:#999;'>已售:{{soldNum}}</view>
+      <view class='goodShare'>
+        <image src='{{shareIcon}}' mode='widthFixe'></image>
+        <button open-type='share'></button>
+      </view>
+    </view> 
+    <view class='peerDiscountShow' wx:if='{{detailsType=="activity"}}'>
+      <view class='peerDiscountTitle'>同行优惠</view>
+      <view class='peerDiscountBar'>
+        <view class='peerDiscountBarSle' style='width: {{peerBarWidth}};background-color: {{assistedColor2}};'></view>
+        <view class='peerMarkList'>
+          <view class='peerMarkItem' wx:for='{{peerDiscountList}}' style='background-color: {{item.joinState?assistedColor2:barSpotAutoColor}};border: {{item.joinState?barBorderMarkColor:barBorderAutoColor}};'>
+            <view class='peerMarkInfo'>
+              <view class='peerMarkInfoTop'>{{item.title}}</view>
+              <view class='peerMarkInfoBottom' style='color:{{importantColor}};'>¥{{item.price}}/人</view> 
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='detailInfoTip' wx:if='{{detailsType!="activity" && (isSevenDaysRefund==1||paymentMethod==2||paymentMethod==3)}}'>
+      <image class='serviceTipIcon' mode='widthFix' src='{{markIcon}}' wx:if='{{isSevenDaysRefund==1}}'></image>
+      <text wx:if='{{isSevenDaysRefund==1}}'>7日内随时退</text>
+      <image class='serviceTipIcon' mode='widthFix' src='{{markIcon}}' wx:if='{{paymentMethod==2||paymentMethod==3}}'></image>
+      <text wx:if='{{paymentMethod==2||paymentMethod==3}}'>支持到店付</text>
+      <image class='serviceTipIcon' mode='widthFix' src='{{markIcon}}' wx:if='{{coinState}}'></image>
+      <text wx:if='{{coinState}}'>支持在线币抵扣</text>
+  </view>
+  <!-- <view class='selCategory' wx:if='{{detailsType=="sever" || detailsType=="shop"}}' bindtap='openSelectProType'>
+    <text>选择分类</text>
+    <image src='/images/product/narrow.png' mode='widthFix'></image>
+  </view> -->
+  <view class='detailCnt2'>
+    <view class='shopNameTime'>
+      <view class='serviceShopName'>{{shopName}}</view>
+      <view class='serviceBusinessHours'>营业时间: {{openWeeks}} {{shopTimeStart}}-{{shopTimeEnd}}</view>
+    </view>
+    <view class='serviceShopAddress' bindtap='map'>
+      <view class='shopAddressTxt'>{{shopAddress}}</view>
+      <image class='shopAddressIcon' src='{{positionIcon}}' mode='widthFix'></image>
+    </view>
+  </view>
+  <view class='detailCnt3'>
+    <view class='serviceInfoItem' wx:if='{{detailsType=="sever" || detailsType=="activity"}}'>服务名称：{{detailsName}}</view>
+    <view class='serviceInfoItem' wx:if='{{detailsType=="sever" || detailsType=="activity"}}'>{{serviceTimeTxt}}：{{serviceTime}}分钟</view>
+    <view class='serviceInfoItem'>购买须知：{{buyNotes}}</view>
+  </view>
+  <view class='imageTextDetail'>
+    <view class='imageTextDetailTitle'>
+      <view class='titleLine'></view><text class='titleTxt'>图文详情</text><view class='titleLine'></view>
+    </view>
+    <view class='imageTextDetailCnt'>
+       <template is="wxParse" data="{{wxParseData:articleDesc.nodes}}" /> 
+    </view>
+  </view>
+  <view class='serviceEmpty'></view>
+</view>
+<!-- 底部按钮tab start -->
+<view class='serviceTabBtn'>
+  <view class='callIcon' bindtap='phoneCall' data-phone='{{phone}}'><image src='{{callIcon}}' mode='widthFix'></image></view>
+  <view class='serviceOrderBtn' style='background-color: #333;' wx:if='{{detailsType=="activity"}}' bindtap='toBuy' id='0'>
+    <view class='orderBtnTxt1' style='color:#fff;'>普通预约</view>
+    <view class='orderBtnTxt2' style='color:{{themeColor}};'>¥{{detailsPrice}}</view>
+  </view>
+  <view class='serviceOrderBtn' style='background-color: {{themeColor}};margin-left: 40rpx;' wx:if='{{detailsType=="activity"}}' bindtap='toBuy' id='1'>
+    <view class='orderBtnTxt1' style='color:#333;'>同行预约</view>
+    <view class='orderBtnTxt2' style='color:{{importantColor}};'>定金¥{{deposit}}</view>
+  </view>
+  <view class='serviceOrderBtn' style='background-color: #333;' wx:if='{{detailsType=="sever" && (bookingMethod==2 || bookingMethod==3)}}' bindtap='toBuy' id='0'>
+    <view class='orderBtnTxt3' style='color:#fff;'>{{serviceToHome}}</view>
+  </view>
+  <view class='serviceOrderBtn' style='background-color: {{themeColor}};margin-left: 40rpx;' wx:if='{{detailsType=="sever" && (bookingMethod==1 || bookingMethod==3)}}'>
+    <view class='orderBtnTxt3' style='color:#333;' bindtap='toBuy' id='1'>{{serviceToShop}}</view>
+  </view>
+  <view class='shopOrderBtn' style='background-color: {{themeColor}}' wx:if='{{detailsType=="shop"}}' bindtap='toBuy'>立即购买</view>
+</view>
+<!-- 底部按钮tab end -->
+<!-- 选择分类弹窗 start -->
+<view class='popupMask' wx:if='{{selectProTypeState}}' catchtap='closeSelectProType'></view>
+<view class='selectProType' wx:if='{{selectProTypeState}}'>
+  <view class='productInfo'>
+    <view class='productImg'><image src='{{detailsBanner}}' mode='aspectFill'></image></view>
+    <view class='productDec'>
+      <view class='productName'>{{detailsName}}</view>
+      <view class='productPrice' style='color:{{importantColor}}'>¥ {{buyProPrice}}</view>
+    </view>
+  </view>
+  <view class='selPecBox' wx:if='{{paramState}}'>
+    <view class='selPecTitle'>{{specTypeName}}：</view>
+    <view class='selPecList'>
+      <view class='selPecItem {{item.select?"specSelected":"specAuto"}}' style='background:{{item.select?btnGradientColor:""}}' wx:for='{{specList}}' bindtap='selSpecType' data-name='{{item.specName}}' data-index='{{index}}' id='{{item.id}}'>{{item.specName}}</view>
+    </view>
+  </view>
+  <view class='buyNumBox' wx:if='{{detailsType=="shop"}}'>
+    <view class='buyNumTitle'>购买数量：</view>
+    <view class='buyNumSel'>
+      <view class='buyNumChange' bindtap='changeNum' data-cate='minus'>-</view>
+      <view class='buyNum'>{{buyNum}}</view>
+      <view class='buyNumChange' bindtap='changeNum' data-cate='add'>+</view>
+    </view>
+  </view>
+  <view class='nextStepBox'>
+    <view class='nextStepBtn' style='background-color: {{themeColor}};' bindtap='toOrderFilling'>下一步</view>
+  </view>
+</view>
+<!-- 选择分类弹窗 end -->
+<template is='getMember' data='{{getMemberState:getMemberState,themeColor:themeColor,assistedColor1:assistedColor1,getPhoneState:getPhoneState,getCodeBtnBgColor:getCodeBtnBgColor,getCodeBtnTxt:getCodeBtnTxt,closeIcon:closeIcon}}' />
+<template is='loading' data='{{loading:loading}}' />

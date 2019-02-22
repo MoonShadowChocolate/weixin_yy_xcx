@@ -1,0 +1,55 @@
+<!--pages/peerDiscount/peerDiscount.wxml-->
+<import src='/template/loading/loading' />
+<view class='content'>
+  <view class='peerActiveTitle'>{{peerName}}</view>
+  <view class='peerCountDown'>
+    <text>剩余时间</text>
+    <view class='peerCountDownNum'>{{d}}</view>
+    <text>天</text>
+    <view class='peerCountDownNum'>{{h}}</view>
+    <text>小时</text>
+    <view class='peerCountDownNum'>{{m}}</view>
+    <text>分钟</text>
+    <view class='peerCountDownNum'>{{s}}</view>
+    <text>秒</text>
+  </view>
+  <view class='peerActiveList'>
+    <view class='peerActiveItem' wx:for='{{peerGoodList}}'>
+      <view class='peerActiveItemImg' bindtap='nav' data-url='/pages/public/serviceDetails/serviceDetails?id={{item.id}}&type=activity'><image src='{{item.img}}' mode='aspectFill'></image></view>
+      <view class='peerActiveItemTitle'>{{item.name}}</view>
+      <view class='peerActiveItemInfo'>
+        <view class='peerActiveItemPrice'><text style='color:{{importantColor}}'>¥{{item.discountPrice}}</text>/人</view>
+        <view class='peerActiveItemOldPrice'>原价:¥{{item.price}}</view>
+      </view>
+      <view class='joinPeerActiveBtn' style='background-color: {{themeColor}};' bindtap='nav' data-url='/pages/public/serviceDetails/serviceDetails?id={{item.id}}&type=activity'>立即参加</view>
+    </view>
+  </view>
+  <view class='peerActiveRuleBtn' style='background-color: {{ruleBgColor}};' bindtap='openActivityRule'>活动规则</view>
+</view>
+<!-- 活动规则弹窗start -->
+<view class='popupMask' wx:if='{{activityRuleState}}' catchtouchstart='maskCatchEvent'></view>
+<view class='activeRuleBox' wx:if='{{activityRuleState}}'>
+  <image class='closeIconRule' src='{{closeIcon}}' mode='widthFix' bindtap='closeActivityRule'></image>
+  <view class='activityExplain'>
+    <view class='activeRuleTile' style='color:{{ruleTitleColor}};'>活动说明</view>
+    <view class='activityRuleCnt'>
+      <view class='activityRuleItem'>1.顾客选择参加同行优惠的服务，支付定金，发起同行优惠活动。</view>
+      <view class='activityRuleItem'>2.邀请朋友参加活动，朋友也支付定金后，同行活动即创建。</view>
+      <view class='activityRuleItem'>3.朋友同样也可以邀请自己的朋友，参加此次同行优惠活动。</view>
+      <view class='activityRuleItem'>4.服务开始后，所有人到店消费，消费结束后，根据当前优惠级别补齐尾款，同行优惠完成。</view>
+    </view>
+  </view>
+  <view class='activityRule'>
+    <view class='activeRuleTile' style='color:{{ruleTitleColor}};'>活动规则</view>
+    <view class='activityRuleCnt'>
+      <view class='activityRuleItem'>1.活动时间：{{startDate}}-{{endDate}}。</view>
+      <view class='activityRuleItem'>2.发起人在截止时间，未邀请到好友的，则按服务无优惠价格补齐尾款。</view>
+      <view class='activityRuleItem'>3.好友加入并成功支付定金后，每位参与者都会获得一个和发起人相同的预约单。</view>
+      <view class='activityRuleItem'>4.本活动一旦参加，不可取消。</view>
+      <view class='activityRuleItem'>5.本活动不能与其他优惠同享。</view>
+      <view class='activityRuleItem'>6.活动最终解释权归商家所有。</view>
+    </view>
+  </view>
+</view>
+<!-- 活动规则弹窗end -->
+<template is='loading' data='{{loading:loading}}' />

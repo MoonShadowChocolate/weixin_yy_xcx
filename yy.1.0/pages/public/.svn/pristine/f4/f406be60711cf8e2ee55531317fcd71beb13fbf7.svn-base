@@ -1,0 +1,33 @@
+<!--pages/cardDetails/cardDetails.wxml-->
+<import src='/template/loading/loading'/>
+<import src='/template/getMember/getMember'/>
+<view class='content'>
+  <view class='cardInfoBox'>
+    <view class='cardList'>
+      <view class='cardTop' style='background-color: #333;'></view>
+      <view class='cardCnt' style='background-color: {{themeColor}};'>
+        <view class='cardCntItem'>
+          <view class='cardTitle'>{{rechargeAmount}}元充值卡(赠送{{giveAmount}}元)</view>
+          <view class='cardPrice'>
+            <text>￥</text>{{rechargeAmount}}</view>
+        </view>
+        <view class='cardCntItem'>
+          <view class='effectiveDate'>有效期:永久</view>
+        </view>
+      </view>
+    </view>
+    <view class='cardName'>{{cardName}}</view>
+    <view class='cardBottomPrice' style='color:{{importantColor}};'>¥{{rechargeAmount}}</view>
+  </view>
+  <view class='useExplain'>使用说明：<text>{{cardUseDesc}}</text></view>
+</view>
+<!-- 卡片底部tab按钮 start -->
+<view class='cardTabBtn'>
+  <view class='callBtn'>
+    <image src='{{callIcon}}' mode='widthFix' bindtap='phoneCall' data-phone='{{phone}}'></image>
+  </view>
+  <view class='payCardBtn' style='background-color: {{themeColor}};' bindtap='payCard'>立刻充值</view>
+</view>
+<!-- 卡片底部tab按钮 end -->
+<template is='loading' data='{{loading:loading}}'/>
+<template is='getMember' data='{{getMemberState:getMemberState,themeColor:themeColor,assistedColor1:assistedColor1,getPhoneState:getPhoneState,getCodeBtnBgColor:getCodeBtnBgColor,getCodeBtnTxt:getCodeBtnTxt,closeIcon:closeIcon}}' />

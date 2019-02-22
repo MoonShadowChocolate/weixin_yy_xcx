@@ -1,0 +1,44 @@
+/* pages/underLinePaid/underLinePaid.wxss */
+.ulpaid-top{
+  overflow: hidden;
+  text-align: center;
+  margin-top: 40rpx;
+}
+.ulpaid-top-icon{
+  width: 172rpx;
+  height: 172rpx;
+}
+.ulpaid-top-txt{
+  font-size: 30rpx;
+  margin: 42rpx 0;
+  text-align: center;
+}
+.ulpaid-list{
+  margin-bottom: 70rpx;
+}
+.ulpaid-list-item{
+  height: 110rpx;
+  line-height: 110rpx;
+  padding: 0 40rpx;
+  border-bottom: 1px solid #e5e5e5;
+  font-size: 32rpx;
+}
+.ulpaid-list-item-left{
+  float: left;
+  font-weight: bold;
+  margin-right: 28rpx;
+}
+.ulpaid-list-item-right{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ulpaid-button{
+  font-size: 32rpx;
+  text-align:  center;
+  border-radius: 40rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  width: 520rpx;
+  margin: 0 auto;
+}

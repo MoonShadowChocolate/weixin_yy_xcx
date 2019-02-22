@@ -1,0 +1,476 @@
+const app=getApp();
+export default {
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    phone:''
+  },
+  // 取消预约单
+  cancelAppoint: function (e) {
+    var that = this;
+    wx.showModal({
+      title: '提示',
+      content: '确定取消？',
+      success: function (res) {
+        if (res.confirm) {
+          app.request(app.host + 'appointment/cancel/' + app.appid + '/' + app.openid, 'POST', 'form', {
+            shopId: wx.getStorageSync('businessId'),
+            appointmentId: e.currentTarget.dataset.orderid
+          }, function (re) {
+            if (re.data.data) {
+              console.log('取消预约单成功');
+            } else {
+              console.log('取消预约单失败');
+            }
+            that.query(that.data.appointtab[that.data.tabselect].txt);
+          });
+        }
+      }
+    })
+  },
+  // 取消订单
+  cancel: function (e) {
+    var that = this;
+    wx.showModal({
+      title: '提示',
+      content: '确定取消订单？',
+      success: function (re) {
+        if (re.confirm) {
+          app.request(app.host + 'order/rejected/cancelOrder4App/' + app.appid + '/' + app.openid, 'POST', 'form', {
+            orderId: e.currentTarget.dataset.orderid,
+            type: 1
+          }, function (res) {
+            that.query('待付款');
+          })
+        }
+      }
+    })
+  },
+  // 去支付
+  toPay: function (e) {
+    if (this.data.isCard) {
+      this.pay(e.currentTarget.dataset.orderid);
+    } else {
+      wx.navigateTo({
+        url: '/pages/public/pay/pay?payType=order&orderid=' + e.currentTarget.dataset.orderid
+      })
+    }
+  },
+  //支付
+  pay: function (orderId) {
+    var that = this;
+    console.log(orderId)
+    app.login(wx.request, {
+      url: app.host + 'weiXin/unifiedOrder/' + app.appid + '/' + orderId,
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        console.log(res.data);
+        wx.requestPayment({
+          'timeStamp': res.data.data.timeStamp,
+          'nonceStr': res.data.data.nonceStr,
+          'package': res.data.data.package,
+          'signType': res.data.data.signType,
+          'paySign': res.data.data.paySign,
+          success: function (res) {
+            console.log(res);
+            setTimeout(function () {
+              wx.reLaunch({
+                url: '/pages/public/personalCenter/personalCenter',
+              })
+            }, 1500);
+            wx.showToast({
+              title: '支付成功',
+              mask: true
+            })
+          },
+          fail: function (res) {
+            console.log(res)
+            setTimeout(function () {
+              wx.reLaunch({
+                url: '/pages/public/personalCenter/personalCenter',
+              })
+            }, 1500);
+            wx.showToast({
+              title: '支付失败',
+              image: '/images/close@2x.png',
+              mask: true
+            })
+          },
+          complete: function (res) {
+            console.log(res)
+          }
+        })
+      }
+    });
+  },
+  dateParse: function (date) {
+    var datereg = /\d{4}(-|\.|\s)\d{2}(-|\.|\s)\d{2}/;
+    var timereg = /\d{2}:\d{2}:\d{2}/;
+    var dates = datereg.exec(date)[0];
+    var times = timereg.exec(date)[0];
+    var millisecond = new Date(dates.replace(/\-/g, '/') + " " + times).getTime();
+    var dateObj = new Date(dates.replace(/\-/g, '/') + " " + times);
+    return { dates, times, millisecond, dateObj};
+  },
+  phoneCall(){
+    var that=this;
+    wx.showActionSheet({
+      itemList: ['呼叫','复制','添加到手机通讯录'],
+      success(res){
+        switch(res.tapIndex){
+          case 0:
+            app.phoneCall(that.data.phone);
+            break;
+          case 1:
+            wx.setClipboardData({
+              data: that.data.phone,
+            })
+            break;
+          case 2:
+            wx.addPhoneContact({
+              firstName: '预约商家',
+              mobilePhoneNumber:that.data.phone
+            })
+            break;
+        }
+      }
+    })
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    var that=this;
+    this.setSkin();
+    that.setData({
+      types:options.types
+    });
+    if(options.types=='order'){
+      wx.setNavigationBarTitle({
+        title: '订单详情',
+      })
+      app.request(app.host + 'order/find/' + options.id, 'POST', 'form', {
+
+      }, function (res) {
+        console.log(res.data);
+        var data=res.data.data;
+        var obj={};
+        switch (parseInt(data.summary.status)) {
+          case 1:
+            obj.status = '待付款';
+            obj.icon = app.orderDetailObj.topayicon;
+            break;
+          case 3:
+            obj.status = '已完成';
+            obj.icon = app.orderDetailObj.finishicon;
+            break;
+          case 4:
+            obj.status = '已取消';
+            obj.icon = app.orderDetailObj.cancelicon;
+            break;
+          
+        }
+        var list=[];
+        for(let i of data.detailList){
+          var item={};
+          item.title = i.goodsName;
+          item.num=i.quantity;
+          item.price = i.totalPrice;
+          item.spec=[];
+          if(data.summary.orderType!=6){
+            if (i.paramSpecDetail.specValueOne) {
+              item.spec.push(i.paramSpecDetail.specValueOne);
+            }
+            if (i.paramSpecDetail.specValueTwo) {
+              item.spec.push(i.paramSpecDetail.specValueTwo);
+            }
+            if (i.paramSpecDetail.specValueThree) {
+              item.spec.push(i.paramSpecDetail.specValueThree);
+            }
+            item.img = i.imgUrl;
+          }else{
+            item.img = app.orderDetailObj.cardicon;
+            obj.isCard=true;
+          }
+          list.push(item);
+        }
+
+        if (data.summary.appointmentId && data.summary.orderType != 6){
+          var dateObj = that.dateParse(data.summary.appointmentDate).dateObj;
+          var day = '';
+          switch (dateObj.getDay()) {
+            case 1:
+              day = '一';
+              break;
+            case 2:
+              day = '二';
+              break;
+            case 3:
+              day = '三';
+              break;
+            case 4:
+              day = '四';
+              break;
+            case 5:
+              day = '五';
+              break;
+            case 6:
+              day = '六';
+              break;
+            case 0:
+              day = '日';
+              break;
+          }
+          obj.date = dateObj.getMonth() + 1 + '月' + dateObj.getDate() + '日 周' + day + ' ' + that.dateParse(data.summary.appointmentDate).times.slice(0, 5);
+          obj.online = true;
+        }else{
+          obj.online=false;
+        }
+        
+        obj.orderid=data.summary.id;
+        obj.ordernum=data.summary.code;
+        obj.phone=wx.getStorageSync('businessPhone');
+        obj.customer = data.summary.appointmentCustomer;
+        obj.cusphone = data.summary.appointmentPhone||'';
+        obj.total=data.summary.price;
+        obj.topay = data.summary.toPayAmount;
+        obj.paid = data.summary.paidAmount||'0.00';
+        var pay=data.revInfoList.map((v,i)=>{
+          var ty;
+          switch(v.type){
+            case 1:
+              ty ='微信支付';
+              break;
+            case 2:
+              ty = '支付宝';
+              break;
+            case 3:
+              ty = '现金支付';
+              break;
+            case 4:
+              ty = '其他';
+              break;
+            case 5:
+              ty = '余额';
+              break;
+            case 6:
+              ty = '优惠付';
+              break;
+          }
+          return { type: ty, value: v.collectedAmount};
+        });
+        obj.payway1=pay[0].type;
+        obj.paid1=pay[0].value;
+        if(pay.length>1){
+          obj.payway2=pay[1].type;
+          obj.paid2=pay[1].value;
+        }
+        if(parseFloat(data.summary.toPayAmount)==0){
+          obj.fin=true;
+        }else{
+          obj.fin=false;
+        }
+        if(data.recInfo.type==1){
+          obj.servtype='far';
+        }else if(data.recInfo.type==2){
+          obj.servtype='close';
+        }
+        that.setData({
+          list,
+          ...obj
+        })
+      });
+    }else if(options.types=='appoint'){
+      wx.setNavigationBarTitle({
+        title: '预约详情',
+      })
+      app.request(app.host + 'appointment/find/' + options.id, 'POST', 'form', {
+
+      }, function (res) {
+        console.log(res.data);
+        var data = res.data.data;
+        var obj = {};
+        switch (parseInt(data.summary.status)) {
+          case 1:
+            obj.status = '待付款';
+            obj.icon = app.orderDetailObj.topayicon;
+            break;
+          case 2:case 3:
+            obj.status = '待服务';
+            obj.icon = app.orderDetailObj.toservicon;
+            break;
+          case 4:
+            obj.status = '待提货';
+            obj.icon = app.orderDetailObj.togeticon;
+            break;
+          case 5:
+            obj.status = '已取消';
+            obj.icon = app.orderDetailObj.cancelicon;
+            break;
+        }
+        var list = [];
+        for (let i of data.detailList) {
+          var item = {};
+          item.title = i.goodsName;
+          item.num = i.quantity;
+          item.price = i.price;
+          item.spec = [];
+          if (i.paramSpecDetail.specValueOne) {
+            item.spec.push(i.paramSpecDetail.specValueOne);
+          }
+          if (i.paramSpecDetail.specValueTwo) {
+            item.spec.push(i.paramSpecDetail.specValueTwo);
+          }
+          if (i.paramSpecDetail.specValueThree) {
+            item.spec.push(i.paramSpecDetail.specValueThree);
+          }
+          item.img = i.imgUrl;
+          list.push(item);
+        }
+
+        if (data.summary.appointmentType == 3) {
+          obj.cancelable = false;
+        } else {
+          if (data.summary.isCanceled == 1) {
+            obj.cancelable = true;
+          } else if (data.summary.isCanceled == 0) {
+            obj.cancelable = false;
+          }
+        }
+
+
+        var dateObj = that.dateParse(data.summary.appointmentDate).dateObj;
+        var day = '';
+        switch (dateObj.getDay()) {
+          case 1:
+            day = '一';
+            break;
+          case 2:
+            day = '二';
+            break;
+          case 3:
+            day = '三';
+            break;
+          case 4:
+            day = '四';
+            break;
+          case 5:
+            day = '五';
+            break;
+          case 6:
+            day = '六';
+            break;
+          case 0:
+            day = '日';
+            break;
+        }
+        obj.date = dateObj.getMonth() + 1 + '月' + dateObj.getDate() + '日 周' + day + ' ' + that.dateParse(data.summary.appointmentDate).times.slice(0, 5);
+        obj.online = true;
+
+        obj.orderid = data.summary.id;
+        obj.ordernum = data.summary.code;
+        obj.phone = wx.getStorageSync('businessPhone');
+        obj.customer = data.summary.appointmentCustomer;
+        obj.cusphone = data.summary.appointmentPhone || '';
+        obj.total = data.summary.price;
+        obj.address = data.summary.appointmentAddress;
+        if (parseFloat(data.summary.discountAmount)){
+          obj.preference = '-￥' + data.summary.discountAmount;
+          obj.nopre=false;
+        }else{
+          obj.preference = '无';
+          obj.nopre = true;
+        }
+        switch (data.revInfo.type) {
+          case 1:
+            obj.payway = '微信支付';
+            break;
+          case 2:
+            obj.payway = '支付宝';
+            break;
+          case 3:
+            obj.payway = '现金支付';
+            break;
+          case 4:
+            obj.payway = '其他';
+            break;
+          case 5:
+            obj.payway = '余额';
+            break;
+          case 6:
+            obj.payway = '优惠付';
+            break;
+        }
+        if (data.recInfo.type == 1) {
+          obj.servtype = 'far';
+        } else if (data.recInfo.type == 2) {
+          obj.servtype = 'close';
+        }
+        that.setData({
+          list,
+          ...obj
+        })
+      });
+    }
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  },
+  setSkin(){
+    this.setData({
+      ...app.globalObj,
+      ...app.orderDetailObj
+    })
+  }
+}

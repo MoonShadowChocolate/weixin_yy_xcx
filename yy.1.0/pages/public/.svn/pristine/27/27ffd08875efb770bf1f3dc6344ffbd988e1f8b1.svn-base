@@ -1,0 +1,476 @@
+/* pages/serviceDetails/serviceDetails.wxss */
+ @import "/wxParse/wxParse.wxss"; 
+ @import "/template/getMember/getMember";
+.content{
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  background-color: #F4F4F4;
+}
+.detailBanner{
+  width: 750rpx;
+  height: 358rpx;
+}
+.detailCnt1{
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  padding-bottom: 40rpx;
+  box-sizing: border-box;
+}
+.detailDec{
+  width: 100%;
+  height: auto;
+  padding-top: 10rpx;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  box-sizing: border-box;
+  font-size: 30rpx;
+  color: #333;
+}
+.serviceOldPrice{
+  width: 100%;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  box-sizing: border-box;
+  font-size: 28rpx;
+  color: #333;
+  margin-top: 10rpx;
+}
+.goodPriceInfo{
+  width: 100%;
+  height: 80rpx;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  line-height: 80rpx;
+  position: relative;
+}
+.goodPrice{
+  font-size: 28rpx;
+}
+.goodRackRate{
+  font-size: 24rpx;
+  margin-left: 40rpx;
+}
+.goodBuyNum{
+  font-size: 24rpx;
+  margin-left: 190rpx;
+}
+.goodShare{
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  top:5rpx;
+  right:40rpx;
+}
+.goodShare image{
+  width: 40rpx;
+  height: 40rpx;
+}
+.goodShare button{
+  width: 50rpx;
+  height: 50rpx;
+  position: absolute;
+  top:0;
+  right:0;
+  opacity: 0;
+}
+.peerDiscountShow{
+  width: 670rpx;
+  height: 290rpx;
+  border-radius: 20rpx;
+  margin: 0 auto;
+  margin-top: 50rpx;
+  box-shadow: 0rpx 0rpx 10rpx rgba(194, 194, 194, 0.25);
+  padding-top: 30rpx;
+  box-sizing: border-box;
+}
+.peerDiscountTitle{
+  width: 100%;
+  font-size: 32rpx;
+  color: #333;
+  text-align: center;
+}
+.peerDiscountBar{
+  width: 540rpx;
+  height: 4rpx;
+  background-color: #E5E5E5;
+  margin: 0 auto;
+  margin-top: 60rpx;
+  position: relative;
+}
+.peerDiscountBarSle{
+  height: 4rpx;
+}
+.peerMarkList{
+  width: 540rpx;
+  height: 32rpx;
+  position: absolute;
+  top:-16rpx;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+}
+.peerMarkItem{
+  width: 22rpx;
+  height: 22rpx;
+  border-radius: 50%;
+  position: relative;
+}
+.peerMarkInfo{
+  width: 120rpx;
+  height: 100rpx;
+  position: absolute;
+  top:64rpx;
+  left:-44rpx;
+  font-size: 24rpx;
+  text-align: center;
+}
+.peerMarkInfoTop{
+  width: 100%;
+  color: #333;
+}
+.peerMarkInfoBottom{
+  width: 100%;
+  margin-top: 15rpx;
+}
+.detailInfoTip{
+  width: 100%;
+  height: 88rpx;
+  background-color: #FAFAFA;
+  line-height: 88rpx;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  box-sizing: border-box;
+  font-size: 24rpx;
+  color: #999;
+}
+.detailInfoTip text{
+  margin-right: 50rpx;
+}
+.serviceTipIcon{
+  width: 28rpx;
+  height: 28rpx;
+  margin-right: 15rpx;
+  vertical-align: middle;
+}
+.selCategory{
+  width: 100%;
+  height: 88rpx;
+  margin-top: 20rpx;
+  line-height: 88rpx;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  font-size: 30rpx;
+  color: #333;
+  background-color: #fff;
+}
+.selCategory image{
+  width: 20rpx;
+  height: 20rpx;
+  margin: auto 0; 
+}
+.detailCnt2{
+  width: 100%;
+  height: auto;
+  margin-top: 20rpx;
+  font-size: 30rpx;
+  color: #333;
+}
+.shopNameTime{
+  width: 100%;
+  height: auto;
+  padding: 30rpx 40rpx 30rpx 40rpx;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+.serviceBusinessHours{
+  margin-top: 10rpx;
+}
+.serviceShopAddress{
+  width: 100%;
+  height: 88rpx;
+  background-color: #fff;
+  margin-top: 2rpx;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+}
+.shopAddressTxt{
+  line-height: 88rpx;
+  white-space:nowrap;  
+	overflow:hidden;
+  text-overflow:ellipsis;
+}
+.shopAddressIcon{
+  width: 40rpx;
+  height: 40rpx;
+  margin: auto 0;
+  margin-left: 20rpx;
+}
+.detailCnt3{
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  margin-top: 20rpx;
+  padding: 30rpx 40rpx 30rpx 40rpx;
+  box-sizing: border-box;
+  font-size: 30rpx;
+  color: #333;
+}
+.serviceInfoItem{
+  margin-bottom: 10rpx;
+  word-wrap:break-word;
+}
+.imageTextDetail{
+  width: 100%;
+  height: auto;
+  margin-top: 2rpx;
+  background-color: #fff;
+}
+.imageTextDetailTitle{
+  width: 100%;
+  height: 185rpx;
+  display: flex;
+  justify-content: center;
+}
+.titleLine{
+  width: 40rpx;
+  height: 2rpx;
+  background-color: #999;
+  margin: auto 0;
+}
+.titleTxt{
+  font-size: 28rpx;
+  color: #999;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  line-height: 185rpx;
+}
+.imageTextDetailCnt{
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+.serviceEmpty{
+  width: 100%;
+  height: 108rpx;
+  background-color: #fff;
+}
+/* 底部按钮tab start */
+.serviceTabBtn{
+  width: 100%;
+  height: 108rpx;
+  background-color: #fff;
+  box-shadow: -2rpx 0rpx 5rpx rgba(180, 180, 180, 0.2);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-left: 60rpx;
+  padding-right: 60rpx;
+  box-sizing: border-box;
+}
+.callIcon{
+  width: 54rpx;
+  height: 108rpx;
+  line-height: 138rpx;
+  text-align: center;
+}
+.callIcon image{
+  width: 54rpx;
+  height: 54rpx;
+}
+.serviceOrderBtn{
+  width: 220rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  margin: auto 0;
+  text-align: center;
+  padding-top: 10rpx;
+  box-sizing: border-box;
+  margin-left: 60rpx;
+}
+.orderBtnTxt1{
+  font-size: 28rpx;
+  line-height: 30rpx;
+}
+.orderBtnTxt2{
+  font-size: 26rpx;
+  line-height: 30rpx;
+}
+.orderBtnTxt3{
+  font-size: 28rpx;
+  line-height: 60rpx;
+}
+.shopOrderBtn{
+  width: 342rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  color: #333;
+  text-align: center;
+  line-height: 80rpx;
+  margin: auto 0;
+  /* margin-left: 150rpx; */
+}
+/* 底部按钮tab end */
+/* 选择分类弹窗 start */
+.selectProType{
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  position: fixed;
+  left:0;
+  bottom: 0;
+  z-index: 20;
+}
+.productInfo{
+  width: 720rpx;
+  height: 240rpx;
+  border-bottom: solid 1rpx #E5E5E5;
+  margin: 0 auto;
+  padding: 40rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+}
+.productImg{
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+.productImg image{
+  width: 160rpx;
+  height: 160rpx;
+}
+.productDec{
+  width: auto;
+  height: 160rpx;
+  padding-top: 10rpx;
+  padding-left: 30rpx;
+  box-sizing: border-box;
+}
+.productName{
+  font-size: 30rpx;
+  color: #333;
+}
+.productPrice{
+  font-size: 30rpx;
+  margin-top: 20rpx;
+}
+.selPecBox{
+  width: 720rpx;
+  height: auto;
+  border-bottom: solid 1rpx #E5E5E5;
+  margin: 0 auto;
+  padding:30rpx 20rpx 40rpx 20rpx;
+  box-sizing: border-box;
+}
+.selPecTitle{
+  font-size: 30rpx;
+  color: #333;
+}
+.selPecList{
+  width: 720rpx;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.selPecItem{
+  width: auto;
+  height: 60rpx;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+  text-align: center;
+  line-height: 60rpx;
+  margin-right: 30rpx;
+  margin-top: 24rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  box-sizing: border-box;
+}
+.specAuto{
+  color: #ccc;
+  border: solid 1rpx #ccc;
+  box-sizing: border-box;
+}
+.specSelected{
+  color: #fff;
+}
+.buyNumBox{
+  width: 720rpx;
+  height: 120rpx;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+}
+.buyNumTitle{
+  font-size: 30rpx;
+  color: #333;
+  line-height: 120rpx;
+  padding-left: 25rpx;
+  box-sizing: border-box;
+}
+.buyNumSel{
+  width: 186rpx;
+  height: 48rpx;
+  border-radius: 6rpx;
+  border: solid 1rpx #333;
+  display: flex;
+  flex-direction: row;
+  margin: auto 0;
+  margin-left: 320rpx;
+}
+.buyNumChange{
+  width: 48rpx;
+  height: 48rpx;
+  font-size: 28rpx;
+  color: #333;
+  text-align: center;
+  line-height: 48rpx;
+}
+.buyNum{
+  width: 90rpx;
+  height: 48rpx;
+  border-left: solid 1rpx #333;
+  border-right: solid 1rpx #333;
+  box-sizing: border-box;
+  font-size: 28rpx;
+  color: #333;
+  text-align: center;
+  line-height: 48rpx;
+}
+.nextStepBox{
+  width: 100%;
+  height: 108rpx;
+  background-color: #fff;
+  box-shadow: -2rpx 0rpx 5rpx rgba(180, 180, 180, 0.2);
+  display: flex;
+  margin-top:10rpx;
+}
+.nextStepBtn{
+  width: 520rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  color: #333;
+  text-align: center;
+  line-height: 80rpx;
+  margin: auto; 
+}
+/* 选择分类弹窗 end */

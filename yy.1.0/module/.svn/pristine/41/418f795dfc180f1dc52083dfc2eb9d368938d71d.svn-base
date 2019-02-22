@@ -1,0 +1,529 @@
+const app = getApp();
+export default {
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    alertCost:0,
+    alertScore:0,
+    showAlert:false,
+    loading: true,
+    /* 初始化领取会员 start */
+    getMemberState: false,
+    getPhoneState: false,
+    userPhone: '',
+    userCode: '',
+    getCodeBtnTxt: '获取',
+    countDownNum: 60,
+    getCodeBtnState: true,
+    /* 初始化领取会员 end */
+  },
+  confirm(e){
+    var that=this;
+    app.request(app.host + 'member/coupon/exchangeCoupon/' + app.openid, 'POST', 'form', {
+      couponId: that.data.couponid
+    }, function (re) {
+      if (re.data.data) {
+        wx.showModal({
+          title: '',
+          content: '兑换成功',
+          showCancel: false,
+          success: function () {
+            that.onLoad({ types: that.data.types });
+          }
+        })
+      } else {
+        wx.showModal({
+          title: '',
+          content: re.data.message,
+          showCancel: false,
+          success: function () {
+            that.onLoad({ types: that.data.types });
+          }
+        })
+      }
+
+    })
+    this.setData({
+      showAlert:false
+    })
+  },
+  close(){
+    this.setData({
+      showAlert:false
+    })
+  },
+  // 免费领取
+  freeToExchange: function (e) {
+    var that = this;
+    new Promise(function (resolve, reject) {
+      app.request(app.host + 'member/info/findIsMember4App/' + app.openid, 'POST', 'form', {
+        appId: app.appid
+      }, function (re) {
+        if (re.data.data == true) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    }).then(function (bool) {
+      if (bool == true) {
+        app.request(app.host + 'member/coupon/exchangeCoupon/' + app.openid, 'POST', 'form', {
+          couponId: e.currentTarget.dataset.couponid
+        }, function (re) {
+          if (re.data.data) {
+            wx.showModal({
+              title: '',
+              content: '兑换成功',
+              showCancel: false,
+              success: function () {
+                that.onLoad({ types: that.data.types });
+              }
+            })
+          } else {
+            wx.showModal({
+              title: '',
+              content: re.data.message,
+              showCancel: false,
+              success: function () {
+                that.onLoad({ types: that.data.types });
+              }
+            })
+          }
+
+        })
+      } else {
+        that.setData({
+          getMemberState: true,
+        })
+
+      }
+    })
+  },
+  // 积分兑换
+  creditToExchange: function (e) {
+    var that = this;
+    app.request(app.host + 'member/info/findIsMember4App/' + app.openid, 'POST', 'form', {
+      appId: app.appid
+    }, function (re) {
+      if (re.data.data == true) {
+        app.request(app.host +'member/info/find4App/'+app.openid,'POST','form',{
+          appId: app.appid
+        },function(r){
+          that.setData({
+            showAlert: true,
+            alertCost: e.currentTarget.dataset.cost,
+            alertScore: r.data.data.totalScore,
+            couponid: e.currentTarget.dataset.couponid
+          })
+        });
+        
+      } else {
+        that.setData({
+          getMemberState: true,
+        })
+      }
+    });
+    // wx.showModal({
+    //   title: ' ',
+    //   content: `确定花费${e.currentTarget.dataset.cost}积分兑换该券？`,
+    //   success: function (res) {
+    //     if (res.confirm) {
+    //       that.freeToExchange(e);
+
+    //     } else {
+
+    //     }
+    //   }
+    // })
+  },
+  //解析从后台传递的时间
+  dateParse: function (date) {
+    var datereg = /\d{4}(-|\.|\s)\d{2}(-|\.|\s)\d{2}/;
+    var timereg = /\d{2}:\d{2}:\d{2}/;
+    var dates = datereg.exec(date)[0];
+    var times = timereg.exec(date)[0];
+    var millisecond = new Date(dates + " " + times).getTime();
+    return { dates, times, millisecond };
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    // options:{
+    //   types:''//business、user
+    // }
+    var that = this;
+    this.setSkin();
+    that.setData({
+      types: options.types
+    });
+    if (options.types == 'business') {
+      wx.setNavigationBarTitle({
+        title: '优惠券',
+      })
+      app.request(app.host + 'shop/coupon/findPage4App/' + app.appid, 'POST', 'form', {
+        shopId: wx.getStorageSync('businessId')
+      }, function (res) {
+        console.log(res.data)
+        let list = [];
+        for (let i of res.data.data.list) {
+          if (i.status != 1) {
+            continue;
+          }
+          let item = {};
+          if (i.couponAttr == 1) {
+            item.name = '全场券';
+            item.prop = 1;//1:全场券、2:指定服务券、3:已领取
+          } else if (i.couponAttr == 2) {
+            item.name = '指定服务券';
+            item.prop = 2;
+          }
+          if (i.receiveType == 1) { //1:免费领取、0:积分兑换
+            item.free = true;
+            item.cost = i.exchangeNum;
+          } else if (i.receiveType == 0) {
+            item.free = false;
+            item.cost = i.exchangeNum;
+          }
+          item.id = i.id;
+          item.value = Number.parseFloat(i.couponValue);
+          if (i.validType == 1) {
+            item.time = `自领取${i.validDays}日内`;
+            item.datetype = 1;
+          } else if (i.validType == 0) {
+            item.time = that.dateParse(i.endDate).dates.replace(/\.|\s|-/g, '.');
+            item.datetype = 2;
+          }
+          if (i.couponType == 1) { //满减
+            item.types = 1;
+            item.limit = Number.parseFloat(i.couponStint);
+          } else if (i.couponType == 2) {//折扣
+            item.types = 2;
+          }
+          if (i.releaseStint == 1) {//不限制
+            item.haslimit = false;
+          } else if (i.releaseStint == 0) {//限制
+            item.haslimit = true;
+            item.rest = i.releaseCount;
+          }
+          list.push(item);
+        }
+        list.sort(function (a, b) {
+          return a['cost'] - b['cost'];
+        });
+        that.setData({
+          list: list,
+          loading: false
+        })
+      });
+    } else if (options.types == 'user') {
+      wx.setNavigationBarTitle({
+        title: '我的优惠券',
+      })
+      app.request(app.host + 'member/coupon/findPage4App/' + app.appid + '/' + app.openid, 'POST', 'form', {
+        status:1,
+        shopId: wx.getStorageSync('businessId')
+      }, function (res) {
+        console.log(res.data);
+        let list = [];
+        for (let i of res.data.data.list) {
+          let item = {};
+          if (i.couponAttr == 1) {
+            item.name = '全场券';
+            item.prop = 1;//1:全场券、2:指定服务券、3:已领取
+          } else if (i.couponAttr == 2) {
+            item.name = '指定服务券';
+            item.prop = 2;
+          }
+          item.id = i.id;
+          item.value = Number.parseFloat(i.couponValue);
+          item.time = that.dateParse(i.endDate).dates.replace(/\.|\s|-/g, '.');
+          item.datetype = 2;
+          if (i.couponType == 1) { //满减
+            item.types = 1;
+            item.limit = Number.parseFloat(i.couponStint);
+          } else if (i.couponType == 2) {//折扣
+            item.types = 2;
+          }
+          list.push(item);
+        }
+        that.setData({
+          list: list,
+          loading: false
+        })
+      });
+    }
+  },
+  setSkin: function () {
+    this.setData({
+      themeColor: app.globalObj.themeColor,//主题色
+      assistedColor1: app.globalObj.assistedColor1,//辅助色1
+      getCodeBtnBgColor: app.globalObj.assistedColor1,//获取按钮的背景色
+      assistedTxtColor1: app.globalObj.assistedTxtColor1
+    })
+  },
+  /* 领取会员 start */
+  //获取手机号
+  getPhoneNumber: function (e) {
+    console.log(e);
+    var that = this;
+    wx.checkSession({
+      success: function () {
+        console.log(e.detail.errMsg)
+        console.log(e.detail.iv)
+        console.log(e.detail.encryptedData)
+        var encryptedData = e.detail.encryptedData;
+        var iv = e.detail.iv;
+        //领取会员
+        wx.request({
+          url: app.host + 'member/info/becomeMember',
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          data: {
+            'openId': app.openid,
+            'encryptedData': encryptedData,
+            'iv': iv,
+            'appId': app.appid
+          },
+          method: 'POST',
+          success: function (res) {
+            console.log(res);
+            if (res.data.code == 200) {
+              that.setData({
+                getMemberState: false,
+              })
+              wx.showToast({
+                title: '激活成功',
+                icon: 'success',
+                duration: 2000
+              })
+            } else {
+              wx.showToast({
+                title: res.data.message,
+                image: '/images/close@2x.png',
+                duration: 2000
+              })
+            }
+          }
+        })
+      }
+    })
+  },
+  //显示用户获取验证码弹窗
+  showUserGetPhone: function () {
+    this.setData({
+      getPhoneState: true
+    })
+  },
+  //关闭激活会员弹窗
+  closeGetMember: function () {
+    this.setData({
+      getMemberState: false
+    })
+  },
+  //关闭用户获取验证码弹窗
+  closeGetCode: function () {
+    this.setData({
+      getPhoneState: false
+    })
+  },
+  //手机号输入框输入事件
+  userPhoneInput: function (e) {
+    console.log(e);
+    this.setData({
+      userPhone: e.detail.value
+    })
+  },
+  //验证码输入框输入事件
+  userCodeInput: function (e) {
+    console.log(e);
+    this.setData({
+      userCode: e.detail.value
+    })
+  },
+  //获取验证码点击事件
+  getCode: function () {
+    if (this.data.getCodeBtnState) {
+      let that = this;
+      let userPhone = this.data.userPhone;
+      if (userPhone == '') {
+        wx.showToast({
+          title: '请先输入手机号',
+          image: '/images/close@2x.png',
+          duration: 2000
+        })
+      } else {
+        let phoneReg = /^[1][3,4,5,7,8][0-9]{9}$/;
+        if (!phoneReg.test(userPhone)) {
+          wx.showToast({
+            title: '手机号格式错误',
+            image: '/images/close@2x.png',
+            duration: 2000
+          })
+        } else {
+          that.sendCode(userPhone);
+        }
+      }
+    }
+  },
+  //发送短信验证码
+  sendCode: function (userPhone) {
+    let that = this;
+    app.request(app.host + 'netease/sms/sendCode', 'POST', 'form', {
+      mobile: userPhone,
+      typeFlag: 201,
+    }, function (res) {
+      console.log(res.data);
+      if (res.data.code == 200) {
+        that.getCodeCountDown();
+      } else {
+        wx.showToast({
+          title: res.data.message,
+          image: '/images/close@2x.png',
+          duration: 2000
+        })
+      }
+    })
+  },
+  //获取验证码按钮触发后倒计时置灰
+  getCodeCountDown: function () {
+    let that = this;
+    let countDownNum = Number(that.data.countDownNum);
+    if (countDownNum > 0) {
+      countDownNum--;
+      setTimeout(function () {
+        that.setData({
+          countDownNum: countDownNum,
+          getCodeBtnTxt: countDownNum + 's',
+          getCodeBtnBgColor: '#ccc',
+          getCodeBtnState: false,
+        })
+        that.getCodeCountDown();
+      }, 1000);
+    } else {
+      that.setData({
+        countDownNum: 60,
+        getCodeBtnTxt: '获取',
+        getCodeBtnBgColor: that.data.assistedColor1,
+        getCodeBtnState: true,
+      })
+    }
+  },
+  //立即激活
+  getMemberCodeStyle: function () {
+    let that = this;
+    let userPhone = this.data.userPhone;
+    let userCode = this.data.userCode;
+    if (userPhone == '') {
+      wx.showToast({
+        title: '请先输入手机号',
+        image: '/images/close@2x.png',
+        duration: 2000
+      })
+    } else {
+      let phoneReg = /^[1][3,4,5,7,8][0-9]{9}$/;
+      if (!phoneReg.test(userPhone)) {
+        wx.showToast({
+          title: '手机号格式错误',
+          image: '/images/close@2x.png',
+          duration: 2000
+        })
+      } else {
+        if (userCode == '') {
+          wx.showToast({
+            title: '请先获取验证码',
+            image: '/images/close@2x.png',
+            duration: 2000
+          })
+        } else {
+          //激活会员
+          app.request(app.host + 'member/info/becomeMemberPhone', 'POST', 'form', {
+            openId: app.openid,
+            appId: app.appid,
+            phone: userPhone,
+            smsCode: userCode
+          }, function (res) {
+            console.log(res.data);
+            if (res.data.code == 200) {
+              that.setData({
+                getMemberState: false,
+                getPhoneState: false,
+              })
+              wx.showToast({
+                title: '激活成功',
+                icon: 'success',
+                duration: 2000
+              })
+            }
+            else if (res.data.code == 413) {
+              wx.showToast({
+                title: '验证码错误',
+                image: '/images/close@2x.png',
+                duration: 2000
+              })
+            }
+            else {
+              wx.showToast({
+                title: res.data.message,
+                image: '/images/close@2x.png',
+                duration: 2000
+              })
+            }
+          })
+        }
+      }
+    }
+  },
+  /* 领取会员 end */
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  }
+}

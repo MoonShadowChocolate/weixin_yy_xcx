@@ -1,0 +1,137 @@
+/* pages/public/recharge/recharge.wxss */
+.content{
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  padding-bottom: 80rpx;
+  box-sizing: border-box;
+}
+.topInfoBox{
+  width: 100%;
+  height: 260rpx;
+  display: flex;
+  flex-direction: row;
+  padding: 50rpx;
+  box-sizing: border-box;
+}
+.topInfoLeft{
+  width: 482rpx;
+  height: 168rpx;
+}
+.topInfoTxt_1{
+  font-size: 36rpx;
+  color: #333;
+}
+.topInfoTxt_2{
+  font-size: 36rpx;
+  color: #FF8A2C;
+  margin-top: 20rpx;
+}
+.topInfoTxt_3{
+  font-size: 26rpx;
+  color: #999;
+  margin-top: 10rpx;
+}
+.topInfoRight{
+  width: 168rpx;
+  height: 168rpx;
+  position: relative;
+}
+.topInfoRight image{
+  width: 168rpx;
+  height: 168rpx;
+}
+.topInfoRightTxt{
+  width: 168rpx;
+  height: 168rpx;
+  position: absolute;
+  top:0;
+  left: 0;
+  font-size: 42rpx;
+  color: #fff;
+  text-align: center;
+  line-height: 168rpx;
+}
+.inputBox{
+  width: 640rpx;
+  height: 183rpx;
+  border-radius: 10rpx;
+  border: solid 1rpx #999;
+  margin: 0 auto;
+  margin-top: 40rpx;
+  display: flex;
+  flex-direction: row;
+}
+.leftIcon{
+  width: 44rpx;
+  height: 183rpx;
+  line-height: 183rpx;
+}
+.leftIcon image{
+  width: 44rpx;
+  height: 44rpx;
+}
+.rightInput{
+  width: 596rpx;
+  height: 183rpx;
+}
+.inputItem{
+  width: 596rpx;
+  height: 90rpx;
+  display: flex;
+  flex-direction: row;
+  font-size: 30rpx;
+  color: #333;
+  line-height: 90rpx;
+}
+.inputItem input{
+  width: 500rpx;
+  height: 90rpx;
+  padding-left: 10rpx;
+  box-sizing: border-box;
+}
+.inputCompany{
+  width: 96rpx;
+  color: #FF8A2C;
+  text-align: right;
+  padding-right: 30rpx;
+  box-sizing: border-box;
+}
+.inputLine{
+  width: 596rpx;
+  height: 1rpx;
+  background-color: #999;
+}
+.rechargeBtnBox{
+  width: 640rpx;
+  height: 90rpx;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  margin-top: 56rpx;
+}
+.rechargeBtn{
+  width: 296rpx;
+  height: 90rpx;
+  border-radius: 10rpx;
+  font-size: 30rpx;
+  text-align: center;
+  line-height: 90rpx;
+}
+.cancelBtn{
+  color: #333;
+  border:solid 1rpx #333;
+  box-sizing: border-box;
+}
+.confirmBtn{
+  color: #fff;
+  background-color: #FF8A2C;
+}
+.RemarksBox{
+  width: 640rpx;
+  height: auto;
+  margin: 0 auto;
+  font-size: 26rpx;
+  color: #999;
+  margin-top: 50rpx;
+}

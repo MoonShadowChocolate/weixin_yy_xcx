@@ -1,0 +1,28 @@
+<!--pages/pay/pay.wxml-->
+<import src='/template/loading/loading' />
+<view class='content'>
+  <view class='selPayTypeBox'>
+    <view class='selPayTitle'>选择支付方式</view>
+    <view class='selPayType'>
+      <radio-group class="radio-group" bindchange="radioChange">
+        <view class='payTypeItem'>
+          <image src='{{weixinIcon}}' mode='widthFix' class='payTypeIcon'></image>
+          <view class='payTypeName'>微信支付</view>
+          <radio value="1" checked="{{notEnoughState}}" />
+        </view>
+        <view class='payTypeItem'>
+          <image src='{{balanceIcon}}' mode='widthFix' class='payTypeIcon'></image>
+          <view class='payTypeName'>余额支付（<text style='color:{{importantColor}};'>余额{{accountBalance}}</text><text style='color:{{importantColor}};' wx:if='{{notEnoughState}}'>，不足</text>）</view>
+          <radio disabled='{{notEnoughState?"true":""}}' value="5" checked="{{!notEnoughState}}" />
+        </view>  
+      </radio-group>
+    </view>
+  </view>
+</view>
+<!-- 底部tab start-->
+<view class='tabBtnBottom'>
+  <view class='payAmt'>总计：¥{{totalPrice}}</view>
+  <view class='payBtn' style='background-color: {{themeColor}};' bindtap='toPay'>支付</view>
+</view>
+<!-- 底部tab end-->
+<template is='loading' data='{{loading:loading}}' />

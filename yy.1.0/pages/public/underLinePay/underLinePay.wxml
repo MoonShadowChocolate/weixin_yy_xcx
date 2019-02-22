@@ -1,0 +1,17 @@
+<!--pages/underLinePay/underLinePay.wxml-->
+<import src='/template/loading/loading' />
+<view class='content' wx:if='{{!loading}}'>
+  <view class='top'>
+    <view class='returnBtn' bindtap='nav' data-url='/pages/index/index' style='background-color: #333;'>店铺首页</view>
+  </view>
+  <view class='payInfoBox'>
+    <view class='shopName'>{{shopname}}</view>
+    <view class='payAmtInput'><input type='digit' value='{{inputs}}' bindfocus='inputFocus' bindblur='inputBlur' bindinput='inputs' placeholder='{{placeholder}}' placeholder-style='color:{{assistedTxtColor2}};'></input></view>
+    <view class='payBtn' bindtap='{{ismember?"throPay":""}}' style='background-color: {{themeColor}};'>
+      微信支付
+      <button class='hideBtn' wx:if='{{!ismember}}' open-type='getPhoneNumber' bindgetphonenumber='getPhoneNumber'></button>
+    </view>
+  </view>
+  <view class='payCover' wx:if='{{paying}}'></view>
+</view>
+<template is='loading' data='{{loading}}' />

@@ -1,0 +1,28 @@
+<!--template/getMember.wxml-->
+<template name='getMember'>
+  <!-- 领取会员弹窗 -->
+  <view class='getMemberBg' wx:if='{{getMemberState}}'>
+    <view class='getMemberBox'>
+      <image class='closeIcon' src='{{closeIcon}}' mode='widthFix' bindtap='closeGetMember'></image>
+      <view class='getMemberTitle'>激活会员</view>
+      <view class='getPhone' style='background-color: {{themeColor}};'>
+        微信授权登录
+        <button class='getPhoneBtn' open-type='getPhoneNumber' bindgetphonenumber="getPhoneNumber"></button>
+      </view>
+      <view class='userGetPhone' style='border: solid 1rpx {{assistedColor1}};color: {{assistedColor1}};' bindtap='showUserGetPhone'>手机号登录</view>
+    </view>
+  </view>
+  <!-- 用户获取手机验证码弹窗 -->
+  <view class='getPhoneBg' wx:if='{{getPhoneState}}'>
+    <view class='getMemberBox'>
+      <image class='closeIcon' src='{{closeIcon}}' mode='widthFix' bindtap='closeGetCode'></image> 
+      <view class='getMemberTitle'>激活会员</view>
+      <view class='userPhone'><input placeholder='请输入手机号' placeholder-style='color:#ccc;' bindinput='userPhoneInput'></input></view>
+      <view class='getCode'>
+        <input placeholder='请输入验证码' placeholder-style='color:#ccc;' bindinput='userCodeInput' maxlength='4'></input>
+        <view class='getCodeBtn' style='background-color: {{getCodeBtnBgColor}}' bindtap='getCode'>{{getCodeBtnTxt}}</view>
+      </view>
+      <view class='becomeMember' style='background-color: {{themeColor}};' bindtap='getMemberCodeStyle'>立即激活</view>
+    </view>
+  </view>
+</template>

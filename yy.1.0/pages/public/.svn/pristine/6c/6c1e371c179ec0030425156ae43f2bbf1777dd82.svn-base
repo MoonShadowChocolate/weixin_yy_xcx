@@ -1,0 +1,30 @@
+<!--pages/changeStore/changeStore.wxml-->
+<import src='/template/loading/loading'/>
+<block wx:if='{{!loading}}'>
+  <view class='changeStore-list'>
+    <view class='changeStore-item' wx:for='{{list}}' wx:key=''>
+      <view class='changeStore-item-top' catchtap='select' data-id='{{item.id}}'>
+        <view class='changeStore-item-top-title'>
+          <text class='citt-left' style='color:{{themeTxtColor}}'>{{item.name}}</text>
+          <text class='citt-right' style='color:{{assistedColor2}}' wx:if='{{getLocation}}'>距您{{item.meter}}m</text>
+        </view>
+        <view class='changeStore-item-top-detail' style='color:{{themeTxtColor}}'>{{item.detail}}</view>
+        <view class='changeStore-item-top-time' style='color:{{assistedTxtColor2}}'>营业时间:{{item.time}}</view>
+      </view>
+      <view class='changeStore-item-bottom'>
+        <view class='changeStore-item-bottom-phone' bindtap='phoneCall' data-phone='{{item.phone}}'>
+          <image mode='widthFix' class='changeStore-item-bottom-icon' src='{{phoneicon}}'></image>
+          <text class='changeStore-item-bottom-txt' style='color:{{themeTxtColor}}'>{{item.phone}}</text>
+        </view>
+        <view class='changeStore-item-bottom-address' bindtap='{{getLocation?"map":""}}' data-map='{{item.map}}'>
+          <image mode='widthFix' class='changeStore-item-bottom-icon' src='{{locationicon}}'></image>
+          <text class='changeStore-item-bottom-txt' style='color:{{themeTxtColor}}'>到这儿去</text>
+          <button open-type='openSetting' bindopensetting='openSetting' data-map='{{item.map}}' class='ciba-button' wx:if='{{!getLocation}}'></button>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- <view class='changeStore-location' style='color:{{themeTxtColor}}' wx:if='{{getLocation&&userAddress}}'>当前位置：{{userAddress}}</view> -->
+</block>
+<template is='loading' data='{{loading:loading}}'/>
+

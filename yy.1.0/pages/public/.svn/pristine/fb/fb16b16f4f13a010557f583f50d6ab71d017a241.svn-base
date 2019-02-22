@@ -1,0 +1,75 @@
+/* pages/underLinePay/underLinePay.wxss */
+@import '/template/getMember/getMember';
+.content{
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+.top{
+  width: 100%;
+  padding-top: 36rpx;
+  padding-left: 40rpx;
+  box-sizing: border-box;
+}
+.returnBtn{
+  width: 135rpx;
+  height: 62rpx;
+  border-radius: 31rpx;
+  color: #fff;
+  font-size: 26rpx;
+  text-align: center;
+  line-height: 62rpx;
+}
+.payInfoBox{
+  width: 100%;
+  height: auto;
+  text-align: center;
+  padding-top: 60rpx;
+  box-sizing: border-box;
+}
+.shopName{
+  font-size: 36rpx;
+  color: #333;
+  font-weight: bold;
+}
+.payAmtInput{
+  width: 480rpx;
+  height: 110rpx;
+  border-bottom: solid 2rpx #999;
+  margin: 0 auto;
+  margin-top: 120rpx;
+}
+.payAmtInput input{
+  width: 480rpx;
+  height: 110rpx;
+  font-size: 48rpx;
+  color: #333;
+}
+.payBtn{
+  width: 520rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  color: #333;
+  text-align: center;
+  line-height: 80rpx;
+  margin: 0 auto;
+  margin-top: 150rpx;
+  position: relative;
+}
+.hideBtn{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+.payCover{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}

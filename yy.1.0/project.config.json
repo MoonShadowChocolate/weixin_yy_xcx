@@ -1,0 +1,130 @@
+{
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.2.1",
+	"appid": "wxe4910ca17f45b537",
+	"projectname": "%E9%A2%84%E7%BA%A6%E7%89%88-%E5%A4%96%E9%93%BEsvn%E7%89%88%E6%9C%AC1.0-%E7%AC%AC%E4%B8%89%E6%96%B9",
+	"isGameTourist": false,
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 14,
+			"list": [
+				{
+					"id": -1,
+					"name": "预约信息填写",
+					"pathName": "pages/orderFilling/orderFilling",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "选择优惠券",
+					"pathName": "pages/selCoupon/selCoupon",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "我的地址",
+					"pathName": "pages/fillMyAddress/fillMyAddress",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "支付",
+					"pathName": "pages/pay/pay",
+					"query": ""
+				},
+				{
+					"id": 4,
+					"name": "我的同行活动",
+					"pathName": "pages/myPeerActivity/myPeerActivity",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "同行活动",
+					"pathName": "pages/peerDiscount/peerDiscount",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "服务详情",
+					"pathName": "pages/serviceDetails/serviceDetails",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "预约成功",
+					"pathName": "pages/paySuccess/paySuccess",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "产品",
+					"pathName": "pages/product/product",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "线下支付",
+					"pathName": "pages/underLinePay/underLinePay",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "购买卡项",
+					"pathName": "pages/buyCard/buyCard",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "卡片详情",
+					"pathName": "pages/cardDetails/cardDetails",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "我的币钱包",
+					"pathName": "pages/public/myCoinWallet/myCoinWallet",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "充值",
+					"pathName": "pages/public/recharge/recharge",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "线下支付",
+					"pathName": "pages/public/offlinePay/offlinePay"
+				}
+			]
+		}
+	}
+}

@@ -1,0 +1,100 @@
+<!--pages/public/orderDetail/orderDetail.wxml-->
+<view class='orderDetail-top' style='background:{{btnGradientColor}};color:{{themeTxtColor}}'>
+  <image class='orderDetail-top-icon' mode='widthFix' src='{{icon}}'></image>
+  <view class='orderDetail-top-right'>{{status}}</view>
+  <view class='orderDetail-top-txt' wx:if='{{types=="appoint"&&status=="待服务"}}'>凭手机号与商家确认后即可享受服务</view>
+</view>
+<view class='orderDetail-part1' style='color:{{themeTxtColor}}'>
+  <view class='orderDetail-item1'>{{types=="appoint"?"预约":"订"}}单号：{{ordernum}}</view>
+  <view class='orderDetail-item2'>
+    <view class='orderDetail-item2-list'>
+      <view class='orderDetail-item2-list-item' wx:for='{{list}}' wx:key=''>
+        <image class='oili-img' src='{{item.img}}' mode='aspectFill'></image>
+        <view class='oili-right overflowTxt'>
+          <view class='oili-right-title overflowTxt'>{{item.title}}</view>
+          <view class='oili-right-spec overflowTxt' style='color:{{assistedTxtColor1}}'>{{item.spec}}</view>
+          <view class='oili-right-bottom' style='color:{{assistedTxtColor1}}'>
+            <view class='oili-right-bottom-num'>x {{item.num}}</view>
+            <view class='oili-right-bottom-price'>￥{{item.price}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <block wx:if='{{online}}'>
+    <view class='orderDetail-item2'>
+      <view class='orderDetail-item2-left'>预约{{servtype=="far"?"到店":"上门"}}时间</view>
+      <view class='orderDetail-item2-right'>{{date}}</view>
+    </view>
+    <view class='orderDetail-item2'>
+      <view class='orderDetail-item2-left'>消费{{types=="appoint"?"顾客":"人"}}</view>
+      <view class='orderDetail-item2-right orderDetail-item2-sp'>
+        <view class='orderDetail-item2-sp-box'>{{customer}}</view>
+        <view class='orderDetail-item2-sp-box'>{{cusphone}}</view>
+      </view>
+    </view>
+  </block>
+  <view class='orderDetail-item2' wx:if='{{types=="appoint"}}'>
+    <view class='orderDetail-item2-left'>{{servtype=="far"?"门店":"预约"}}地址</view>
+    <view class='orderDetail-item2-right'>
+      <view class='orderDetail-item2-right-txt overflowTxt'>{{address}}</view>
+      <image class='orderDetail-item2-right-icon' src='{{locicon}}' mode='widthFix'></image>
+    </view>
+  </view>
+  <view class='orderDetail-item3' bindtap='phoneCall'>
+    <image class='orderDetail-item3-icon' src='{{phoneicon}}' mode='widthFix'></image>
+    <text class='orderDetail-item3-txt'>联系商家</text>
+  </view>
+</view>
+
+<view class='orderDetail-part2' style='color:{{themeTxtColor}}'>
+  <block wx:if='{{types=="appoint"}}'>
+    <view class='orderDetail-item2'>
+        <view class='orderDetail-item2-left'>优惠</view>
+        <view class='orderDetail-item2-right' style='{{nopre?"":"color:"+assistedColor2}}'>{{preference}}</view>
+      </view>
+      <view class='orderDetail-item2'>
+        <view class='orderDetail-item2-left'>总计</view>
+        <view class='orderDetail-item2-right' style='color:{{assistedColor2}}'>￥{{total}}</view>
+      </view>
+      <view class='orderDetail-item2'>
+        <view class='orderDetail-item2-left'>支付方式</view>
+        <view class='orderDetail-item2-right'>{{payway}}</view>
+      </view>
+  </block>
+  
+  <block wx:if='{{types=="order"}}'>
+    <view class='orderDetail-item2'>
+      <view class='orderDetail-item2-left'>合计</view>
+      <view class='orderDetail-item2-right' style='color:{{assistedColor2}}'>￥{{total}}</view>
+    </view>
+    <view class='orderDetail-item3' wx:if='{{!isCard}}'>
+      <view class='orderDetail-item3-topbox'>
+        <view class='orderDetail-item2-left'>已付：{{payway1}}</view>
+        <view class='orderDetail-item2-right'>￥{{paid1}}</view>
+      </view>
+      <view class='orderDetail-item3-box' wx:if='{{payway2}}'>
+        <view class='orderDetail-item2-left'>{{payway2}}</view>
+        <view class='orderDetail-item2-right'>￥{{paid2}}</view>
+      </view>
+    </view>
+    <view class='orderDetail-item2' wx:if='{{fin}}'>
+      <view class='orderDetail-item2-left'>合计付款</view>
+      <view class='orderDetail-item2-right'>￥{{total}}</view>
+    </view>
+    <view class='orderDetail-item2' wx:else>
+      <view class='orderDetail-item2-left'>待支付</view>
+      <view class='orderDetail-item2-right' style='color:{{importantColor}}'>￥{{topay}}</view>
+    </view>
+    
+  </block>
+  
+</view>
+
+<view class='orderDetail-blank'></view>
+
+<view class='orderDetail-bottom' wx:if='{{(types=="appoint"&&status!="已取消")||(isCard&&status=="待付款")||cancelable}}' style='color:{{themeTxtColor}}'>
+  <view class='orderDetail-bottom-but' style='color:{{themeTxtColor}};border-color:{{themeTxtColor}};' bindtap='cancel' data-orderid='{{orderid}}' wx:if='{{isCard}}'>取消订单</view>
+  <view class='orderDetail-bottom-but' style='color:{{themeTxtColor}};border-color:{{themeTxtColor}};' bindtap='cancelAppoint' data-orderid='{{orderid}}' wx:if='{{types=="appoint"&&status!="已取消"&&cancelable}}'>取消预约</view>
+  <view class='orderDetail-bottom-but orderDetail-bottom-pay' style='background:{{assistedColor2}}' bindtap='toPay' data-orderid='{{orderid}}' data-deductioncoinnumber='{{deductionCoinNumber}}' wx:if='{{status=="待付款"}}'>去支付</view>
+</view>

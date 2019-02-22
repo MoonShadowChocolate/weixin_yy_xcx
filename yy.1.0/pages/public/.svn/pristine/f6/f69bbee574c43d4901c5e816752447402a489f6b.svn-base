@@ -1,0 +1,148 @@
+/* pages/myOrder/myOrder.wxss */
+.myOrder-tab{
+  border-bottom: 1px solid #E5E5E5;
+
+}
+.myOrder-tab-item{
+  width: 25%;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  line-height: 100rpx;
+  font-size: 32rpx;
+  color: #ccc;
+  position: relative;
+}
+.myOrder-tab-item-strip{
+  position: absolute;
+  width: 32rpx;
+  height: 6rpx;
+  background: #FFE200;
+  border-radius: 4rpx;
+  bottom: 18rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.myOrder-list{
+  background: #f4f4f4;
+  line-height: 1;
+  font-size: 0;
+  overflow: hidden;
+}
+.myOrder-list-item{
+  background: white;
+  margin-bottom: 20rpx;
+}
+.myOrder-list-item-status{
+  display: flex;
+  height: 80rpx;
+  justify-content: space-between;
+  padding: 0 40rpx;
+  align-items: center;
+  font-size: 26rpx;
+}
+.mlis-left{
+  
+}
+.mlis-right{
+  
+}
+.myOrder-list-item-spec{
+  padding: 34rpx 40rpx;
+  border-top: 1px solid #E5E5E5;
+  border-bottom: 1px solid #E5E5E5;
+  overflow: hidden;
+}
+.mlisp-left{
+  float: left;
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 10rpx;
+  margin-right: 32rpx;
+}
+.mlisp-right{
+  overflow: hidden;
+}
+.mlisp-right-name{
+  font-size: 28rpx;
+  margin-top: 16rpx;
+  margin-bottom: 32rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.mlisp-right-spec{
+  font-size: 24rpx;
+  height: 24rpx;
+  margin-bottom: 26rpx;
+}
+.mlisp-right-num{
+  font-size: 24rpx;
+  position: relative;
+}
+.mlisp-right-num-sumprice{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 26rpx;
+}
+.myOrder-list-item-sum{
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: right;
+  padding: 0 40rpx;
+  font-weight: bold;
+  font-size: 26rpx;
+  border-bottom: 1px solid #E5E5E5;
+}
+.myOrder-list-item-button{
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: right;
+  padding: 0 40rpx;
+}
+.mlib-cancel{
+  width: 136rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  text-align: center;
+  font-size:26rpx;
+  border-radius: 26rpx;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 20rpx;
+}
+.mlib-pay{
+  width: 136rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  text-align: center;
+  color: #FF8A2C;
+  font-size: 26rpx;
+  border: 1px solid #FF8A2C;
+  border-radius: 26rpx;
+  display: inline-block;
+  vertical-align: middle;
+}
+.myOrder-nolist{
+  margin-top: 32rpx;
+  font-size: 0;
+  text-align: center;
+}
+.myOrder-nolist-icon{
+  width: 400rpx;
+  height: 400rpx;
+}
+.myOrder-nolist-txt{
+  margin-bottom: 86rpx;
+  font-size: 28rpx;
+  line-height: 1.5;
+}
+.myOrder-nolist-button{
+  font-size: 32rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  width: 266rpx;
+  border-radius: 40rpx;
+  display: inline-block;
+}

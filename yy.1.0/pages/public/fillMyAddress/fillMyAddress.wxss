@@ -1,0 +1,60 @@
+/* pages/fillMyAddress/fillMyAddress.wxss */
+.content{
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+.fillingItem{
+  width: 750rpx;
+  height: 110rpx;
+  border-bottom: solid 1rpx #E5E5E5;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  font-size: 32rpx;
+  color: #333;
+  line-height: 110rpx;
+}
+.fillingTitleShort{
+  width: 80rpx;
+  height: 110rpx;
+  font-weight: bold;
+}
+.fillingTitleLong{
+  width: 144rpx;
+  height: 110rpx;
+  font-weight: bold;
+}
+.fillingInputShort{
+  width: 506rpx;
+  height: 110rpx;
+  margin-left: 20rpx;
+}
+.fillingInputLong{
+  width: 570rpx;
+  height: 110rpx;
+  margin-left: 20rpx;
+}
+.fillingTitleMiddle{
+  width: 110rpx;
+  height: 110rpx;
+  font-weight: bold;
+}
+.fillingInputMiddle{
+  width: 530rpx;
+  height: 110rpx;
+  margin-left: 20rpx;
+}
+.fillingOkBtn{
+  width: 520rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  color: #fff;
+  font-size: 32rpx;
+  text-align: center;
+  line-height: 80rpx;
+  margin: 0 auto;
+  margin-top: 70rpx;
+}

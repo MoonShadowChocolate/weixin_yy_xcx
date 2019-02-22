@@ -1,0 +1,66 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/public/business/business",
+    "pages/public/changeStore/changeStore",
+    "pages/public/product/product",
+    "pages/public/coupon/coupon",
+    "pages/public/peerDiscount/peerDiscount",
+    "pages/public/serviceDetails/serviceDetails",
+    "pages/public/cardDetails/cardDetails",
+    "pages/public/personalCenter/personalCenter",
+    "pages/public/orderFilling/orderFilling",
+    "pages/public/point/point",
+    "pages/public/userInfo/userInfo",
+    "pages/public/myActivity/myActivity",
+    "pages/public/selCoupon/selCoupon",
+    "pages/public/fillMyAddress/fillMyAddress",
+    "pages/public/pay/pay",
+    "pages/public/myPeerActivity/myPeerActivity",
+    "pages/public/paySuccess/paySuccess",
+    "pages/public/myOrder/myOrder",
+    "pages/public/underLinePay/underLinePay",
+    "pages/public/buyCard/buyCard",
+    "pages/public/underLinePaid/underLinePaid",
+    "pages/public/myCoinWallet/myCoinWallet",
+    "pages/public/recharge/recharge",
+    "pages/public/offlinePay/offlinePay",
+    "pages/public/orderDetail/orderDetail"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#DBDBDB",
+    "selectedColor": "#333",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "/images/home@2x.png",
+        "selectedIconPath": "/images/home_click@2x.png"
+      },
+      {
+        "pagePath": "pages/public/product/product",
+        "text": "产品",
+        "iconPath": "/images/product@2x.png",
+        "selectedIconPath": "/images/product_click@2x.png"
+      },
+      {
+        "pagePath": "pages/public/personalCenter/personalCenter",
+        "text": "我的",
+        "iconPath": "/images/me@2x.png",
+        "selectedIconPath": "/images/me_click@2x.png"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  }
+}

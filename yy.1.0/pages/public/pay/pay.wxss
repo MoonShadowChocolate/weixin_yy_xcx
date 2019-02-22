@@ -1,0 +1,77 @@
+/* pages/pay/pay.wxss */
+.content{
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+.selPayTypeBox{
+  width: 100%;
+  height: auto;
+  padding-top: 90rpx;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  box-sizing: border-box;
+}
+.selPayTitle{ 
+  font-size: 36rpx;
+  color: #333;
+  font-weight: bold;
+}
+.selPayType{
+  width: 100%;
+  height: auto;
+  padding-top: 20rpx;
+  box-sizing: border-box;
+}
+.payTypeItem{
+  width: 100%;
+  height: 60rpx;
+  display: flex;
+  flex-direction: row;
+  margin-top: 50rpx;
+}
+.payTypeIcon{
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 30rpx;
+}
+.payTypeName{
+  width: 500rpx;
+  height: 60rpx;
+  font-size: 30rpx;
+  color: #333;
+  line-height: 60rpx;
+}
+/* 底部tab start */
+.tabBtnBottom{
+  width: 100%;
+  height: 125rpx;
+  background-color: #fff;
+  box-shadow: 4rpx 0rpx 15rpx RGBA(180, 180, 180, 0.2);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  box-sizing: border-box;
+}
+.payAmt{
+  font-size: 32rpx;
+  color: #333;
+  line-height: 125rpx;
+}
+.payBtn{
+  width: 266rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  margin: auto 0;
+  font-size: 32rpx;
+  color: #333;
+  text-align: center;
+  line-height: 80rpx;
+}
+/* 底部tab end */

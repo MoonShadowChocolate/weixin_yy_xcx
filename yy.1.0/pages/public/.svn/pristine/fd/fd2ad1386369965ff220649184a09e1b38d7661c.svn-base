@@ -1,0 +1,29 @@
+<!--pages/userInfo/userInfo.wxml-->
+<import src='/template/loading/loading' />
+<block wx:if='{{!loading}}'>
+  <view class='userInfo-list' style='color:{{themeTxtColor}}'>
+    <view class='userInfo-list-item'>
+      <view class='userInfo-list-item-left'>姓名：</view>
+      <input class='userInfo-list-item-name' bindblur='nameBlur' value='{{name}}' placeholder='请输入姓名' placeholder-class='userInfo-list-item-namep'></input>
+    </view>
+    <view class='userInfo-list-item'>
+      <view class='userInfo-list-item-left'>生日：</view>
+      <picker class='userInfo-list-item-name userInfo-picker' bindchange='dateChange' mode='date' start='1900-01-01' end='2020-01-01'>
+        {{date?date:"请选择"}}<image src='/images/userInfo/narrow@2x.png' class='ulin-arrow' mode='widthFix'></image>
+      </picker>
+    </view>
+    <view class='userInfo-list-item'>
+      <view class='userInfo-list-item-left'>性别：</view>
+      <picker class='userInfo-list-item-name userInfo-picker' bindchange='sexChange' mode='selector' range='{{sexRange}}'>
+        {{sex?sexRange[sex]:"请选择"}}<image src='/images/userInfo/narrow@2x.png' class='ulin-arrow' mode='widthFix'></image>
+      </picker>
+    </view>
+    <view class='userInfo-list-item'>
+      <view class='userInfo-list-item-left'>手机号：</view>
+      <view class='userInfo-list-item-name'>{{phone}}</view>
+    </view>
+  </view>
+  <view class='userInfo-button' bindtap='save' style='background:{{ready?themeColor:assistedTxtColor2}};color:{{ready?"black":""}}'>保存</view>
+</block>
+
+<template is='loading' data='{{loading:loading}}' />

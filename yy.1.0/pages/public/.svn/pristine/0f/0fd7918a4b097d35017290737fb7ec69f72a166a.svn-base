@@ -1,0 +1,175 @@
+<!--pages/orderFilling/orderFilling.wxml-->
+<import src='/template/getUserInfo/getUserInfo'/>
+<import src='/template/loading/loading' />
+<view class='content'>
+  <view class='fillingItem'>
+    <view wx:if='{{orderType=="shop"}}' class='fillingTitleMiddle'>取货人:</view>
+    <view wx:if='{{orderType!="shop"}}' class='fillingTitleMiddle'>消费人:</view>
+    <input class='fillingInputLong' placeholder='会员名' value='{{userName}}' bindinput='inputUserName'></input>
+  </view>
+  <view class='fillingItem'>
+    <view class='fillingTitleLong'>联系电话:</view>
+    <view class='fillingInputShort'><input class='fillingInputLong' placeholder='联系电话' value='{{userPhone}}' bindinput='inputUserPhone'></input></view>
+  </view>
+  <view class='fillingItem'>
+    <view class='fillingTitleShort'>备注:</view>
+    <input class='fillingInputLong' placeholder='可填写偏好或要求，不超过50字' maxlength='50' bindinput='inputRemarks'></input>
+  </view>
+  <view class='orderContent'>
+    <view class='orderCntTitle'>预约内容:</view>
+    <view class='productInfo'>
+      <view class='productImg'>
+        <image src='{{param.img}}' mode='aspectFill'></image>
+      </view>
+      <view class='productInfoDetails'>
+        <view class='productTitle'>{{param.name}}</view>
+        <view class='productDec'>{{param.paramName}}</view>
+        <view class='productDec'>× {{param.quantity}}</view>
+      </view>
+    </view>
+  </view>
+  <view class='fillingItem'>
+    <view class='fillingTitleLong' wx:if='{{orderType=="toDoor"}}'>我的地址:</view>
+    <view class='fillingTitleLong' wx:if='{{orderType!="toDoor"}}'>门店地址:</view>
+    <view class='shopAddress' wx:if='{{orderType!="toDoor"}}' bindtap='map'>{{shopAddress}}</view>
+    <view class='shopAddress' wx:if='{{orderType=="toDoor"}}' bindtap='nav' data-url='/pages/public/fillMyAddress/fillMyAddress'>{{myAddress}}</view>
+    <image class='selIcon' src='/images/product/narrow.png' mode='widthFix'></image>
+  </view>
+  <view class='fillingItem'>
+    <view class='fillingTitleLong' wx:if='{{orderType=="toDoor"}}'>上门时间:</view>
+    <view class='fillingTitleLong' wx:if='{{orderType!="toDoor"}}'>到店时间:</view>
+    <view class='selTime' bindtap='timerSelectShow'>{{currentDateShow}} {{currentTimeShow}}<text wx:if='{{timeNullState}}'>选择</text></view>
+    <image class='selIcon' bindtap='timerSelectShow' src='/images/product/narrow.png' mode='widthFix'></image>
+  </view>
+  <view class='fillingItem' wx:if='{{coinProportionState}}'>
+    <view class='fillingTitleLong' style='width:194rpx;'>商家币抵扣:</view>
+    <view class='selDiscount' style='width:470rpx;' bindtap='coinInputShow' data-url='/pages/public/selCoupon/selCoupon?couponParam={{couponParam}}'>
+      <view wx:if='{{!coinSelctedState}}' style='font-size:26rpx;color:#999;line-height:40rpx;padding-top:20rpx;text-align: left;'>最多可使用{{coinMustNum}}币抵扣{{deductionMustMoney}}元(仅在线付)</view>
+      <text wx:if='{{coinSelctedState}}' style='font-size:26rpx;color:#FF4646;'>已抵扣{{coinDeductionNum}}元</text>
+    </view>
+    <image class='selIcon' src='/images/product/narrow.png' mode='widthFix'></image>
+  </view>
+  <view class='fillingItem' wx:if='{{orderType!="peer"}}'>
+    <view class='fillingTitleShort'>优惠:</view>
+    <view class='selDiscount' bindtap='nav' data-url='/pages/public/selCoupon/selCoupon?couponParam={{couponParam}}'>{{couponTxt}}</view>
+    <image class='selIcon' src='/images/product/narrow.png' mode='widthFix'></image>
+  </view>
+  <view class='fillingItem'>
+    <view class='totalPrice'>合计: ¥{{totalPrice}}</view>
+  </view>
+  <view class='emptyBox'></view>
+</view>
+<!-- 底部tab start -->
+<view class='tabBtnBottom'>
+  <view wx:if='{{orderType=="peer"}}' class='payBtn' style='background-color: #FFE200;' bindtap='toPay'>支付定金</view>
+  <view wx:if='{{orderType=="shop"}}' class='payBtn' style='background-color: #FFE200;' bindtap='toPay'>预约购买</view>
+  <view wx:if='{{orderType!="shop"&&orderType!="peer"}}' class='payBtn' style='background-color: #FFE200;' bindtap='toPay'>提交预约</view>
+</view>
+<!-- 底部tab end -->
+<!-- 日历时间弹窗 start -->
+<view class='popupMask' wx:if='{{timerSelectState}}' catchtouchstart='maskCatchEvent'></view>
+<!-- 时间组件 -->
+<view class='timerSelectBox' wx:if='{{timerSelectState}}'>
+  <view class='canlendarTopViewTitel'>请选择预约时间
+    <image src='/images/product/close_date.png' mode='widthFix' class='closeIconImg' bindtap='closeTimerSelect'></image>
+  </view>
+  <view class='weekDateList'>
+    <view class='weekDateItemBox'>
+      <view class='weekDateItem' bindtap="select" data-year='{{item.year}}' data-month='{{item.month}}' data-day='{{item.day}}' data-week='{{item.week}}' wx:for="{{ calendar }}" wx:for-item="item" wx:for-index="index" data-index="{{ index }}" style='color:{{index==currentIndex? "#333":"#ccc"}}' data-seldate='{{item.date}}'>
+        <view class='weekDateNum'>{{ item.week }}</view>
+        <view class='weekDateNum'>{{ item.date }}</view>
+      </view>
+    </view>
+    <view class='toCanlendarIcon' bindtap='showCanlendar'>
+      <image src='/images/product/calendar.png' mode='widthFix'></image>
+    </view>
+  </view>
+  <scroll-view scroll-y="true" style="height: 320rpx;">
+    <!-- <view class="timerItem {{timeIndex < startTime || timeIndex > endTime ?'':currentTime==timeIndex? 'selTimer':''}}" style="color:{{timeIndex < startTime || timeIndex > endTime ? '#ccc': todayState && timeIndex < toHoursNum ? '#ccc' : currentTime == timeIndex ?'#fff':'#333'}}" bindtap="{{timeIndex < startTime || timeIndex > endTime ?'': todayState && timeIndex < toHoursNum ? '' : 'selectTime'}}" wx:for="{{ timeArr}}" wx:for-item="timeItem" wx:for-index="timeIndex" data-Tindex="{{ timeIndex }}" data-timeshow='{{timeItem.time}}'>{{timeItem.time}}</view> -->
+    <view class='timerList'>
+      <view class='timerItem' wx:for='{{timeList}}' style="color:{{item.seleted?'#509BF8':item.warningState?'#FF4646':item.prohibitState?'#ccc':'#333'}}; border-bottom: {{item.seletedSlot?'solid 1rpx #D5EAFF':item.seleted?'solid 2rpx #509BF8':''}}" data-index='{{item.index}}' data-timeval='{{item.value}}' bindtap="{{item.prohibitState?'':'selectTime'}}">{{item.value}}</view>
+    </view>
+  </scroll-view>
+  <view class='selctTimerOKBox'>
+    <view class='selTimerShow'>预约时间: {{currentDateShow}} {{currentTimeShow}}<text wx:if='{{timeNullState}}'>请选择预约时间</text></view>
+    <view class='selctTimerOKBtn' style='background-color: #FFE200;' bindtap='selOkTimer'>确定</view>
+  </view>
+</view>
+<!-- 日期组件 -->
+<view class="canlendarBgView" wx:if='{{canlendarState}}'>
+  <view class='canlendarTopViewTitel'>请选择预约时间
+    <image src='/images/product/close_date.png' mode='widthFix' class='closeIconImg' bindtap='closeCanlendar'></image>
+  </view>
+  <view class="canlendarTopView">
+    <view class="directionBox" bindtap="handleCalendar" data-handle="prev">
+      {{'< '}} 
+    </view>
+    <view class="centerView">{{cur_year || "--"}} 年 {{cur_month || "--"}} 月</view>
+    <view class="directionBox" bindtap="handleCalendar" data-handle="next">
+       {{'>'}}
+    </view>
+  </view>
+  <view class="weekBgView">
+    <view wx:for="{{weeks_ch}}" wx:key="{{index}}" data-idx="{{index}}">{{item}}</view>
+  </view>
+  <view class="dateBgView">
+    <view wx:if="{{hasEmptyGrid}}" class="dateEmptyView" wx:for="{{empytGrids}}">
+    </view>
+    <view class="dateView" wx:for="{{days}}" wx:key="{{index}}" data-idx="{{index}}">
+      <view class='datesView' wx:if='{{cur_year < startYear}}' style="color:#ccc">{{item}}</view>
+      <view class='datesView' wx:if='{{cur_year > endYear}}' style="color:#ccc">{{item}}</view>
+      <view class="datesView" wx:if='{{cur_year == startYear && cur_year == endYear && cur_month < startMonth}}' style="color:#ccc">{{item}}</view>
+      <view class="datesView" wx:if='{{cur_year == startYear && cur_year == endYear && cur_month > endMonth}}' style="color:#ccc">{{item}}</view>
+      <view class="datesView" wx:if='{{cur_year == startYear && cur_year == endYear && cur_month == startMonth && cur_month == endMonth}}' class="datesView {{index < startDay-1 || index > endDay-1 ? '' :index == todayIndex ? 'dateSelectView' : ''}}" style="color:{{index < startDay-1 || index > endDay-1 ? '#ccc' :index == todayIndex ? '#fff' : '#333'}}"
+        bindtap="{{index < startDay-1 || index > endDay-1 ? '':'dateSelectAction'}}" wx:key="{{index}}" data-idx="{{index}}">{{item}}</view>
+      <view class="datesView" wx:if='{{cur_year == startYear && cur_year == endYear && cur_month == startMonth && cur_month < endMonth}}' class="datesView {{index < startDay-1 ? '' :index == todayIndex ? 'dateSelectView' : ''}}" style="color:{{index < startDay-1 ? '#ccc' :index == todayIndex ? '#fff' : '#333'}}"
+        bindtap="{{index < startDay-1 ? '':'dateSelectAction'}}" wx:key="{{index}}" data-idx="{{index}}">{{item}}</view>
+      <view class="datesView" wx:if='{{cur_year == startYear && cur_year == endYear && cur_month > startMonth && cur_month < endMonth}}' class="datesView {{index == todayIndex ? 'dateSelectView' : ''}}" style="color:{{index == todayIndex ? '#fff' : '#333'}}"
+        bindtap="{{index < startDay-1 ? '':'dateSelectAction'}}" wx:key="{{index}}" data-idx="{{index}}">{{item}}</view>
+      <view class="datesView" wx:if='{{cur_year == startYear && cur_year == endYear && cur_month > startMonth && cur_month == endMonth}}' class="datesView {{index > endDay-1 ? '' :index == todayIndex ? 'dateSelectView' : ''}}" style="color:{{index > endDay-1 ? '#ccc' :index == todayIndex ? '#fff' : '#333'}}"
+        bindtap="{{index > endDay-1 ? '':'dateSelectAction'}}" wx:key="{{index}}" data-idx="{{index}}">{{item}}</view>
+      <view class="datesView" wx:if='{{cur_year > startYear && cur_year == endYear && cur_month < endMonth}}' class="datesView {{index == todayIndex ? 'dateSelectView' : ''}}" style="color:{{index == todayIndex ? '#fff' : '#333'}}" bindtap="dateSelectAction"
+        wx:key="{{index}}" data-idx="{{index}}">{{item}}</view>
+      <view class="datesView" wx:if='{{cur_year > startYear && cur_year == endYear && cur_month == endMonth}}' class="datesView {{index > endDay-1 ? '' :index == todayIndex ? 'dateSelectView' : ''}}" style="color:{{index > endDay-1 ? '#ccc' :index == todayIndex ? '#fff' : '#333'}}"
+        bindtap="{{index > endDay-1 ? '':'dateSelectAction'}}" wx:key="{{index}}" data-idx="{{index}}">{{item}}</view>
+      <view class="datesView" wx:if='{{cur_year > startYear && cur_year == endYear && cur_month > endMonth}}' class="datesView" style="color:#ccc">{{item}}</view>
+      <view class="datesView" wx:if='{{cur_year == startYear && cur_year < endYear && cur_month > startMonth}}' class="datesView {{index == todayIndex ? 'dateSelectView' : ''}}" style="color:{{index == todayIndex ? '#fff' : '#333'}}" bindtap="dateSelectAction"
+        wx:key="{{index}}" data-idx="{{index}}">{{item}}</view>
+      <view class="datesView" wx:if='{{cur_year == startYear && cur_year < endYear && cur_month == startMonth}}' class="datesView {{index < startDay-1 ? '' : index == todayIndex ? 'dateSelectView' : ''}}" style="color:{{index < startDay-1 ? '#ccc' : index == todayIndex ? '#fff' : '#333'}}"
+        bindtap="{{index < startDay-1 ? '':'dateSelectAction'}}" wx:key="{{index}}" data-idx="{{index}}">{{item}}</view>
+      <view class="datesView" wx:if='{{cur_year == startYear && cur_year < endYear && cur_month < startMonth}}' class="datesView" style="color:#ccc">{{item}}</view>
+      <view class="datesView" wx:if='{{cur_year > startYear && cur_year < endYear}}' class="datesView {{index == todayIndex ? 'dateSelectView' : ''}}" style="color:'#333'}}"
+        bindtap="dateSelectAction" wx:key="{{index}}" data-idx="{{index}}">{{item}}</view>
+      <!-- <view class="datesView" wx:if='{{cur_year > startYear && cur_year == endYear && cur_month < endMonth}}' class="datesView {{index == todayIndex ? 'dateSelectView' : ''}}" style="color:'#333'}}"
+        bindtap="dateSelectAction" wx:key="{{index}}" data-idx="{{index}}">{{item}}</view>   -->
+      <view class="datesView" wx:if='{{cur_year>endYear}}' style="color:#ccc">{{item}}</view>
+    </view>
+  </view>
+</view>
+<!-- 日历时间弹窗 end -->
+<template is='getUserInfo' data='{{getUserInfoState:getUserInfoState,shopImgSrc:shopImgSrc,shopName:shopName,themeColor:themeColor,closeIcon:closeIcon}}' />
+<!-- 填写商家币弹窗 start -->
+<view class='popupMask' catchtouchstart='maskCatchEvent' wx:if='{{coinInputState}}'></view>
+<view class='coinDeductionBox' wx:if='{{coinInputState}}'>
+  <image class='closeCoinDeduction' src='{{closeIcon}}' mode='widthFix' bindtap='closeCoinDeduction'></image>
+  <view class='coin_title'>抵扣金额</view>
+  <view class='coinInputBox'><input type='number' bindinput='coinInput' value='{{coinInputNum}}'></input></view>
+  <view class='coin_tip'>最大可抵扣{{deductionMustMoney}}元(仅支持在线付)</view>
+  <view class='coin_tip'>每抵扣一元将花费{{rateCoin}}个币</view>
+  <view class='coin_tip2' wx:if='{{exceedTipState}}'>超过最大抵扣金额</view>
+  <button class='coinConfirmBtn' bindtap='coinInputConfirm'>确认</button>
+</view>
+<!-- 填写商家币弹窗 end -->
+<!-- 选择支付方式弹窗 start -->
+<view class='popupMask' catchtouchstart='maskCatchEvent' wx:if='{{selPayTypeState}}'></view>
+<view class='selPayTypeBox' style='background: linear-gradient(to right, #FD941D , #E84556);' wx:if='{{selPayTypeState}}'>
+  <image class='selPayTypeBg' src='/images/product/element.png' mode='widthFix'></image>
+  <view class='selPayTypeCnt'>
+    <view class='selPayTypeTitle'>请选择支付方式</view>
+    <view wx:if='{{paymentMethod==1||paymentMethod==3}}' class='selPayTypeBtn' style='background: #fff;color:{{importantColor}}' bindtap='selPayType' id='1'>在线优惠付 ¥:{{totalPrice}}</view>
+    <view wx:if='{{orderType!="toDoor" && (paymentMethod==2||paymentMethod==3)}}' class='selPayTypeBtn' style='background: {{themeColor}};color:#333' bindtap='selPayType' id='2'>到店支付 ¥:{{minRackRate}}</view>
+    <view wx:if='{{orderType=="toDoor" && (paymentMethod==2||paymentMethod==3)}}' class='selPayTypeBtn' style='background: {{themeColor}};color:#333' bindtap='selPayType' id='2'>上门支付 ¥:{{minRackRate}}</view>
+  </view>
+</view>
+<!-- 选择支付方式弹窗 end -->
+<template is='loading' data='{{loading:loading}}' />

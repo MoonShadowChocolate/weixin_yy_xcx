@@ -1,0 +1,123 @@
+/* pages/buyCard/buyCard.wxss */
+ @import "/template/getUserInfo/getUserInfo"; 
+.content{
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+.fillingItem{
+  width: 750rpx;
+  height: 110rpx;
+  border-bottom: solid 1rpx #E5E5E5;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  font-size: 32rpx;
+  color: #333;
+  line-height: 110rpx;
+}
+.fillingTitleShort{
+  width: 80rpx;
+  height: 110rpx;
+  font-weight: bold;
+}
+.fillingTitleLong{
+  width: 144rpx;
+  height: 110rpx;
+  font-weight: bold;
+}
+.fillingInputShort{
+  width: 506rpx;
+  height: 110rpx;
+  margin-left: 20rpx;
+}
+.fillingInputLong{
+  width: 570rpx;
+  height: 110rpx;
+  margin: auto 0;
+  margin-left: 20rpx;
+}
+.orderContent{
+  width: 750rpx;
+  height: 290rpx;
+  border-bottom: solid 1rpx #E5E5E5;
+  padding: 30rpx 40rpx 30rpx 40rpx;
+  box-sizing: border-box;
+}
+.orderCntTitle{
+  width: 100%;
+  height: 80rpx;
+  font-size: 32rpx;
+  color: #333;
+  font-weight: bold;
+}
+.productInfo{
+  width: 670rpx;
+  height: 160rpx;
+  display: flex;
+  flex-direction: row;
+}
+.productImg{
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 10rpx;
+  overflow: hidden;
+  background-color: #F8F8F8;
+  display: flex;
+}
+.productImg image{
+  width: 120rpx;
+  height: 120rpx;
+  margin: auto;
+}
+.productInfoDetails{
+  width: 510rpx;
+  height: 160rpx;
+  padding-top: 10rpx;
+  padding-left: 30rpx;
+  box-sizing: border-box;
+}
+.productTitle{
+  font-size: 30rpx;
+  color: #333;
+}
+.productDec{
+  font-size: 26rpx;
+  color: #999;
+  margin-top: 10rpx;
+}
+/* 底部tab start */
+.tabBtnBottom{
+  width: 100%;
+  height: 125rpx;
+  background-color: #fff;
+  box-shadow: 4rpx 0rpx 15rpx RGBA(180, 180, 180, 0.2);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: row;
+}
+.payAmtTxt{
+  width: 50%;
+  height: 125rpx;
+  font-size: 32rpx;
+  color: #333;
+  line-height: 125rpx;
+  padding-left: 40rpx;
+  box-sizing: border-box;
+}
+.payBtn{
+  width: 266rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  color: #333;
+  text-align: center;
+  line-height: 80rpx;
+  margin: auto;
+}
+/* 底部tab end */

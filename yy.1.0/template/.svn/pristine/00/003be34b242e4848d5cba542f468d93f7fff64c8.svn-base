@@ -1,0 +1,77 @@
+/* template/getUserInfo/getUserInfo.wxss */
+.getMemberBg{
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  position: fixed;
+  top:0;
+  left:0;
+  z-index: 20;
+  padding-top: 260rpx;
+  box-sizing: border-box;
+}
+.getMemberBox{
+  width: 620rpx;
+  height: 526rpx;
+  border-radius: 10rpx;
+  background-color: #fff;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 20rpx;
+  box-sizing: border-box;
+  position: relative;
+}
+.closeIcon{
+  width: 66rpx;
+  height: 66rpx;
+  position: absolute;
+  top:-25rpx;
+  right: -25rpx;
+}
+.shopHeadImg{
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto;
+  margin-top: 65rpx;
+}
+.shopHeadImg image{
+  width: 128rpx;
+  height: 128rpx;
+}
+.shopName{
+  width: 100%;
+  font-size: 32rpx;
+  color: #333;
+  text-align: center;
+  margin-top: 30rpx;
+}
+.getUserInfoTxt{
+  width: 485rpx;
+  font-size: 28rpx;
+  color: #333;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 30rpx;
+}
+.getUserInfoBtn{
+  width: 266rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  margin: 0 auto;
+  margin-top: 20rpx;
+  font-size: 32rpx;
+  color: #333;
+  text-align: center;
+  line-height: 80rpx;
+  position: relative;
+}
+.getUserInfoBtn button{
+  width: 266rpx;
+  height: 80rpx;
+  opacity: 0;
+  position: absolute;
+  top:0;
+  left:0;
+}

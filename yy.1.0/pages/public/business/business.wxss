@@ -1,0 +1,22 @@
+/* pages/business/business.wxss */
+.business-item{
+  border-bottom: 1px solid #e5e5e5;
+  padding: 30rpx 40rpx;
+  line-height: 1.5;
+}
+.business-item-left{
+  font-weight: bold;
+  float: left;
+  font-size: 32rpx;
+}
+.business-item-right{
+  overflow: hidden;
+  user-select: text;
+  font-size: 32rpx;
+}
+.business-item-bottom{
+  font-size: 32rpx;
+  line-height: 1.4;
+  margin-top: 30rpx;
+  user-select: text;
+}

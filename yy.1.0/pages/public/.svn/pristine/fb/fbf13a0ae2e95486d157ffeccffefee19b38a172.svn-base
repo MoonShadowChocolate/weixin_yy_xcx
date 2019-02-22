@@ -1,0 +1,51 @@
+<!--pages/myOrder/myOrder.wxml-->
+<!-- tab选项 -->
+<import src='/template/loading/loading' />
+<block wx:if='{{!loading}}'>
+  <view class='myOrder-tab'>
+    <view class='myOrder-tab-item' bindtap='tabSelect' data-txt='{{item.txt}}' data-index='{{index}}' wx:for='{{types=="order"?ordertab:appointtab}}' style='color:{{tabselect==index?themeTxtColor:""}};width:{{types=="order"?"25%":"20%"}}' wx:key=''>
+      {{item.txt}}
+      <view class='myOrder-tab-item-strip' style='background:{{themeColor}}' wx:if='{{tabselect==index}}'></view>
+    </view>
+  </view>
+  <!-- 列表页 -->
+  <view class='myOrder-list' wx:if='{{list[0]}}'>
+    <view class='myOrder-list-item' bindtap='nav' data-url='/pages/public/orderDetail/orderDetail?types={{types}}&id={{item.orderid}}' wx:for='{{list}}' wx:key=''>
+      <view class='myOrder-list-item-status'>
+        <view class='mlis-left' style='{{item.overtime?"color:"+importantColor:""}}'>{{types=='order'?'订单号：'+item.ordernumber:item.status=="已取消"?"":item.date}}</view>
+        <view class='mlis-right' style='color:{{item.status=="已取消"?"":item.status=="已支付"?assistedColor1:assistedColor2}}'>{{item.status}}</view>
+      </view>
+      <view class='myOrder-list-item-spec'>
+        <image class='mlisp-left' src='{{item.img}}' mode='aspectFill'></image>
+        <view class='mlisp-right'>
+          <view class='mlisp-right-name'>{{item.name}}</view>
+          <view class='mlisp-right-spec' style='color:{{assistedTxtColor2}}'>{{item.spec||' '}}</view>
+          <view class='mlisp-right-num' style='color:{{assistedTxtColor2}}'>
+            x {{item.num}}
+            <view class='mlisp-right-num-sumprice' style='color:{{themeTxtColor}}'>{{types=='order'?'小':'合'}}计:￥{{types=='order'?item.nofeeprice:item.sumprice}}</view>
+          </view>
+        </view>
+      </view>
+      <view class='myOrder-list-item-sum' wx:if='{{types=="order"}}'>总计:￥{{item.sumprice}}</view>
+      <view class='myOrder-list-item-button' wx:if='{{types=="appoint"||(item.status=="待付款"&&item.isCard)}}'>
+        <!-- <view class='mlib-cancel' bindtap='nav' data-url='/pages/public/paySuccess/paySuccess?orderId={{item.orderid}}' style='border:1px solid {{themeTxtColor}}' wx:if='{{item.status=="已支付"}}'>查看券码</view>
+        <view class='mlib-cancel' bindtap='phoneCall' data-phone='{{phone}}' style='border:1px solid {{themeTxtColor}}' wx:if='{{item.status!="待付款"}}'>联系商家</view> -->
+        <view class='mlib-cancel' bindtap='cancelAppoint' data-orderid='{{item.orderid}}' style='border:1px solid {{themeTxtColor}}' wx:if='{{types=="appoint"&&item.cancelable&&item.status!="已取消"}}'>取消预约</view>
+        <view class='mlib-cancel' bindtap='cancel' data-orderid='{{item.orderid}}' style='border:1px solid {{themeTxtColor}}' wx:if='{{types=="order"&&item.isCard&&item.status=="待付款"}}'>取消订单</view>
+        <view class='mlib-pay' bindtap='toPay' data-orderid='{{item.orderid}}' data-ordertype='{{item.ordertype || 0}}' wx:if='{{item.status=="待付款"}}'>去支付</view>
+        <view class='mlib-cancel' bindtap='deletes' data-orderid='{{item.orderid}}' style='border:1px solid {{themeTxtColor}}' wx:if='{{item.status=="已取消"}}'>删除</view>
+      </view>
+    </view>
+  </view>
+  <view class='myOrder-nolist' wx:if='{{(!list[0])}}'>
+    <image class='myOrder-nolist-icon' src='{{nolisticon}}' mode='widthFix'></image>
+    <view class='myOrder-nolist-txt' style='color:{{assistedTxtColor2}}'>该状态下暂无{{types=='order'?'订单':'预约'}}哦，请切换状态或切换门店查看!</view>
+    <view class='myOrder-nolist-button' bindtap='nav' data-url='/pages/public/changeStore/changeStore' style='color:{{themeTxtColor}};background:{{themeColor}};'>更换门店</view>
+  </view>
+  <!-- <view class='nodata' wx:if='{{types=="order"&&(!list[0])}}'>
+    <image class='nodata-icon' src='/images/myOrder/no_goods_illustration@2x.png'></image>
+    <view class='nodata-txt' style='color:{{assistedTxtColor1}}'>暂时还没有商品呢~</view>
+  </view> -->
+</block>
+
+<template is='loading' data='{{loading:loading}}' />

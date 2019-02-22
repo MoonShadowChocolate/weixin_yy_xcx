@@ -1,0 +1,46 @@
+<!--pages/coupon/coupon.wxml-->
+<import src='/template/loading/loading'/>
+<import src='/template/getMember/getMember' />
+<block wx:if='{{!loading}}'>
+  <view class='coupon-list' wx:if='{{list[0]}}'>
+    <view class='coupon-item' wx:for='{{list}}' wx:key='' style='background:linear-gradient(to right,{{item.prop==1?"#FC9340,#FC4281":item.prop==2?"#B63DFF,#7B30FF":""}});{{item.prop==3?"background:#cccccc":""}}'>
+      <view class='coupon-item-top' style='position:{{types=="user"?"static":""}};margin:{{types=="user"?"50rpx 0":"44rpx 0"}}'>
+      <view class='coupon-item-top-left'>{{item.name}}</view>
+      <view class='{{types=="user"?"coupon-item-top-right_user":"coupon-item-top-right"}}'><text class='citr-left' wx:if='{{item.types==1}}'>￥</text><text class='citr-right'>{{item.value}}</text><text class='citr-sale' wx:if='{{item.types==2}}'>折</text></view>
+      <view class='coupon-item-top-rest' wx:if='{{item.prop==2&&types=="business"&&item.haslimit}}'>(剩余数量：{{item.rest}})</view>
+      </view>
+      <view class='coupon-item-bottom'>
+        <view class='coupon-item-bottom-left'>
+          <view class='cibl-limit'>{{item.types==1?'满'+item.limit+'可用':''}}</view>
+          <view class='cibl-time'>有效期{{item.datetype==1?"":item.datetype==2?"至":""}}：{{item.time}}</view>
+        </view>
+        <view class='coupon-item-bottom-right' wx:if='{{types!="user"}}' data-cost='{{item.cost}}' data-couponid='{{item.id}}' bindtap='{{item.free?"freeToExchange":"creditToExchange"}}' style='color:{{item.prop==1?"#FC4281":item.prop==2?"#7B30FF":"#CCCCCC"}}'>
+          {{item.prop==3?"已领取":item.free?"免费领取":""}}
+          <view class='cibr-txt' wx:if='{{!item.free}}'>
+            <view class='cibr-txt-top'>兑换</view>
+            <view class='cibr-txt-bottom'>({{item.cost}}积分)</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='nodata' wx:else>
+    <image class='nodata-icon' src='/images/coupon/no_coupon@2x.png'></image>
+    <view class='nodata-txt' style='color:{{assistedTxtColor1}}'>暂无优惠券~</view>
+  </view>
+  <view class='coupon-alert' wx:if='{{showAlert}}'>
+    <view class='coupon-alert-back' bindtouchstart='close'></view>
+    <view class='coupon-alert-content'>
+      <view class='coupon-alert-content-top'>
+        <view class='cact-txt'>确定花费{{alertCost}}积分兑换该券？</view>
+        <view class='cact-tips'>(剩余积分：{{alertScore}}积分)</view>
+      </view>
+      <view class='coupon-alert-content-bottom'>
+        <view class='cacb-but cacb-cancel' bindtap='close'>取消</view>
+        <view class='cacb-but cacb-confirm' bindtap='confirm'>确定</view>
+      </view>
+    </view>
+  </view>
+</block>
+<template is='loading' data='{{loading:loading}}'/>
+<template is='getMember' data='{{getMemberState:getMemberState,themeColor:themeColor,assistedColor1:assistedColor1,getPhoneState:getPhoneState,getCodeBtnBgColor:getCodeBtnBgColor,getCodeBtnTxt:getCodeBtnTxt}}' />

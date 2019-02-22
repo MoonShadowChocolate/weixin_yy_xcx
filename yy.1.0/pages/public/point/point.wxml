@@ -1,0 +1,26 @@
+<!--pages/point/point.wxml-->
+<import src='/template/loading/loading' />
+<view class='point-content' wx:if='{{!loading}}'>
+  <!-- 积分显示 -->
+  <view class='point-content-top'>
+    <view class='point-content-top-left'>
+      <view class='pctl-top'>积分</view>
+      <view class='pctl-point'>{{point}}</view>
+    </view>
+    <image class='point-content-top-right' mode='widthFix' src='{{topicon}}'></image>
+  </view>
+  <!-- 积分权益 -->
+  <view class='point-content-point' style='color:{{themeTxtColor}}'>
+    <view class='point-content-point-title'>
+      <view class='pcpt-stick'></view>
+      <view class='pcpt-txt'>积分权益</view>
+    </view>
+    <view class='point-content-point-list'>
+      <view class='pcpl-item' bindtap='nav' data-url='/pages/public/coupon/coupon?types=business'>
+        <view>兑换优惠券</view>
+        <image class='pcpl-item-arrow' mode='widthFix' src='/images/point/narrow@2x.png'></image>
+      </view>
+    </view>
+  </view>
+</view>
+<template is='loading' data='{{loading:loading}}' />

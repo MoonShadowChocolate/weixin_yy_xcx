@@ -1,0 +1,43 @@
+<!--pages/selCoupon/selCoupon.wxml-->
+<import src='/template/loading/loading'/>
+<view class='content'>
+  <view class='couponList'>
+    <view class='couponItem' wx:for='{{couponList}}' wx:if='{{item.couponType==1}}' style='background: {{couponGradientColor1}};' bindtap='nav' data-url='/pages/public/orderFilling/orderFilling?couponId={{item.couponId}}&couponType={{item.couponType}}&couponVal={{item.couponValue}}'>
+      <view class='leftMark'></view>
+      <view class='rightMark'></view>
+      <view class='couponInfo'>
+        <view class='couponTitle'>全场券</view>
+        <view class='couponInfoTxt'>满{{item.couponStint}}可用</view>
+        <view class='couponInfoTxt'>有效期至: {{item.endDate}}</view>
+      </view>
+      <view class='couponPrice'><text>¥</text>{{item.couponValue}}</view>
+    </view>
+    <!-- <view class='couponItem' style='background: {{couponGradientColor2}};'>
+      <view class='leftMark'></view>
+      <view class='rightMark'></view>
+      <view class='couponInfo'>
+        <view class='couponTitle'>指定服务券</view>
+        <view class='couponInfoTxt'>满99可用</view>
+        <view class='couponInfoTxt'>有效期至: 2018.10.01</view>
+      </view>
+      <view class='couponPrice'><text>¥</text>80</view>
+    </view> -->
+     <view class='couponItem' wx:for='{{couponList}}' wx:if='{{item.couponType==2}}' style='background: {{couponGradientColor3}};' bindtap='nav' data-url='/pages/public/orderFilling/orderFilling?couponId={{item.couponId}}&couponType={{item.couponType}}&couponVal={{item.couponValue}}'>
+      <view class='leftMark'></view>
+      <view class='rightMark'></view>
+      <view class='couponInfo'>
+        <view class='couponTitle'>优惠券</view>
+        <!-- <view class='couponInfoTxt'>满99可用</view> -->
+        <view class='couponInfoTxt'>有效期至: {{item.endDate}}</view>
+      </view>
+      <view class='couponPrice'>{{item.couponValue}}<text>折</text></view>
+    </view> 
+  </view>
+</view>
+<!-- 空页面 start -->
+<view class='emptyPageBox' wx:if='{{emptyPageState}}'>
+  <image class='emptyIcon' src='{{emptyIcon}}' mode='widthFix'></image>
+  <view class='emptyTip'>{{emptyTip}}</view>
+</view> 
+<!-- 空页面 end -->
+<template is='loading' data='{{loading:loading}}' />

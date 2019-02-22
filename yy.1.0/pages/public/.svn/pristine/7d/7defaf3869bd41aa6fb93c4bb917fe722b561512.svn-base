@@ -1,0 +1,36 @@
+<!--pages/myPeerActivity/myPeerActivity.wxml-->
+<import src='/template/getMember/getMember' />
+<import src='/template/loading/loading' />
+<view class='content'>
+  <view class='peerActivityTop'>
+    <view class='peerActivityImg'>
+      <image src='{{peerImg}}' mode='aspectFill'></image>
+    </view>
+    <view wx:if='{{peerType=="me"}}' class='peerActivityTip'>赶快邀请朋友加入吧！</view>
+    <view wx:if='{{peerType=="friend"}}' class='peerActivityTip'>您的好友邀请您加入同行活动</view>
+  </view>
+  <!-- 同行活动进度条 start -->
+  <view class='peerDiscountBarBox'>
+    <view class='peerDiscountBar'>
+      <view class='peerDiscountBarSle' style='width: {{peerBarWidth}};background-color: {{assistedColor2}};'></view>
+      <view class='peerMarkList'>
+        <view class='peerMarkItem' wx:for='{{peerDiscountList}}' style='background-color: {{item.joinState?assistedColor2:barSpotAutoColor}};border: {{item.joinState?barBorderMarkColor:barBorderAutoColor}};'>
+          <view class='peerMarkInfo'>
+            <view class='peerMarkInfoTop'>{{item.title}}</view>
+            <view class='peerMarkInfoBottom' style='color:#FF4646;'>¥{{item.price}}/人</view>
+          </view>
+        </view>
+        <!-- <view class='peerMarkItem' style='background-color: #FF8A2C;border: solid 10rpx #ffebd5;'></view>
+      <view class='peerMarkItem' style='background-color: #DBDBDB;border: solid 10rpx #f8f8f8;'></view> -->
+      </view>
+    </view>
+  </view>
+  <!-- 同行活动进度条 end -->
+  <view wx:if='{{peerType=="me"}}' class='joinSharePeerBtn' style='background-color: {{themeColor}};'>
+    邀请朋友
+    <button open-type="share" bindtap='onShareAppMessage'></button>
+  </view>
+  <view wx:if='{{peerType=="friend"}}' class='joinSharePeerBtn' style='background-color: {{themeColor}};' bindtap='toJoin'>立即参加</view>
+</view>
+<template is='loading' data='{{loading:loading}}' />
+<template is='getMember' data='{{getMemberState:getMemberState,themeColor:themeColor,assistedColor1:assistedColor1,getPhoneState:getPhoneState,getCodeBtnBgColor:getCodeBtnBgColor,getCodeBtnTxt:getCodeBtnTxt,closeIcon:closeIcon}}' />

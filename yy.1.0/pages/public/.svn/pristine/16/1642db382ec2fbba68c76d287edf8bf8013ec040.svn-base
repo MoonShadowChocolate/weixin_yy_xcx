@@ -1,0 +1,36 @@
+<!--pages/pay/pay.wxml-->
+<import src='/template/loading/loading' />
+<view class='content'>
+  <view class='selPayTypeBox'>
+    <view class='selPayTitle'>选择支付方式</view>
+    <view class='selPayType'>
+      <radio-group class="radio-group" bindchange="radioChange">
+        <view class='payTypeItem'>
+          <image src='{{weixinIcon}}' mode='widthFix' class='payTypeIcon'></image>
+          <view class='payTypeName'>微信支付</view>
+          <!-- <radio value="1" checked="{{defaultType==5&&notEnoughState?true:defaultType==1?true:false}}" /> -->
+          <radio value="1" checked="true" />
+        </view>
+        <view class='payTypeItem' wx:if='{{discountState}}'>
+          <image src='/images/product/personal_offer.png' mode='widthFix' class='payTypeIcon'></image>
+          <view class='payTypeName'>个人优惠付（<text style='color:{{importantColor}};'>{{calcRule}}折</text>）</view>
+          <!-- <radio value="7" checked='{{defaultType==7?true:false}}' /> -->
+          <radio value="7" />
+        </view>
+        <view class='payTypeItem'>
+          <image src='{{balanceIcon}}' mode='widthFix' class='payTypeIcon'></image>
+          <view class='payTypeName'>余额支付（<text style='color:{{importantColor}};'>余额{{accountBalance}}</text><text style='color:{{importantColor}};' wx:if='{{notEnoughState}}'>，不足</text>）</view>
+          <!-- <radio disabled='{{notEnoughState?"true":""}}' value="5" checked="{{!notEnoughState&&defaultType==5?true:false}}" /> -->
+          <radio disabled='{{notEnoughState?"true":""}}' value="5" />
+        </view>  
+      </radio-group>
+    </view>
+  </view>
+</view>
+<!-- 底部tab start-->
+<view class='tabBtnBottom'>
+  <view class='payAmt'>总计：¥{{totalPrice}}</view>
+  <view class='payBtn' style='background-color: {{themeColor}};' bindtap='toPay'>支付</view>
+</view>
+<!-- 底部tab end-->
+<template is='loading' data='{{loading:loading}}' />

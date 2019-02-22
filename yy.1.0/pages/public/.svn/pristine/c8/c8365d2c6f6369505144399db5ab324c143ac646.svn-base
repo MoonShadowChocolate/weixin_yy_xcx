@@ -1,0 +1,87 @@
+// pages/public/recharge/recharge.js
+const app = getApp();
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    this.setStyleFun();
+  },
+  //商家币输入事件
+  inputCoinNum:function(e){
+    console.log(e);
+    
+  },
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  },
+  //设置皮肤
+  setStyleFun: function () {
+    this.setData({
+      themeColor: app.globalObj.themeColor,//主题色
+      assistedColor1: app.globalObj.assistedColor1,//辅助色1
+      assistedColor2: app.globalObj.assistedColor2,//辅助色2
+      importantColor: app.globalObj.importantColor,//重要警示性颜色
+      btnGradientColor: app.globalObj.btnGradientColor,//一些按钮背景的渐变色
+      themeTxtColor: app.globalObj.themeTxtColor,//主文字色
+      assistedTxtColor1: app.globalObj.assistedTxtColor1,//辅助文字色1
+      assistedTxtColor2: app.globalObj.assistedTxtColor2,//辅助文字色2
+      getCodeBtnBgColor: app.globalObj.assistedColor1,//获取按钮的背景色
+      rechargeIcon: app.myCoinWalletObj.rechargeIcon,//币充值单位背景图标
+      recgargeLinkIcon: app.myCoinWalletObj.recgargeLinkIcon,//币充值输入框链接图标
+    })
+  }
+})

@@ -1,0 +1,11 @@
+<!--pages/business/business.wxml-->
+<import src='/template/loading/loading'/>
+
+<view class='business-list' style='color:{{themeTxtColor}}' wx:if='{{!loading}}'>
+  <view class='business-item' wx:for='{{list}}' wx:key=''>
+    <view class='business-item-left' style='{{item.row?"float:none":""}}'>{{item.left}}</view>
+    <view class='{{item.row?"business-item-bottom":"business-item-right"}}'>{{item.right}}</view>
+  </view>
+</view>
+<template is='loading' data='{{loading:loading}}'/>
+

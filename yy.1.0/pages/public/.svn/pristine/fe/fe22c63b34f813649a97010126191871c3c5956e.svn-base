@@ -1,0 +1,44 @@
+<!--pages/public/myCoinWallet/myCoinWallet.wxml-->
+<view class='content'>
+  <view class='topShow' style='background-color: #FFE200;'>
+    <image class='topShowBg' src='{{coinTopBgIcon}}' mode='widthFix'></image>
+    <view class='coinNumBox'>
+      <view class='coinNum'>59.00</view>
+      <view class='coinNumTxt'>(币)</view>
+    </view>
+  </view>
+  <view class='briefIntroduction'>
+    <view class='briefIntroductionTitle'>币简介</view>
+    <view class='briefIntroductionItem'>预计STO分红率：20%<text>（分红率=收益/投入）</text></view>
+    <view class='briefIntroductionItem'>周期固定收益：20%<text>（分红率=收益/投入）</text></view>
+    <view class='briefIntroductionItem'>分红周期：2018/05/25 - 2019/05/25</view>
+    <view class='briefIntroductionItem'>投资限售期：100天<text>（锁定期内用户不可卖出商家币）</text></view>
+    <view class='briefIntroductionItem'>发行商家：云竹美业店</view>
+    <view class='briefIntroductionItem'>发行总量：100万</view>
+    <view class='briefIntroductionItem'>流通总量：70万</view>
+    <view class='briefIntroductionItem'>简介：
+      <view class='briefIntroductionTxt' style='-webkit-line-clamp:2;'>云竹美业店是国内首家深度依靠小程序，实现服务预约在线率百分之百的店铺，店内消费个虽然个人问题问题</view>
+      <view class='viewAll'>查看全部</view>
+    </view>
+    <view class='briefIntroductionItem'>提现方式：<text style='color: #FF8A2C;font-size:28rpx;'>APP下载链接</text></view>
+  </view>
+  <view class='coinWalletBtnBox'>
+    <button class='coinWalletBtnStyle' style='background-color:#FF8A2C;' bindtap='toProduct'>去消费</button>
+    <button class='coinWalletBtnStyle' style='background-color:#39C615;' bindtap='toRecharge'>去充值</button>
+    <button class='coinWalletBtnStyle' style='background-color:#FF4646;' bindtap='bindAppShow'>绑定APP账户</button>
+  </view>
+</view>
+<!-- 绑定APP账户弹窗 start -->
+  <view class='getPhoneBg' wx:if='{{bindAppState}}'>
+    <view class='getMemberBox'>
+      <image class='closeIcon' src='{{closeIcon}}' mode='widthFix' bindtap='closeBindApp'></image> 
+      <view class='getMemberTitle'>请填写需要绑定的app账号</view>
+      <view class='userPhone'><input placeholder='请输入手机号' placeholder-style='color:#ccc;' bindinput='userPhoneInput' type='number'></input></view>
+      <view class='getCode'>
+        <input placeholder='请输入验证码' placeholder-style='color:#ccc;' bindinput='userCodeInput' maxlength='4' type='number'></input>
+        <view class='getCodeBtn' style='background-color: {{getCodeBtnBgColor}}' bindtap='getCode'>{{getCodeBtnTxt}}</view>
+      </view>
+      <view class='becomeMember' style='background-color: {{themeColor}};' bindtap='getMemberCodeStyle'>确认绑定</view>
+    </view>
+  </view>
+  <!-- 绑定APP账户弹窗 end -->

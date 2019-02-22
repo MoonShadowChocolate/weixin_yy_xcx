@@ -1,0 +1,15 @@
+<!--template/getUserInfo/getUserInfo.wxml-->
+<template name='getUserInfo'>
+  <view class='getMemberBg' wx:if='{{getUserInfoState}}'>
+    <view class='getMemberBox'>
+      <image class='closeIcon' src='{{closeIcon}}' mode='widthFix' bindtap='closeGetUserInfo'></image>
+      <view class='shopHeadImg'><image src='{{shopImgSrc}}' mode='aspectFill'></image></view>
+      <view class='shopName'>{{shopName}}</view>
+      <view class='getUserInfoTxt'>申请获取你的昵称、头像信息，用于个人中心、分享卡片展示</view>
+      <view class='getUserInfoBtn' style='background-color: {{themeColor}}'>
+        授权信息
+        <button open-type='getUserInfo' bindgetuserinfo='getUserInfo'></button>
+      </view>
+    </view>
+  </view>
+</template>

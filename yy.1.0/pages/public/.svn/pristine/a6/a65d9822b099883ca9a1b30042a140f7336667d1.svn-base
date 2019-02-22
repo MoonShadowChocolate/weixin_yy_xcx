@@ -1,0 +1,85 @@
+<!--pages/product/product.wxml-->
+<import src='/template/loading/loading'/>
+<import src='/template/getMember/getMember'/>
+<view class='content'>
+  <view class='product-tab'>
+    <view class='tabItem' wx:for='{{productTabList}}' bindtap='tab' data-index="{{index}}">
+      <view class='tabTxt' style='color:{{item.select?"#333":"#ccc"}}'>{{item.tabTitle}}</view>
+      <view class='tabMark' wx:if='{{item.select}}' style='background-color: {{themeColor}};'></view>
+    </view>
+  </view>
+  <view class='product-box'>
+    <!-- 服务start -->
+    <view class='pro-service' wx:if='{{serviceState}}'>
+      <view class='category'>
+        <view wx:for='{{serviceCategory}}' class='{{item.select?"cate-sel":"cate-auto"}}' style='background:{{item.select?btnGradientColor:"#fff"}}' bindtap='serachProduct' data-index='{{index}}' data-catetype='{{item.catetype}}' data-catename='{{item.cateName}}'>{{item.cateName}}</view>
+      </view>
+      <view class='serviceList'>
+        <view class='serviceItem' wx:for='{{serviceList}}'>
+          <view class='serviceImg' bindtap='nav' data-url='/pages/public/serviceDetails/serviceDetails?id={{item.id}}&type=sever'><image src='{{item.imgUrl}}' mode='aspectFill'></image></view>
+          <view class='serviceDec'>
+            <view class='serviceTitle'>{{item.name}}</view>
+            <view class='servicePrice' style='color: {{importantColor}};'>¥{{item.price}}</view>
+          </view>
+          <view class='serviceDec'>
+            <view class='serviceDecTxt'>已售: {{item.soldNum}}</view>
+            <view class='serviceDecTxt'>{{rackRate}}：¥{{item.rackRate}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 服务end -->
+    <!-- 商品start -->
+    <view class='pro-shop' wx:if='{{shopState}}'>
+      <view class='category'>
+        <view wx:for='{{shopCategory}}' class='{{item.select?"cate-sel":"cate-auto"}}' style='background:{{item.select?btnGradientColor:"#fff"}}' bindtap='serachProduct' data-index='{{index}}' data-catetype='{{item.catetype}}' data-catename='{{item.cateName}}'>{{item.cateName}}</view>
+      </view>
+      <view class='shopList'>
+        <view class='shopItem' wx:for='{{shopList}}'>
+          <image class='shopImg' src='{{item.imgUrl}}' mode='aspectFill' bindtap='nav' data-url='/pages/public/serviceDetails/serviceDetails?id={{item.id}}&type=shop'></image>
+          <view class='shopDec'>
+            <view class='shopName'>{{item.name}}</view>
+            <view class='shopBottom'>
+              <view class='shopPrice' style='color:#FF4646;'>¥{{item.price}}</view>
+              <view class='shopPayNum'>已售: {{item.soldNum}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 商品end -->
+    <!-- 卡项start -->
+    <view class='pro-card' wx:if='{{cardState}}'>
+      <view class='cardList' wx:for='{{cardList}}' bindtap='nav' data-url='/pages/public/cardDetails/cardDetails?id={{item.id}}'>
+        <view class='cardTop' style='background-color: #333;'></view>
+        <view class='cardCnt' style='background-color: {{themeColor}};'>
+          <view class='cardCntItem'>
+            <view class='cardTitle'>{{item.rechargeAmount}}元充值卡(赠送{{item.giveAmount}}元)</view>
+            <view class='cardPrice'><text>￥</text>{{item.rechargeAmount}}</view>
+          </view>
+          <view class='cardCntItem'>
+            <view class='effectiveDate'>有效期:永久</view>
+            <view class='buyCardBtn' catchtap='payCard' id='{{item.id}}'>立刻购买</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 卡项end -->
+    <!-- 活动start -->
+    <view class='pro-activity' wx:if='{{activityState}}'>
+      <view class='activityList' wx:for='{{activityList}}'>
+        <view class='activityImg'><image src='{{item.iconUrl}}' mode='widthFix' bindtap='nav' data-url='/pages/public/peerDiscount/peerDiscount?id={{item.id}}'></image></view>
+        <view class='activityCnt'>{{item.name}}</view>
+      </view>
+    </view>
+    <!-- 活动end -->
+  </view>
+</view> 
+<!-- 空页面 start -->
+<view class='emptyPageBox' wx:if='{{emptyPageState}}'>
+  <image class='emptyIcon' src='{{emptyIcon}}' mode='widthFix'></image>
+  <view class='emptyTip'>{{emptyTip}}</view>
+</view> 
+<!-- 空页面 end -->
+<template is='loading' data='{{loading:loading}}'/>
+<template is='getMember' data='{{getMemberState:getMemberState,themeColor:themeColor,assistedColor1:assistedColor1,getPhoneState:getPhoneState,getCodeBtnBgColor:getCodeBtnBgColor,getCodeBtnTxt:getCodeBtnTxt,closeIcon:closeIcon}}' />

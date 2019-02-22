@@ -1,0 +1,329 @@
+/* pages/product/product.wxss */
+@import "/template/getMember/getMember";
+.content{
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  padding-top: 100rpx;
+  box-sizing: border-box;
+}
+.product-tab{
+  width: 100%;
+  height: 100rpx;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  top:0;
+  left:0;
+  z-index: 10;
+}
+.tabItem{
+  width: 25%;
+  height: 100rpx;
+  text-align: center;
+}
+.tabTxt{
+  width: 100%;
+  height: 80rpx;
+  font-size: 32rpx;
+  line-height: 80rpx;
+}
+.tabMark{
+  width: 32rpx;
+  height: 6rpx;
+  border-radius: 3rpx;
+  margin: 0 auto;
+}
+.product-box{
+  width: 100%;
+  height: auto;
+  padding-top: 15rpx;
+  box-sizing: border-box;
+}
+/* 服务start */
+.pro-service{
+  width: 100%;
+  height: auto;
+}
+.category{
+  width: 100%;
+  height: auto;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.cate-sel{
+  width: auto;
+  height: 60rpx;
+  border-radius: 30rpx;
+  background: linear-gradient(to right, #FFB824 , #FFA100);  
+  font-size: 24rpx;
+  color: #fff;
+  text-align: center;
+  line-height: 60rpx;
+  margin-left: 15rpx;
+  margin-right: 15rpx;
+  margin-bottom: 20rpx;
+  /* white-space:nowrap;  
+	overflow:hidden;
+  text-overflow:ellipsis; */
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  box-sizing: border-box;
+}
+.cate-auto{
+  width: auto;
+  height: 60rpx;
+  border-radius: 30rpx;
+  border:solid 1rpx #ccc;
+  font-size: 24rpx;
+  color: #ccc;
+  text-align: center;
+  line-height: 60rpx;
+  margin-left: 15rpx;
+  margin-right: 15rpx;
+  margin-bottom: 20rpx;
+  box-sizing: border-box;
+  /* white-space:nowrap;  
+	overflow:hidden;
+  text-overflow:ellipsis; */
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+}
+.serviceList{
+  width: 100%;
+  height: auto;
+  padding-top: 30rpx;
+  padding-left: 35rpx;
+  padding-right: 35rpx;
+  box-sizing: border-box;
+}
+.serviceItem{
+  width: 670rpx;
+  height: auto;
+  margin-bottom: 45rpx;
+}
+.serviceImg{
+  width: 670rpx;
+  height: 320rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+}
+.serviceImg image{
+  width: 670rpx;
+  height: 320rpx;
+}
+.serviceDec{
+  width: 670rpx;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  box-sizing: border-box;
+}
+.serviceTitle{
+  width: 500rpx;
+  font-size: 30rpx;
+  color: #333;
+  white-space:nowrap;  
+	overflow:hidden;
+  text-overflow:ellipsis;
+  padding-top: 20rpx;
+  box-sizing: border-box;
+}
+.servicePrice{
+  width: 170rpx;
+  font-size: 30rpx;
+  text-align: right;
+  padding-top: 20rpx;
+  box-sizing: border-box;
+}
+.serviceDecTxt{
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 10rpx;
+}
+/* 服务end */
+/* 商品start */
+.pro-shop{
+  width: 100%;
+  height: auto;
+}
+.shopList{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  box-sizing: border-box;
+}
+.shopItem{
+  width: 320rpx;
+  height: 457rpx; 
+  margin-top: 30rpx;
+}
+.shopImg{
+  width: 320rpx;
+  height: 320rpx;
+}
+.shopDec{
+  width: 320rpx;
+  height: 122rpx;  
+  box-shadow:2rpx 2rpx 5rpx rgba(194,194,194,.35);
+  padding-top: 20rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  box-sizing: border-box;
+}
+.shopName{
+  width: 100%;
+  font-size: 26rpx;
+  color: #333;
+  white-space:nowrap;  
+	overflow:hidden;
+  text-overflow:ellipsis;
+}
+.shopBottom{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20rpx;
+}
+.shopPrice{
+  font-size: 28rpx;
+  color: #333;
+}
+.shopPayNum{
+  font-size: 24rpx;
+  color: #999;
+}
+/* 商品end */
+/* 卡项start */
+.pro-card{
+  width: 100%;
+  height: auto;
+}
+.cardList{
+  width: 670rpx;
+  height: 306rpx;
+  border-radius: 20rpx;
+  margin: 0 auto;
+  margin-top: 30rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+}
+.cardTop{
+  width: 100%;
+  height: 64rpx;
+}
+.cardCnt{
+  width: 100%;
+  height: 242rpx;
+}
+.cardCntItem{
+  width: 610rpx;
+  height: 121rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  color: #333;
+}
+.cardTitle{
+  width: 400rpx;
+  font-size: 32rpx;
+  padding-top: 60rpx;
+  box-sizing: border-box;
+}
+.cardPrice{
+  width: 210rpx;
+  font-size: 76rpx;
+  text-align: right;
+  padding-top: 40rpx;
+  box-sizing: border-box;
+}
+.cardPrice text{
+  font-size: 32rpx;
+}
+.effectiveDate{
+  width: 400rpx;
+  font-size: 28rpx;
+  padding-top: 20rpx;
+  box-sizing: border-box;
+}
+.buyCardBtn{
+  width: 178rpx;
+  height: 66rpx;
+  font-size: 32rpx;
+  text-align: center;
+  line-height: 66rpx;
+  border-radius: 33rpx;
+  background-color: #fff;
+  margin-top: 30rpx;
+  box-sizing: border-box;
+}
+/* 卡项end */
+/* 活动start */
+.pro-activity{
+  width: 100%;
+  height: auto;
+}
+.activityList{
+  width: 670rpx;
+  height: auto;
+  margin: 0 auto;
+  margin-top: 30rpx;
+}
+.activityImg{
+  width: 670rpx;
+  height: 320rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+  background-color: #FFB824;
+}
+.activityImg image{
+  width: 670rpx;
+  height: 320rpx;
+}
+.activityCnt{
+  width: 670rpx;
+  font-size: 30rpx;
+  color: #333;
+  line-height: 60rpx;
+  padding-left: 20rpx;
+  box-sizing: border-box;
+}
+/* 活动end */
+
+/* 空页面 start */
+.emptyPageBox{
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  position: fixed;
+  top:100rpx;
+  left: 0;
+  z-index: 10;
+  text-align: center;
+}
+.emptyIcon{
+  width: 400rpx;
+  height: 400rpx;
+  margin-top: 40rpx;
+}
+.emptyTip{
+  font-size: 28rpx;
+  color: #999;
+}
+/* 空页面 end */
